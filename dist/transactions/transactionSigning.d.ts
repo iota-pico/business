@@ -1,12 +1,12 @@
 import { Hash } from "@iota-pico/data/dist/data/hash";
-import { Trits } from "@iota-pico/data/dist/data/trits";
-import { Trytes } from "@iota-pico/data/dist/data/trytes";
 /**
  * Helper class for signing transactions.
+ * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export declare class TransactionSigning {
-    static generateKey(seed: Hash, index: number, length: number): number[];
-    static digests(key: number[]): Trits;
-    static address(digests: Trits): Trits;
-    static addChecksum(inputValue: Trytes, checksumLength: number): Trytes;
+    static key(seed: Hash, index: number, length: number): number[];
+    static digests(key: number[]): number[];
+    static address(digests: number[]): number[];
+    static createChecksum(trits: number[], checksumLength: number): string;
+    static signatureFragment(normalizedBundleFragment: number[], keyFragment: number[]): number[];
 }
