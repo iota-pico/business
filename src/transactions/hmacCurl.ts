@@ -32,14 +32,15 @@ export class HmacCurl {
         for (let i = 0; i < bundle.transactions.length; i++) {
             if (bundle.transactions[i].value.toNumber() > 0) {
                 const bundleHashTrits = Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();
-                const hmac: number[] = [];
+                const hmac: number[] = Array.from(new Int8Array(hashLength));
                 curl.initialize();
-                curl.absorb(key, 0, hashLength);
-                curl.absorb(bundleHashTrits, 0, hashLength);
-                curl.squeeze(hmac, 0, hashLength);
+                curl.absorb(key, 0, key.length);
+                curl.absorb(bundleHashTrits, 0, bundleHashTrits.length);
+                curl.squeeze(hmac, 0, hmac.length);
                 const hmacTrytes = Trits.fromArray(hmac).toTrytes().toString();
+                const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, 2187);
                 bundle.transactions[i].signatureMessageFragment =
-                    SignatureFragment.create(Trytes.create(hmacTrytes + bundle.transactions[i].signatureMessageFragment.toString().substring(81, 2187)));
+                    SignatureFragment.create(Trytes.create(hmacTrytes + rest));
             }
         }
     }

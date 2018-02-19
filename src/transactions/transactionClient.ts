@@ -309,8 +309,8 @@ export class TransactionClient implements ITransactionClient {
         }
 
         const emptyTrytes = Trytes.create("");
-        const nullHashTrytes = "9".repeat(244);
-        const addHMAC = false;
+        const nullHashTrytes = "9".repeat(243);
+        const addHMAC = hmacKey !== undefined && hmacKey !== null;
         let addedHMAC = false;
 
         // If message or tag is not supplied, provide it
