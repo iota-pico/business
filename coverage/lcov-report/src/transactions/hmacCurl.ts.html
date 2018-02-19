@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transactions/hmacCurl.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/transactions</a> hmacCurl.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>6/20</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>6/20</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { TritsHasherFactory } from "@iota-pico/crypto/dist/factories/tritsHasherFactory";
+import { Bundle } from "@iota-pico/data/dist/data/bundle";
+import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
+import { Trits } from "@iota-pico/data/dist/data/trits";
+import { Trytes } from "@iota-pico/data/dist/data/trytes";
+&nbsp;
+/**
+ * Hashed Message Authentication Code using Curl.
+ * @interface
+ */
+export class HmacCurl {
+    /* @internal */
+    private static readonly HMAC_ROUNDS: number = 27;
+    /* @internal */
+    private readonly _keyTrits: number[];
+&nbsp;
+    /**
+     * Create a new instance of the HmacCurl.
+     * @param key The key to seed with.
+     */
+<span class="fstat-no" title="function not covered" >    constructor(</span>key: Trytes) {
+<span class="cstat-no" title="statement not covered" >        this._keyTrits = Trits.fromTrytes(key).toArray();</span>
+    }
+&nbsp;
+    /**
+     * Add bundle to the HMAC.
+     */
+    public <span class="fstat-no" title="function not covered" >addHMAC</span>(bundle: Bundle): void {
+        const curl = <span class="cstat-no" title="statement not covered" >TritsHasherFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);</span>
+        const hashLength = <span class="cstat-no" title="statement not covered" >curl.getConstants().HASH_LENGTH;</span>
+        const key = <span class="cstat-no" title="statement not covered" >this._keyTrits;</span>
+<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; bundle.transactions.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (bundle.transactions[i].value.toNumber() &gt; 0) {</span>
+                const bundleHashTrits = <span class="cstat-no" title="statement not covered" >Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();</span>
+                const hmac: number[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >                curl.initialize();</span>
+<span class="cstat-no" title="statement not covered" >                curl.absorb(key, 0, hashLength);</span>
+<span class="cstat-no" title="statement not covered" >                curl.absorb(bundleHashTrits, 0, hashLength);</span>
+<span class="cstat-no" title="statement not covered" >                curl.squeeze(hmac, 0, hashLength);</span>
+                const hmacTrytes = <span class="cstat-no" title="statement not covered" >Trits.fromArray(hmac).toTrytes().toString();</span>
+<span class="cstat-no" title="statement not covered" >                bundle.transactions[i].signatureMessageFragment =</span>
+                    SignatureFragment.create(Trytes.create(hmacTrytes + bundle.transactions[i].signatureMessageFragment.toString().substring(81, 2187)));
+            }
+        }
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 19 2018 13:43:09 GMT+0300 (Turkey Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

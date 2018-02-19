@@ -1,0 +1,2126 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/transactions/transactionClient.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/transactions</a> transactionClient.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64.26% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>187/291</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">40.82% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>80/196</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">42.86% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">64.93% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>187/288</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2171x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">688x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">171x</span>
+<span class="cline-any cline-yes">171x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">173x</span>
+<span class="cline-any cline-yes">173x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">173x</span>
+<span class="cline-any cline-yes">519x</span>
+<span class="cline-any cline-yes">519x</span>
+<span class="cline-any cline-yes">14013x</span>
+<span class="cline-any cline-yes">14013x</span>
+<span class="cline-any cline-yes">14013x</span>
+<span class="cline-any cline-yes">14013x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">519x</span>
+<span class="cline-any cline-yes">260x</span>
+<span class="cline-any cline-yes">9038x</span>
+<span class="cline-any cline-yes">21672x</span>
+<span class="cline-any cline-yes">9038x</span>
+<span class="cline-any cline-yes">9038x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">259x</span>
+<span class="cline-any cline-yes">8926x</span>
+<span class="cline-any cline-yes">21188x</span>
+<span class="cline-any cline-yes">8926x</span>
+<span class="cline-any cline-yes">8926x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">173x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
+import { IFindTransactionsRequest } from "@iota-pico/api/dist/models/IFindTransactionsRequest";
+import { IGetBalancesRequest } from "@iota-pico/api/dist/models/IGetBalancesRequest";
+import { IGetInclusionStatesRequest } from "@iota-pico/api/dist/models/IGetInclusionStatesRequest";
+import { IGetTrytesRequest } from "@iota-pico/api/dist/models/IGetTrytesRequest";
+import { IWereAddressesSpentFromRequest } from "@iota-pico/api/dist/models/IWereAddressesSpentFromRequest";
+import { CoreError } from "@iota-pico/core/dist/error/coreError";
+import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
+import { TritsHasherFactory } from "@iota-pico/crypto/dist/factories/tritsHasherFactory";
+import { Address } from "@iota-pico/data/dist/data/address";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
+import { Bundle } from "@iota-pico/data/dist/data/bundle";
+import { Hash } from "@iota-pico/data/dist/data/hash";
+import { Input } from "@iota-pico/data/dist/data/input";
+import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
+import { Tag } from "@iota-pico/data/dist/data/tag";
+import { Transaction } from "@iota-pico/data/dist/data/transaction";
+import { Transfer } from "@iota-pico/data/dist/data/transfer";
+import { Trits } from "@iota-pico/data/dist/data/trits";
+import { Trytes } from "@iota-pico/data/dist/data/trytes";
+import { TryteNumber } from "../../../iota-pico-data/dist/data/tryteNumber";
+import { ITimeProvider } from "../interfaces/ITimeProvider";
+import { ITransactionClient } from "../interfaces/ITransactionClient";
+import { TimeProvider } from "../time/timeProvider";
+import { HmacCurl } from "./hmacCurl";
+import { TransactionSigning } from "./transactionSigning";
+&nbsp;
+/**
+ * Default implementation of the ITransactionClient.
+ */
+export class TransactionClient implements ITransactionClient {
+    /* @internal */
+    private readonly _apiClient: IApiClient;
+&nbsp;
+    /* @internal */
+    private readonly _timeProvider: ITimeProvider;
+&nbsp;
+    /**
+     * Create a new instance of the TransactionClient.
+     * @param apiClient An API Client to communicate through.
+     * @param timeProvider A class which can provide the time.
+     */
+    constructor(apiClient: IApiClient, timeProvider: ITimeProvider = new TimeProvider()) {
+        this._apiClient = apiClient;
+        this._timeProvider = timeProvider;
+    }
+&nbsp;
+    /**
+     * Returns the list of transaction in progress.
+     * @returns Promise which resolves to a list of hashes or rejects with error.
+     */
+    public <span class="fstat-no" title="function not covered" >async</span> getTransactionsInProgress(): Promise&lt;Hash[]&gt; {
+        const response = <span class="cstat-no" title="statement not covered" >await this._apiClient.getTips();</span>
+<span class="cstat-no" title="statement not covered" >        if (response &amp;&amp; response.hashes) {</span>
+<span class="cstat-no" title="statement not covered" >            return response.hashes.map(<span class="fstat-no" title="function not covered" >hash</span> =&gt; <span class="cstat-no" title="statement not covered" >Hash.create(Trytes.create(hash)))</span>;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return [];</span>
+        }
+    }
+&nbsp;
+    /**
+     * Find the transactions which match the specified input and return. All input values are lists,
+     * for which a list of return values (transaction hashes), in the same order, is returned for all
+     * individual elements. The input fields can either be bundles, addresses, tags or approvees.
+     * Using multiple of these input fields returns the intersection of the values.
+     * @returns Promise which resolves with a list of hashes or rejects with error.
+     */
+    public <span class="fstat-no" title="function not covered" >async</span> findTransactions(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise&lt;Hash[]&gt; {
+        const hasBundle = <span class="cstat-no" title="statement not covered" >bundles !== undefined &amp;&amp; bundles !== null &amp;&amp; bundles.length &gt; 0;</span>
+        const hasAddresses = <span class="cstat-no" title="statement not covered" >addresses !== undefined &amp;&amp; addresses !== null &amp;&amp; addresses.length &gt; 0;</span>
+        const hasTags = <span class="cstat-no" title="statement not covered" >tags !== undefined &amp;&amp; tags !== null &amp;&amp; tags.length &gt; 0;</span>
+        const hasApprovees = <span class="cstat-no" title="statement not covered" >approvees !== undefined &amp;&amp; approvees !== null &amp;&amp; approvees.length &gt; 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (!hasBundle &amp;&amp; !hasAddresses &amp;&amp; !hasTags &amp;&amp; !hasApprovees) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("Your must provide bundles, addresses, tags or approvees");</span>
+        }
+&nbsp;
+        const request: IFindTransactionsRequest = <span class="cstat-no" title="statement not covered" >{</span>
+            bundles: hasBundle ? bundles.map(<span class="fstat-no" title="function not covered" >bundle</span> =&gt; <span class="cstat-no" title="statement not covered" >bundle.toTrytes().toString())</span> : undefined,
+            addresses: hasAddresses ? addresses.map(<span class="fstat-no" title="function not covered" >address</span> =&gt; <span class="cstat-no" title="statement not covered" >address.toTrytes().toString())</span> : undefined,
+            tags: hasTags ? tags.map(<span class="fstat-no" title="function not covered" >tag</span> =&gt; <span class="cstat-no" title="statement not covered" >tag.toTrytes().toString())</span> : undefined,
+            approvees: hasApprovees ? approvees.map(<span class="fstat-no" title="function not covered" >approvee</span> =&gt; <span class="cstat-no" title="statement not covered" >approvee.toTrytes().toString())</span> : undefined
+        };
+&nbsp;
+        const response = <span class="cstat-no" title="statement not covered" >await this._apiClient.findTransactions(request);</span>
+<span class="cstat-no" title="statement not covered" >        if (response &amp;&amp; response.hashes) {</span>
+<span class="cstat-no" title="statement not covered" >            return response.hashes.map(<span class="fstat-no" title="function not covered" >hash</span> =&gt; <span class="cstat-no" title="statement not covered" >Hash.create(Trytes.create(hash)))</span>;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return [];</span>
+        }
+    }
+&nbsp;
+    /**
+     * Get the transaction details of specific transactions.
+     * @returns Promise which resolves to the list of transactions or rejects with error.
+     */
+    public <span class="fstat-no" title="function not covered" >async</span> getTransactionsDetails(transactionHashes: Hash[]): Promise&lt;Transaction[]&gt; {
+<span class="cstat-no" title="statement not covered" >        if (transactionHashes === undefined || transactionHashes === null || transactionHashes.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("Your must provide the hashes of the transactions you want to retrieve");</span>
+        }
+&nbsp;
+        const request: IGetTrytesRequest = <span class="cstat-no" title="statement not covered" >{</span>
+            hashes: transactionHashes.map(<span class="fstat-no" title="function not covered" >hash</span> =&gt; <span class="cstat-no" title="statement not covered" >hash.toTrytes().toString())</span>
+        };
+&nbsp;
+        const response = <span class="cstat-no" title="statement not covered" >await this._apiClient.getTrytes(request);</span>
+<span class="cstat-no" title="statement not covered" >        if (response &amp;&amp; response.trytes) {</span>
+<span class="cstat-no" title="statement not covered" >            return response.trytes.map(<span class="fstat-no" title="function not covered" >trytes</span> =&gt; <span class="cstat-no" title="statement not covered" >Transaction.fromTrytes(Trytes.create(trytes)))</span>;</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            return [];</span>
+        }
+    }
+&nbsp;
+    /**
+     * Get the inclusion states of a list of transaction hashes.
+     * @returns Promise which resolves to the list of inclusion states or rejects with error.
+     */
+    public <span class="fstat-no" title="function not covered" >async</span> getLatestInclusion(transactionHashes: Hash[]): Promise&lt;boolean[]&gt; {
+<span class="cstat-no" title="statement not covered" >        if (transactionHashes === undefined || transactionHashes === null || transactionHashes.length === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("Your must provide the hashes of the transactions you want to get the inclusion states for");</span>
+        }
+&nbsp;
+        const nodeInfo = <span class="cstat-no" title="statement not covered" >await this._apiClient.getNodeInfo();</span>
+<span class="cstat-no" title="statement not covered" >        if (nodeInfo &amp;&amp; nodeInfo.latestSolidSubtangleMilestone !== undefined) {</span>
+            const request: IGetInclusionStatesRequest = <span class="cstat-no" title="statement not covered" >{</span>
+                transactions: transactionHashes.map(<span class="fstat-no" title="function not covered" >hash</span> =&gt; <span class="cstat-no" title="statement not covered" >hash.toTrytes().toString())</span>,
+                tips: [nodeInfo.latestSolidSubtangleMilestone]
+            };
+            const response = <span class="cstat-no" title="statement not covered" >await this._apiClient.getInclusionStates(request);</span>
+<span class="cstat-no" title="statement not covered" >            if (response &amp;&amp; response.states) {</span>
+<span class="cstat-no" title="statement not covered" >                return response.states;</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                return [];</span>
+            }
+        } else {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The node could not provide the latestSolidSubtangleMilestone");</span>
+        }
+    }
+&nbsp;
+    /**
+     * Generates new addresses index-based.
+     * @param seed The seed to generate the addresses from.
+     * @param startIndex The start index to generate addresses.
+     * @param createCount The number of addresses to create.
+     * @param includeChecksum Includes the checksum on addresses.
+     * @param security The security level at which to create the addresses.
+     * @returns Promise which resolves to the list of addresses or rejects with error.
+     */
+    public async getAddressesByIndex(seed: Hash, startIndex: number, createCount: number, includeChecksum: boolean, security: AddressSecurity): Promise&lt;Address[]&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (seed === undefined || seed === null) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The seed cannot be undefined or null");</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(startIndex) || startIndex &lt; 0) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The startIndex must be a number greater than or equal to zero", { startIndex });</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(createCount) || createCount &lt; 1) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The create count must be at least 1", { createCount });</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(security) || security &lt; 1 || security &gt; 3) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The security must be between 1 and 3", { security });</span>
+        }
+&nbsp;
+        let localStartIndex = startIndex;
+&nbsp;
+        const addresses: Address[] = [];
+&nbsp;
+        for (let i = 0; i &lt; createCount; i++) {
+            addresses.push(this.generateAddress(seed, localStartIndex++, security || <span class="branch-1 cbranch-no" title="branch not covered" >AddressSecurity.medium,</span> includeChecksum));
+        }
+&nbsp;
+        return Promise.resolve(addresses);
+    }
+&nbsp;
+    /**
+     * Generates new address which havent been used using apis.
+     * @param seed The seed to generate the addresses from.
+     * @param startIndex The start index to generate addresses.
+     * @param includeChecksum Includes the checksum on addresses.
+     * @param security The security level at which to create the addresses.
+     * @returns Promise which resolves to an addresses list, the first unused address is the last in the list or rejects with error.
+     */
+    public async getAddressesToUnused(seed: Hash, startIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise&lt;Address[]&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (seed === undefined || seed === null) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The seed cannot be undefined or null");</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(startIndex) || startIndex &lt; 0) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The startIndex must be a number greater than or equal to zero", { startIndex });</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(security) || security &lt; 1 || security &gt; 3) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The security must be between 1 and 3", { security });</span>
+        }
+&nbsp;
+        let localStartIndex = startIndex;
+        let isUsed;
+        const addresses = [];
+&nbsp;
+        do {
+            const address = this.generateAddress(seed, localStartIndex++, security || <span class="branch-1 cbranch-no" title="branch not covered" >AddressSecurity.medium,</span> includeChecksum);
+&nbsp;
+            addresses.push(address);
+&nbsp;
+            const addressNoChecksum = address.toTrytes().toString();
+&nbsp;
+            const spentFromRequest: IWereAddressesSpentFromRequest = {
+                addresses: [addressNoChecksum]
+            };
+&nbsp;
+            const spentFromResponse = await this._apiClient.wereAddressesSpentFrom(spentFromRequest);
+&nbsp;
+            isUsed = spentFromResponse &amp;&amp; spentFromResponse.states &amp;&amp; spentFromResponse.states.length &gt; 0 ? spentFromResponse.states[0] : <span class="branch-1 cbranch-no" title="branch not covered" >false;</span>
+            if (!isUsed) {
+                const findTransactionsRequest: IFindTransactionsRequest = {
+                    addresses: [addressNoChecksum]
+                };
+&nbsp;
+                const findResponse = await this._apiClient.findTransactions(findTransactionsRequest);
+&nbsp;
+                isUsed = findResponse &amp;&amp; findResponse.hashes &amp;&amp; findResponse.hashes.length &gt; 0;
+            }
+        }
+        while (isUsed);
+&nbsp;
+        return Promise.resolve(addresses);
+    }
+&nbsp;
+    /**
+     * Get the input data for a range of addresses.
+     * @param seed The seed to get the input data for.
+     * @param startIndex The start index to get the addresses.
+     * @param endIndex The end index to get the addresses.
+     * @param security The security level used to create the addresses.
+     * @param totalRequired The threshold at which total balance to stop gathering addresses.
+     * @returns Promise which resolves to the inputs for each address or rejects with error.
+     */
+    public <span class="fstat-no" title="function not covered" >async</span> getInputs(seed: Hash, startIndex: number, endIndex: number, security: AddressSecurity, totalRequired: number): Promise&lt;{ inputs: Input[]; totalBalance: number }&gt; {
+        let localStartIndex = <span class="cstat-no" title="statement not covered" >startIndex;</span>
+<span class="cstat-no" title="statement not covered" >        if (localStartIndex === undefined || localStartIndex === null) {</span>
+<span class="cstat-no" title="statement not covered" >            localStartIndex = 0;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (endIndex !== undefined &amp;&amp; endIndex !== null &amp;&amp; (localStartIndex &gt; endIndex || endIndex &gt; (localStartIndex + 500))) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The startIndex and endIndex range is not value", { localStartIndex, endIndex });</span>
+        }
+&nbsp;
+        let addresses;
+<span class="cstat-no" title="statement not covered" >        if (endIndex) {</span>
+<span class="cstat-no" title="statement not covered" >            addresses = await this.getAddressesByIndex(seed, localStartIndex, endIndex - localStartIndex, false, security);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >            addresses = await this.getAddressesToUnused(seed, localStartIndex, false, security);</span>
+        }
+&nbsp;
+        let localTotalRequired = <span class="cstat-no" title="statement not covered" >totalRequired;</span>
+<span class="cstat-no" title="statement not covered" >        if (totalRequired === undefined || totalRequired === null || totalRequired &lt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            localTotalRequired = 0;</span>
+        }
+&nbsp;
+        const request: IGetBalancesRequest = <span class="cstat-no" title="statement not covered" >{</span>
+            addresses: addresses.map(<span class="fstat-no" title="function not covered" >add</span> =&gt; <span class="cstat-no" title="statement not covered" >add.toTrytes().toString())</span>,
+            threshold: 100
+        };
+&nbsp;
+        const response = <span class="cstat-no" title="statement not covered" >await this._apiClient.getBalances(request);</span>
+&nbsp;
+        const inputs = <span class="cstat-no" title="statement not covered" >[];</span>
+        let totalBalance = <span class="cstat-no" title="statement not covered" >0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (response) {</span>
+<span class="cstat-no" title="statement not covered" >            for (let i = 0; i &lt; addresses.length; i++) {</span>
+                const balance = <span class="cstat-no" title="statement not covered" >parseInt(response.balances[i], 10);</span>
+<span class="cstat-no" title="statement not covered" >                if (balance &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                    inputs.push(Input.fromParams(addresses[i], security, localStartIndex + i, balance));</span>
+<span class="cstat-no" title="statement not covered" >                    totalBalance += balance;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (localTotalRequired &gt; 0 &amp;&amp; totalBalance &gt;= localTotalRequired) {</span>
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    }
+                }
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (localTotalRequired &gt; 0 &amp;&amp; totalBalance &lt; localTotalRequired) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("Not enough combined balance in the addresses to satisfy the transfer total", { totalRequired: localTotalRequired, totalBalance});</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return { inputs, totalBalance };</span>
+    }
+&nbsp;
+    /**
+     * Prepares transfer by generating bundle, finding and signing inputs.
+     * @param seed The seed to prepare the transfer for.
+     * @param transfers The transfers to prepare.
+     * @param inputs List of inputs used for funding the transfer.
+     * @param remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
+     * @param security Security level to be used for the private key / addresses.
+     * @param hmacKey Hmac key to sign the bundle.
+     * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
+     */
+    public async prepareTransfers(seed: Hash, transfers: Transfer[], inputs: Input[], remainderAddress: Address, security: AddressSecurity, hmacKey: Trytes): Promise&lt;Trytes[]&gt; {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (seed === undefined || seed === null) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The seed cannot be undefined or null");</span>
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (transfers === undefined || transfers === null || transfers.length === 0) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The transfers cannot be undefined, null or zero length");</span>
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!NumberHelper.isInteger(security) || security &lt; 1 || security &gt; 3) {
+<span class="cstat-no" title="statement not covered" >            throw new CoreError("The security must be between 1 and 3", { security });</span>
+        }
+&nbsp;
+        const emptyTrytes = Trytes.create("");
+        const nullHashTrytes = "9".repeat(244);
+        const addHMAC = false;
+        let addedHMAC = false;
+&nbsp;
+        // If message or tag is not supplied, provide it
+        transfers.forEach(transfer =&gt; {
+            transfer.message = transfer.message ? transfer.message : <span class="branch-1 cbranch-no" title="branch not covered" >emptyTrytes;</span>
+            transfer.tag = transfer.tag || <span class="branch-1 cbranch-no" title="branch not covered" >Tag.EMPTY;</span>
+&nbsp;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (addHMAC &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >transfer.value &gt; 0)</span> {
+<span class="cstat-no" title="statement not covered" >                transfer.message = Trytes.create(nullHashTrytes + transfer.message.toString());</span>
+<span class="cstat-no" title="statement not covered" >                addedHMAC = true;</span>
+            }
+        });
+&nbsp;
+        // Create a new bundle
+        const bundle = new Bundle();
+        let lastTag: Tag;
+&nbsp;
+        let totalValue: number = 0;
+        const signatureFragments: SignatureFragment[] = [];
+&nbsp;
+        //  Iterate over all transfers, get totalValue
+        //  and prepare the signatureFragments, message and tag
+        for (let i = 0; i &lt; transfers.length; i++) {
+            let signatureMessageLength = 1;
+&nbsp;
+            // If message longer than 2187 trytes, increase signatureMessageLength (add 2nd transaction)
+            const messageString = transfers[i].message.toString();
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (messageString.length &gt; 2187) {
+                // Get total length, message / maxLength (2187 trytes)
+<span class="cstat-no" title="statement not covered" >                signatureMessageLength += Math.floor(messageString.length / 2187);</span>
+&nbsp;
+                let msgCopy = <span class="cstat-no" title="statement not covered" >messageString;</span>
+&nbsp;
+                // While there is still a message, copy it
+<span class="cstat-no" title="statement not covered" >                while (msgCopy) {</span>
+                    let fragment = <span class="cstat-no" title="statement not covered" >msgCopy.slice(0, 2187);</span>
+<span class="cstat-no" title="statement not covered" >                    msgCopy = msgCopy.slice(2187, msgCopy.length);</span>
+&nbsp;
+                    // Pad remainder of fragment
+<span class="cstat-no" title="statement not covered" >                    for (let j = 0; fragment.length &lt; 2187; j++) {</span>
+<span class="cstat-no" title="statement not covered" >                        fragment += "9";</span>
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    signatureFragments.push(SignatureFragment.create(Trytes.create(fragment)));</span>
+                }
+            } else {
+                // Else, get single fragment with 2187 of 9's trytes
+                let fragment = "";
+&nbsp;
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (messageString) {
+                    fragment = messageString.slice(0, 2187);
+                }
+&nbsp;
+                for (let j = 0; fragment.length &lt; 2187; j++) {
+                    fragment += "9";
+                }
+&nbsp;
+                signatureFragments.push(SignatureFragment.create(Trytes.create(fragment)));
+            }
+&nbsp;
+            // get current timestamp in seconds
+            const timestamp = Math.floor(this._timeProvider.msSinceEpoch() / 1000);
+&nbsp;
+            lastTag = transfers[i].tag;
+&nbsp;
+            // Add first entries to the bundle
+            bundle.addTransactions(signatureMessageLength, transfers[i].address, transfers[i].value, transfers[i].tag, timestamp);
+&nbsp;
+            // Sum up total value
+            totalValue += transfers[i].value;
+        }
+&nbsp;
+        // Get inputs if we are sending tokens
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (totalValue) {
+            //  Case 1: user provided inputs
+            //  Validate the inputs by calling getBalances
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (inputs) {
+                const request: IGetBalancesRequest = {
+                    addresses: inputs.map(input =&gt; input.address.toTrytes().toString()),
+                    threshold: 100
+                };
+&nbsp;
+                const balances = await this._apiClient.getBalances(request);
+                const confirmedInputs = [];
+                let totalBalance = 0;
+                for (let i = 0; i &lt; balances.balances.length; i++) {
+                    const thisBalance = parseInt(balances.balances[i], 10);
+&nbsp;
+                    // If input has balance, add it to confirmedInputs
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (thisBalance &gt; 0) {
+                        totalBalance += thisBalance;
+&nbsp;
+                        inputs[i].balance = thisBalance;
+&nbsp;
+                        confirmedInputs.push(inputs[i]);
+&nbsp;
+                        // if we've already reached the intended input value, break out of loop
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (totalBalance &gt;= totalValue) {
+                            break;
+                        }
+                    }
+                }
+&nbsp;
+                // Return not enough balance error
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (totalValue &gt; totalBalance) {
+<span class="cstat-no" title="statement not covered" >                    throw new CoreError("Not enough balance in the input addresses to satisfy the total for the transfer");</span>
+                }
+&nbsp;
+                return this.addRemainder(seed, remainderAddress, security, bundle, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC, hmacKey);
+            } else {
+                // No inputs supplied so we need to get some
+                const inputsResponse = <span class="cstat-no" title="statement not covered" >await this.getInputs(seed, undefined, undefined, security, totalValue);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return this.addRemainder(seed, remainderAddress, security, bundle, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC, hmacKey);</span>
+            }
+        } else {
+&nbsp;
+            // If no input required, don't sign and simply finalize the bundle
+<span class="cstat-no" title="statement not covered" >            this.finalizeBundle(bundle);</span>
+<span class="cstat-no" title="statement not covered" >            bundle.addSignatureFragments(signatureFragments);</span>
+&nbsp;
+            const bundleTrytes: Trytes[] = <span class="cstat-no" title="statement not covered" >[];</span>
+<span class="cstat-no" title="statement not covered" >            bundle.transactions.forEach(<span class="fstat-no" title="function not covered" >(t</span>x) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                bundleTrytes.push(tx.toTrytes());</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return bundleTrytes.reverse();</span>
+        }
+    }
+&nbsp;
+    /* @internal */
+    private generateAddress(seed: Hash, index: number, security: AddressSecurity, includeChecksum: boolean): Address {
+        const key = TransactionSigning.key(seed, index, security);
+        const digests = TransactionSigning.digests(key);
+        const addressTrits = TransactionSigning.address(digests);
+        let addressTrytesString = Trits.fromArray(addressTrits).toTrytes().toString();
+&nbsp;
+        if (includeChecksum) {
+            addressTrytesString += TransactionSigning.createChecksum(addressTrits, 9);
+        }
+&nbsp;
+        return Address.create(Trytes.create(addressTrytesString));
+    }
+&nbsp;
+    /* @internal */
+    private async addRemainder(seed: Hash, remainderAddress: Address, security: AddressSecurity, bundle: Bundle, inputs: Input[],
+                               signatureFragments: SignatureFragment[], totalValue: number, tag: Tag, addedHMAC: boolean, hmacKey: Trytes): Promise&lt;Trytes[]&gt; {
+        let totalTransferValue = totalValue;
+        for (let i = 0; i &lt; inputs.length; i++) {
+&nbsp;
+            const thisBalance = inputs[i].balance;
+            const toSubtract = 0 - thisBalance;
+            const timestamp = Math.floor(this._timeProvider.msSinceEpoch() / 1000);
+&nbsp;
+            // Add input as bundle entry
+            bundle.addTransactions(inputs[i].security, inputs[i].address, toSubtract, tag, timestamp);
+&nbsp;
+            // If there is a remainder value
+            // Add extra output to send remaining funds to
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (thisBalance &gt;= totalTransferValue) {
+                const remainder = thisBalance - totalTransferValue;
+&nbsp;
+                // If user has provided remainder address
+                // Use it to send remaining funds to
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (remainder &gt; 0 &amp;&amp; remainderAddress) {
+                    // Remainder bundle entry
+<span class="cstat-no" title="statement not covered" >                    bundle.addTransactions(1, remainderAddress, remainder, tag, timestamp);</span>
+&nbsp;
+                    // Final function for signing inputs
+<span class="cstat-no" title="statement not covered" >                    return this.signInputsAndReturn(seed, bundle, signatureFragments, inputs, security, addedHMAC, hmacKey);</span>
+                } else <span class="missing-if-branch" title="else path not taken" >E</span>if (remainder &gt; 0) {
+                    let startIndex = 0;
+                    for (let k = 0; k &lt; inputs.length; k++) {
+                        startIndex = Math.max(inputs[k].keyIndex, startIndex);
+                    }
+&nbsp;
+                    startIndex++;
+&nbsp;
+                    const addresses = await this.getAddressesToUnused(seed, startIndex, false, security);
+&nbsp;
+                    const ts = Math.floor(this._timeProvider.msSinceEpoch() / 1000);
+&nbsp;
+                    // Remainder bundle entry
+                    bundle.addTransactions(1, addresses[addresses.length - 1], remainder, tag, ts);
+&nbsp;
+                    // Final function for signing inputs
+                    return this.signInputsAndReturn(seed, bundle, signatureFragments, inputs, security, addedHMAC, hmacKey);
+                } else {
+                    // If there is no remainder, do not add transaction to bundle
+                    // simply sign and return
+<span class="cstat-no" title="statement not covered" >                    return this.signInputsAndReturn(seed, bundle, signatureFragments, inputs, security, addedHMAC, hmacKey);</span>
+                }
+            } else {
+                // If multiple inputs provided, subtract the totalTransferValue by
+                // the inputs balance
+<span class="cstat-no" title="statement not covered" >                totalTransferValue -= thisBalance;</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return undefined;</span>
+    }
+&nbsp;
+    private signInputsAndReturn(seed: Hash, bundle: Bundle, signatureFragments: SignatureFragment[], inputs: Input[], security: AddressSecurity, addedHMAC: boolean, hmacKey: Trytes): Trytes[] {
+        this.finalizeBundle(bundle);
+        bundle.addSignatureFragments(signatureFragments);
+&nbsp;
+        //  SIGNING OF INPUTS
+        //
+        //  Here we do the actual signing of the inputs
+        //  Iterate over all bundle transactions, find the inputs
+        //  Get the corresponding private key and calculate the signatureFragment
+        for (let i = 0; i &lt; bundle.transactions.length; i++) {
+            if (bundle.transactions[i].value.toNumber() &lt; 0) {
+                const thisAddress = bundle.transactions[i].address;
+&nbsp;
+                // Get the corresponding keyIndex and security of the address
+                let keyIndex;
+                let keySecurity;
+                for (let k = 0; k &lt; inputs.length; k++) {
+&nbsp;
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (inputs[k].address === thisAddress) {
+&nbsp;
+                        keyIndex = inputs[k].keyIndex;
+                        keySecurity = inputs[k].security ? inputs[k].security : <span class="branch-1 cbranch-no" title="branch not covered" >security;</span>
+                        break;
+                    }
+                }
+&nbsp;
+                const bundleHash = bundle.transactions[i].bundle;
+&nbsp;
+                // Get corresponding private key of address
+                const key = TransactionSigning.key(seed, keyIndex, keySecurity);
+&nbsp;
+                //  Get the normalized bundle hash
+                const normalizedBundleHash = this.normalizedBundle(bundleHash);
+                const normalizedBundleFragments = [];
+&nbsp;
+                // Split hash into 3 fragments
+                for (let l = 0; l &lt; 3; l++) {
+                    normalizedBundleFragments[l] = normalizedBundleHash.slice(l * 27, (l + 1) * 27);
+                }
+&nbsp;
+                //  First 6561 trits for the firstFragment
+                const firstFragment = key.slice(0, 6561);
+&nbsp;
+                //  First bundle fragment uses the first 27 trytes
+                const firstBundleFragment = normalizedBundleFragments[0];
+&nbsp;
+                //  Calculate the new signatureFragment with the first bundle fragment
+                const firstSignedFragment = TransactionSigning.signatureFragment(firstBundleFragment, firstFragment);
+&nbsp;
+                //  Convert signature to trytes and assign the new signatureFragment
+                bundle.transactions[i].signatureMessageFragment = SignatureFragment.create(Trits.fromArray(firstSignedFragment).toTrytes());
+&nbsp;
+                // if user chooses higher than 27-tryte security
+                // for each security level, add an additional signature
+                for (let j = 1; j &lt; keySecurity; j++) {
+&nbsp;
+                    //  Because the signature is &gt; 2187 trytes, we need to
+                    //  find the subsequent transaction to add the remainder of the signature
+                    //  Same address as well as value = 0 (as we already spent the input)
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (bundle.transactions[i + j].address === thisAddress &amp;&amp; bundle.transactions[i + j].value.toNumber() === 0) {
+&nbsp;
+                        // Use the next 6561 trits
+                        const nextFragment = key.slice(6561 * j, (j + 1) * 6561);
+&nbsp;
+                        const nextBundleFragment = normalizedBundleFragments[j];
+&nbsp;
+                        //  Calculate the new signature
+                        const nextSignedFragment = TransactionSigning.signatureFragment(nextBundleFragment, nextFragment);
+&nbsp;
+                        //  Convert signature to trytes and assign it again to this bundle entry
+                        bundle.transactions[i + j].signatureMessageFragment = SignatureFragment.create(Trits.fromArray(nextSignedFragment).toTrytes());
+                    }
+                }
+            }
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (addedHMAC) {
+            const hmac = <span class="cstat-no" title="statement not covered" >new HmacCurl(hmacKey);</span>
+<span class="cstat-no" title="statement not covered" >            hmac.addHMAC(bundle);</span>
+        }
+&nbsp;
+        const bundleTrytes: Trytes[] = [];
+&nbsp;
+        // Convert all bundle entries into trytes
+        bundle.transactions.forEach((tx) =&gt; {
+            bundleTrytes.push(tx.toTrytes());
+        });
+&nbsp;
+        return bundleTrytes.reverse();
+    }
+&nbsp;
+    /* @internal */
+    private finalizeBundle(bundle: Bundle): void {
+        let validBundle = false;
+&nbsp;
+        while (!validBundle) {
+&nbsp;
+            const kerl = TritsHasherFactory.instance().create("kerl");
+            kerl.initialize();
+&nbsp;
+            for (let i = 0; i &lt; bundle.transactions.length; i++) {
+                bundle.transactions[i].currentIndex = TryteNumber.fromNumber(i);
+                bundle.transactions[i].lastIndex = TryteNumber.fromNumber(bundle.transactions.length - 1);
+&nbsp;
+                const bundleEssence = Trits.fromTrytes(Trytes.create(
+                    bundle.transactions[i].address.toTrytes().toString()
+                    + bundle.transactions[i].value.toTrytes().toString() + Transaction.CHECK_VALUE
+                    + bundle.transactions[i].obsoleteTag.toTrytes().toString()
+                    + bundle.transactions[i].timestamp.toTrytes().toString()
+                    + bundle.transactions[i].currentIndex.toTrytes().toString()
+                    + bundle.transactions[i].lastIndex.toTrytes().toString()
+                )).toArray();
+                kerl.absorb(bundleEssence, 0, bundleEssence.length);
+            }
+&nbsp;
+            const hashTrits: number[] = [];
+            kerl.squeeze(hashTrits, 0, kerl.getConstants().HASH_LENGTH);
+&nbsp;
+            const hash = Hash.create(Trits.fromArray(hashTrits).toTrytes());
+            for (let i = 0; i &lt; bundle.transactions.length; i++) {
+                bundle.transactions[i].bundle = hash;
+            }
+&nbsp;
+            const normalizedHash = this.normalizedBundle(hash);
+            if (normalizedHash.indexOf(13 /* = M */) !== -1) {
+                // Insecure bundle. Increment Tag and recompute bundle hash.
+                const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromArray([1]));
+                bundle.transactions[0].obsoleteTag = Tag.create(increasedTag.toTrytes());
+            } else {
+                validBundle = true;
+            }
+        }
+    }
+&nbsp;
+    /* @internal */
+    private normalizedBundle(bundleHash: Hash): number[] {
+        const normalizedBundle = [];
+        const hashString = bundleHash.toTrytes().toString();
+&nbsp;
+        for (let i = 0; i &lt; 3; i++) {
+            let sum = 0;
+            for (let j = 0; j &lt; 27; j++) {
+                const hashChar = hashString.charAt(i * 27 + j);
+                const val = Trits.fromTrytes(Trytes.create(hashChar)).toNumber();
+                normalizedBundle[i * 27 + j] = val;
+                sum += val;
+            }
+&nbsp;
+            if (sum &gt;= 0) {
+                while (sum-- &gt; 0) {
+                    for (let j = 0; j &lt; 27; j++) {
+                        if (normalizedBundle[i * 27 + j] &gt; -13) {
+                            normalizedBundle[i * 27 + j]--;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                while (sum++ &lt; 0) {
+                    for (let j = 0; j &lt; 27; j++) {
+                        if (normalizedBundle[i * 27 + j] &lt; 13) {
+                            normalizedBundle[i * 27 + j]++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+&nbsp;
+        return normalizedBundle;
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 19 2018 13:43:09 GMT+0300 (Turkey Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
