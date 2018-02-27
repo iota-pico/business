@@ -1,4 +1,4 @@
-import { TritsHasherFactory } from "@iota-pico/crypto/dist/factories/tritsHasherFactory";
+import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 
@@ -7,13 +7,13 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
  * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export class TransactionSigning {
-    public static key(seed: Hash, index: number, length: number): number[] {
+    public static key(seed: Hash, index: number, length: number): Int8Array {
         const seedTrits = Trits.fromTrytes(seed.toTrytes());
         const indexTrits = Trits.fromNumber(index);
         const subseed = Trits.add(seedTrits, indexTrits).toArray();
         const subseedLength = subseed.length;
 
-        const kerl = TritsHasherFactory.instance().create("kerl");
+        const kerl = SpongeFactory.instance().create("kerl");
 
         kerl.initialize();
         kerl.absorb(subseed, 0, subseedLength);
@@ -22,9 +22,9 @@ export class TransactionSigning {
         kerl.reset();
         kerl.absorb(subseed, 0, subseedLength);
 
-        const key = [];
+        const key = new Int8Array(27 * 243 * length);
         let offset = 0;
-        const buffer: number[] = [];
+        const buffer = new Int8Array(subseedLength);
         let localLength = length;
 
         while (localLength-- > 0) {
@@ -38,11 +38,12 @@ export class TransactionSigning {
         return key;
     }
 
-    public static digests(key: number[]): number[] {
-        const digests: number[] = [];
-        let buffer: number[];
-
+    public static digests(key: Int8Array): Int8Array {
         const keyLenDiv = Math.floor(key.length / 6561);
+
+        const digests = new Int8Array(keyLenDiv * 243);
+        let buffer: Int8Array;
+
         for (let i = 0; i < keyLenDiv; i++) {
             const iMul = i * 6561;
             const keyFragment = key.slice(iMul, iMul + 6561);
@@ -52,7 +53,7 @@ export class TransactionSigning {
                 buffer = keyFragment.slice(jMul, jMul + 243);
 
                 for (let k = 0; k < 26; k++) {
-                    const kKerl = TritsHasherFactory.instance().create("kerl");
+                    const kKerl = SpongeFactory.instance().create("kerl");
                     kKerl.initialize();
                     kKerl.absorb(buffer, 0, buffer.length);
                     kKerl.squeeze(buffer, 0, kKerl.getConstants().HASH_LENGTH);
@@ -63,7 +64,7 @@ export class TransactionSigning {
                 }
             }
 
-            const kerl = TritsHasherFactory.instance().create("kerl");
+            const kerl = SpongeFactory.instance().create("kerl");
 
             kerl.initialize();
             kerl.absorb(keyFragment, 0, keyFragment.length);
@@ -77,35 +78,35 @@ export class TransactionSigning {
         return digests;
     }
 
-    public static address(digests: number[]): number[] {
-        const kerl = TritsHasherFactory.instance().create("kerl");
-
-        const addressTrits: number[] = [];
+    public static address(digests: Int8Array): Int8Array {
+        const kerl = SpongeFactory.instance().create("kerl");
 
         kerl.initialize();
         kerl.absorb(digests, 0, digests.length);
-        kerl.squeeze(addressTrits, 0, kerl.getConstants().HASH_LENGTH);
+
+        const addressTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+        kerl.squeeze(addressTrits, 0, addressTrits.length);
 
         return addressTrits;
     }
 
-    public static createChecksum(trits: number[], checksumLength: number): string {
-        const kerl = TritsHasherFactory.instance().create("kerl");
+    public static createChecksum(trits: Int8Array, checksumLength: number): string {
+        const kerl = SpongeFactory.instance().create("kerl");
         kerl.initialize();
 
-        const checksumTrits: number[] = [];
-
         kerl.absorb(trits, 0, trits.length);
-        kerl.squeeze(checksumTrits, 0, kerl.getConstants().HASH_LENGTH);
+
+        const checksumTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+        kerl.squeeze(checksumTrits, 0, checksumTrits.length);
 
         return Trits.fromArray(checksumTrits).toTrytes().toString().substring(81 - checksumLength, 81);
     }
 
-    public static signatureFragment(normalizedBundleFragment: number[], keyFragment: number[]): number[] {
+    public static signatureFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
         const signatureFragment = keyFragment.slice();
-        let hash = [];
+        let hash: Int8Array;
 
-        const kerl = TritsHasherFactory.instance().create("kerl");
+        const kerl = SpongeFactory.instance().create("kerl");
 
         for (let i = 0; i < 27; i++) {
             hash = signatureFragment.slice(i * 243, (i + 1) * 243);

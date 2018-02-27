@@ -1,6 +1,7 @@
 /**
  * Combined index of all the modules.
  */
+export * from "./error/businessError";
 export * from "./interfaces/IBackgroundTaskService";
 export * from "./interfaces/ITimeService";
 export * from "./interfaces/ITransactionClient";

@@ -16,6 +16,10 @@ import { TransferOptions } from "./transferOptions";
  */
 export interface ITransactionClient {
     /**
+     * Initialize the client.
+     */
+    initialize(): Promise<void>;
+    /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.
      */
@@ -45,22 +49,22 @@ export interface ITransactionClient {
      * Generates addresses with index-based or using apis.
      * @param seed The seed to generate the addresses from.
      * @param startIndex The start index to generate addresses.
-     * @param endIndex The end index to generate address.
+     * @param endIndex The end index to generate addresses.
      * @param includeChecksum Includes the checksum on addresses.
      * @param security The security level at which to create the addresses.
      * @returns Promise which resolves to the list of addresses or rejects with error.
      */
-    getNewAddress(seed: Hash, startIndex: number, endIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise<Address[]>;
+    getNewAddress(seed: Hash, startIndex?: number, endIndex?: number, includeChecksum?: boolean, security?: AddressSecurity): Promise<Address[]>;
     /**
      * Generates addresses index-based.
      * @param seed The seed to generate the addresses from.
      * @param startIndex The start index to generate addresses.
-     * @param createCount The number of addresses to create.
+     * @param endIndex The end index to generate addresses.
      * @param includeChecksum Includes the checksum on addresses.
      * @param security The security level at which to create the addresses.
      * @returns Promise which resolves to the list of addresses or rejects with error.
      */
-    getAddressesByIndex(seed: Hash, startIndex: number, createCount: number, includeChecksum: boolean, security: AddressSecurity): Promise<Address[]>;
+    getAddressesByIndex(seed: Hash, startIndex: number, endIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise<Address[]>;
     /**
      * Generates address which havent been used using apis.
      * @param seed The seed to generate the addresses from.
@@ -105,7 +109,7 @@ export interface ITransactionClient {
      */
     sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
     /**
-     * Wrapper function that basically does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
+     * Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
      * @param seed The seed to send the transfer for.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
@@ -154,7 +158,7 @@ export interface ITransactionClient {
      * @param bundleHash The bundle hash to match.
      * @returns Promise which resolves to the bundle transactions or rejects with an error.
      */
-    traverseBundle(trunkTransaction: Hash, bundleHash: Hash): Promise<Transaction[]>;
+    traverseBundle(trunkTransaction: Hash, bundleHash?: Hash): Promise<Transaction[]>;
     /**
      * Replays a transfer by doing Proof of Work again.
      * @param transactionTail The hash of the transaction to be promoted.

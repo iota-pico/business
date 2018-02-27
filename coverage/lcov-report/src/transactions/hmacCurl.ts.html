@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>6/20</span>
+        <span class='fraction'>21/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">30% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>6/20</span>
+        <span class='fraction'>21/21</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -89,7 +89,8 @@
 44
 45
 46
-47</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+47
+48</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -110,32 +111,33 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { TritsHasherFactory } from "@iota-pico/crypto/dist/factories/tritsHasherFactory";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
 import { Trits } from "@iota-pico/data/dist/data/trits";
@@ -149,34 +151,35 @@ export class HmacCurl {
     /* @internal */
     private static readonly HMAC_ROUNDS: number = 27;
     /* @internal */
-    private readonly _keyTrits: number[];
+    private readonly _keyTrits: Int8Array;
 &nbsp;
     /**
      * Create a new instance of the HmacCurl.
      * @param key The key to seed with.
      */
-<span class="fstat-no" title="function not covered" >    constructor(</span>key: Trytes) {
-<span class="cstat-no" title="statement not covered" >        this._keyTrits = Trits.fromTrytes(key).toArray();</span>
+    constructor(key: Trytes) {
+        this._keyTrits = Trits.fromTrytes(key).toArray();
     }
 &nbsp;
     /**
      * Add bundle to the HMAC.
      */
-    public <span class="fstat-no" title="function not covered" >addHMAC</span>(bundle: Bundle): void {
-        const curl = <span class="cstat-no" title="statement not covered" >TritsHasherFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);</span>
-        const hashLength = <span class="cstat-no" title="statement not covered" >curl.getConstants().HASH_LENGTH;</span>
-        const key = <span class="cstat-no" title="statement not covered" >this._keyTrits;</span>
-<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; bundle.transactions.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >            if (bundle.transactions[i].value.toNumber() &gt; 0) {</span>
-                const bundleHashTrits = <span class="cstat-no" title="statement not covered" >Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();</span>
-                const hmac: number[] = <span class="cstat-no" title="statement not covered" >[];</span>
-<span class="cstat-no" title="statement not covered" >                curl.initialize();</span>
-<span class="cstat-no" title="statement not covered" >                curl.absorb(key, 0, hashLength);</span>
-<span class="cstat-no" title="statement not covered" >                curl.absorb(bundleHashTrits, 0, hashLength);</span>
-<span class="cstat-no" title="statement not covered" >                curl.squeeze(hmac, 0, hashLength);</span>
-                const hmacTrytes = <span class="cstat-no" title="statement not covered" >Trits.fromArray(hmac).toTrytes().toString();</span>
-<span class="cstat-no" title="statement not covered" >                bundle.transactions[i].signatureMessageFragment =</span>
-                    SignatureFragment.create(Trytes.create(hmacTrytes + bundle.transactions[i].signatureMessageFragment.toString().substring(81, 2187)));
+    public addHMAC(bundle: Bundle): void {
+        const curl = SpongeFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);
+        const hashLength = curl.getConstants().HASH_LENGTH;
+        const key = this._keyTrits;
+        for (let i = 0; i &lt; bundle.transactions.length; i++) {
+            if (bundle.transactions[i].value.toNumber() &gt; 0) {
+                const bundleHashTrits = Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();
+                const hmac = new Int8Array(hashLength);
+                curl.initialize();
+                curl.absorb(key, 0, key.length);
+                curl.absorb(bundleHashTrits, 0, bundleHashTrits.length);
+                curl.squeeze(hmac, 0, hmac.length);
+                const hmacTrytes = Trits.fromArray(hmac).toTrytes().toString();
+                const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureFragment.LENGTH);
+                bundle.transactions[i].signatureMessageFragment =
+                    SignatureFragment.fromTrytes(Trytes.fromString(hmacTrytes + rest));
             }
         }
     }
@@ -187,7 +190,7 @@ export class HmacCurl {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 19 2018 13:43:09 GMT+0300 (Turkey Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Feb 27 2018 15:52:12 GMT+0300 (Turkey Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

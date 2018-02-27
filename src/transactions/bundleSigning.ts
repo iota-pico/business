@@ -1,4 +1,5 @@
-import { TritsHasherFactory } from "@iota-pico/crypto/dist/factories/tritsHasherFactory";
+import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Hash } from "@iota-pico/data/dist/data/hash";
@@ -51,7 +52,7 @@ export class BundleSigning {
 
                 //  Get the normalized bundle hash
                 const normalizedBundleHash = BundleSigning.normalizedBundle(bundleHash);
-                const normalizedBundleFragments = [];
+                const normalizedBundleFragments: Int8Array[] = [];
 
                 // Split hash into 3 fragments
                 for (let l = 0; l < 3; l++) {
@@ -68,7 +69,7 @@ export class BundleSigning {
                 const firstSignedFragment = TransactionSigning.signatureFragment(firstBundleFragment, firstFragment);
 
                 //  Convert signature to trytes and assign the new signatureFragment
-                bundle.transactions[i].signatureMessageFragment = SignatureFragment.create(Trits.fromArray(firstSignedFragment).toTrytes());
+                bundle.transactions[i].signatureMessageFragment = SignatureFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
 
                 // if user chooses higher than 27-tryte security
                 // for each security level, add an additional signature
@@ -88,7 +89,7 @@ export class BundleSigning {
                         const nextSignedFragment = TransactionSigning.signatureFragment(nextBundleFragment, nextFragment);
 
                         //  Convert signature to trytes and assign it again to this bundle entry
-                        bundle.transactions[i + j].signatureMessageFragment = SignatureFragment.create(Trits.fromArray(nextSignedFragment).toTrytes());
+                        bundle.transactions[i + j].signatureMessageFragment = SignatureFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
                     }
                 }
             }
@@ -115,14 +116,14 @@ export class BundleSigning {
 
         while (!validBundle) {
 
-            const kerl = TritsHasherFactory.instance().create("kerl");
+            const kerl = SpongeFactory.instance().create("kerl");
             kerl.initialize();
 
             for (let i = 0; i < bundle.transactions.length; i++) {
                 bundle.transactions[i].currentIndex = TryteNumber.fromNumber(i);
                 bundle.transactions[i].lastIndex = TryteNumber.fromNumber(bundle.transactions.length - 1);
 
-                const bundleEssence = Trits.fromTrytes(Trytes.create(
+                const bundleEssence = Trits.fromTrytes(Trytes.fromString(
                     bundle.transactions[i].address.toTrytes().toString()
                     + bundle.transactions[i].value.toTrytes().toString() + Transaction.CHECK_VALUE
                     + bundle.transactions[i].obsoleteTag.toTrytes().toString()
@@ -133,10 +134,10 @@ export class BundleSigning {
                 kerl.absorb(bundleEssence, 0, bundleEssence.length);
             }
 
-            const hashTrits: number[] = [];
-            kerl.squeeze(hashTrits, 0, kerl.getConstants().HASH_LENGTH);
+            const hashTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+            kerl.squeeze(hashTrits, 0, hashTrits.length);
 
-            const hash = Hash.create(Trits.fromArray(hashTrits).toTrytes());
+            const hash = Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
             for (let i = 0; i < bundle.transactions.length; i++) {
                 bundle.transactions[i].bundle = hash;
             }
@@ -144,8 +145,8 @@ export class BundleSigning {
             const normalizedHash = this.normalizedBundle(hash);
             if (normalizedHash.indexOf(13 /* = M */) !== -1) {
                 // Insecure bundle. Increment Tag and recompute bundle hash.
-                const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromArray([1]));
-                bundle.transactions[0].obsoleteTag = Tag.create(increasedTag.toTrytes());
+                const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromNumberArray([1]));
+                bundle.transactions[0].obsoleteTag = Tag.fromTrytes(increasedTag.toTrytes());
             } else {
                 validBundle = true;
             }
@@ -153,15 +154,15 @@ export class BundleSigning {
     }
 
     /* @internal */
-    public static normalizedBundle(bundleHash: Hash): number[] {
-        const normalizedBundle = [];
+    public static normalizedBundle(bundleHash: Hash): Int8Array {
+        const normalizedBundle = new Int8Array(4 * 27);
         const hashString = bundleHash.toTrytes().toString();
 
         for (let i = 0; i < 3; i++) {
             let sum = 0;
             for (let j = 0; j < 27; j++) {
                 const hashChar = hashString.charAt(i * 27 + j);
-                const val = Trits.fromTrytes(Trytes.create(hashChar)).toNumber();
+                const val = Trits.fromTrytes(Trytes.fromString(hashChar)).toNumber();
                 normalizedBundle[i * 27 + j] = val;
                 sum += val;
             }
@@ -194,10 +195,10 @@ export class BundleSigning {
     public static isValid(transactions: Transaction[]): boolean {
         let isValid = false;
 
-        if (transactions !== undefined && transactions !== null && transactions.length > 0) {
+        if (ArrayHelper.isTyped(transactions, Transaction)) {
             let totalSum = 0;
 
-            const kerl = TritsHasherFactory.instance().create("kerl");
+            const kerl = SpongeFactory.instance().create("kerl");
             kerl.initialize();
 
             // Prepare for signature validation
@@ -216,7 +217,7 @@ export class BundleSigning {
                     const thisTxTrytes = bundleTx.toTrytes();
 
                     // Absorb bundle hash + value + timestamp + lastIndex + currentIndex trytes.
-                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(2187, 162)).toArray();
+                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(SignatureFragment.LENGTH, 162)).toArray();
                     kerl.absorb(thisTxTrits, 0, thisTxTrits.length);
 
                     // Check if input transaction
@@ -247,8 +248,8 @@ export class BundleSigning {
                 isValid = false;
             } else {
                 // get the bundle hash from the bundle transactions
-                const bundleFromTxs: number[] = [];
-                kerl.squeeze(bundleFromTxs, 0, kerl.getConstants().HASH_LENGTH);
+                const bundleFromTxs = new Int8Array(kerl.getConstants().HASH_LENGTH);
+                kerl.squeeze(bundleFromTxs, 0, bundleFromTxs.length);
 
                 const bundleFromTxsTrytes = Trits.fromArray(bundleFromTxs).toTrytes().toString();
 
@@ -288,7 +289,7 @@ export class BundleSigning {
         }
 
         // Get digests
-        const digests = [];
+        const digests = new Int8Array(signatureFragments.length * 243);
 
         for (let i = 0; i < signatureFragments.length; i++) {
             const digestBuffer = BundleSigning.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureFragments[i].toTrytes()).toArray());
@@ -302,17 +303,17 @@ export class BundleSigning {
     }
 
     /* @internal */
-    public static digest(normalizedBundleFragment: number[], signatureFragmentTrits: number[]): number[] {
-        let buffer: number[] = [];
+    public static digest(normalizedBundleFragment: Int8Array, signatureFragmentTrits: Int8Array): Int8Array {
+        let buffer: Int8Array;
 
-        const kerl = TritsHasherFactory.instance().create("kerl");
+        const kerl = SpongeFactory.instance().create("kerl");
         kerl.initialize();
 
         for (let i = 0; i < 27; i++) {
-            buffer = signatureFragmentTrits.slice(i * 243, (i + 1) * 243);
+            buffer = new Int8Array(signatureFragmentTrits.slice(i * 243, (i + 1) * 243));
 
             for (let j = normalizedBundleFragment[i] + 13; j-- > 0;) {
-                const jKerl = TritsHasherFactory.instance().create("kerl");
+                const jKerl = SpongeFactory.instance().create("kerl");
 
                 jKerl.initialize();
                 jKerl.absorb(buffer, 0, buffer.length);
@@ -327,29 +328,28 @@ export class BundleSigning {
     }
 
     /* @internal */
-    public static address(digests: number[]): number[] {
-        const addressTrits: number[] = [];
-
-        const kerl = TritsHasherFactory.instance().create("kerl");
+    public static address(digests: Int8Array): Int8Array {
+        const kerl = SpongeFactory.instance().create("kerl");
 
         kerl.initialize();
         kerl.absorb(digests, 0, digests.length);
-        kerl.squeeze(addressTrits, 0, kerl.getConstants().HASH_LENGTH);
+
+        const addressTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+        kerl.squeeze(addressTrits, 0, addressTrits.length);
 
         return addressTrits;
     }
 
     /* @internal */
     public static transactionHash(transaction: Transaction): Hash {
-        const hashTrits: number[] = [];
-
-        const curl = TritsHasherFactory.instance().create("curl");
+        const curl = SpongeFactory.instance().create("curl");
         const transactionTrits = Trits.fromTrytes(transaction.toTrytes()).toArray();
 
         curl.initialize();
         curl.absorb(transactionTrits, 0, transactionTrits.length);
-        curl.squeeze(hashTrits, 0, curl.getConstants().HASH_LENGTH);
+        const hashTrits = new Int8Array(curl.getConstants().HASH_LENGTH);
+        curl.squeeze(hashTrits, 0, hashTrits.length);
 
-        return Hash.create(Trits.fromArray(hashTrits).toTrytes());
+        return Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
     }
 }
