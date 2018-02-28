@@ -1,8 +1,8 @@
-[@iota-pico/business](../README.md) > [ITimeProvider](../interfaces/itimeprovider.md)
+[@iota-pico/business](../README.md) > [ITimeService](../interfaces/itimeservice.md)
 
 
 
-# Interface: ITimeProvider
+# Interface: ITimeService
 
 
 Represents a class which can provide the time.
@@ -11,7 +11,7 @@ Represents a class which can provide the time.
 
 ## Implemented by
 
-* [TimeProvider](../classes/timeprovider.md)
+* [TimeService](../classes/timeservice.md)
 
 
 ## Methods
@@ -23,7 +23,7 @@ Represents a class which can provide the time.
 
 
 
-*Defined in interfaces/ITimeProvider.ts:10*
+*Defined in interfaces/ITimeService.ts:10*
 
 
 

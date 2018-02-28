@@ -290,7 +290,7 @@ export class TransactionClient implements ITransactionClient {
             throw new BusinessError("The seed must be of type Hash");
         }
         if (!NumberHelper.isInteger(startIndex) || startIndex < 0) {
-            throw new BusinessError("The startIndex must be a number >= zero", { startIndex });
+            throw new BusinessError("The startIndex must be a number >= 0", { startIndex });
         }
         if (!NumberHelper.isInteger(security) || security < 1 || security > 3) {
             throw new BusinessError("The security must be between 1 and 3", { security });
@@ -343,7 +343,7 @@ export class TransactionClient implements ITransactionClient {
             throw new BusinessError("The seed must be of type Hash");
         }
         if (!NumberHelper.isInteger(startIndex) || startIndex < 0) {
-            throw new BusinessError("The startIndex must be a number >= zero", { startIndex });
+            throw new BusinessError("The startIndex must be a number >= 0", { startIndex });
         }
         if (!NumberHelper.isInteger(security) || security < 1 || security > 3) {
             throw new BusinessError("The security must be between 1 and 3", { security });
@@ -483,6 +483,8 @@ export class TransactionClient implements ITransactionClient {
             totalValue += transfers[i].value;
         }
 
+        let preparedTrytes;
+
         // Get inputs if we are sending tokens
         if (totalValue) {
             //  Case 1: user provided inputs
@@ -519,12 +521,12 @@ export class TransactionClient implements ITransactionClient {
                     throw new BusinessError("Not enough balance in the input addresses to satisfy the total for the transfer");
                 }
 
-                return this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTrytes = this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC);
             } else {
                 // No inputs supplied so we need to get some
                 const inputsResponse = await this.getInputs(seed, 0, undefined, localTransferOptions.security, totalValue);
 
-                return this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTrytes = this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC);
             }
         } else {
 
@@ -537,8 +539,10 @@ export class TransactionClient implements ITransactionClient {
                 bundleTrytes.push(tx.toTrytes());
             });
 
-            return bundleTrytes.reverse();
+            preparedTrytes = bundleTrytes.reverse();
         }
+
+        return preparedTrytes;
     }
 
     /**
@@ -549,7 +553,7 @@ export class TransactionClient implements ITransactionClient {
      * @param reference The reference to send with the trytes.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    public async sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
+    public async attachToTangle(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
         if (!ArrayHelper.isTyped(trytes, Trytes)) {
             throw new BusinessError("The trytes must be an array of type Trytes");
         }
@@ -589,19 +593,33 @@ export class TransactionClient implements ITransactionClient {
             powTrytes = attachToTangleResponse.trytes;
         }
 
+        return powTrytes.map(attachTrytes => Transaction.fromTrytes(Trytes.fromString(attachTrytes)));
+    }
+
+    /**
+     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
+     * @param trytes The trytes to send.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param reference The reference to send with the trytes.
+     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     */
+    public async sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
+        const transactions = await this.attachToTangle(trytes, depth, minWeightMagnitude, reference);
+
         const storeTransactionsRequest: IStoreTransactionsRequest = {
-            trytes: powTrytes
+            trytes: transactions.map(t => t.toTrytes().toString())
         };
 
         await this._apiClient.storeTransactions(storeTransactionsRequest);
 
         const broadcastTransactionsRequest: IBroadcastTransactionsRequest = {
-            trytes: powTrytes
+            trytes: storeTransactionsRequest.trytes
         };
 
         await this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
 
-        return powTrytes.map(attachTrytes => Transaction.fromTrytes(Trytes.fromString(attachTrytes)));
+        return transactions;
     }
 
     /**
@@ -695,7 +713,7 @@ export class TransactionClient implements ITransactionClient {
         const isPromotable = await this.isPromotable(transactionTail);
 
         if (isPromotable) {
-            if (localPromoteOptions.interrupt === false || (typeof localPromoteOptions.interrupt === "function" && localPromoteOptions.interrupt() === false)) {
+            if (localPromoteOptions.interrupt === false || (typeof localPromoteOptions.interrupt === "function" && !localPromoteOptions.interrupt())) {
                 const sendTransferResponse = await this.sendTransfer(Hash.fromTrytes(transfers[0].address.toTrytes()), depth, minWeightMagnitude, transfers, undefined, transactionTail);
 
                 if (localPromoteOptions.delay !== undefined) {
@@ -749,44 +767,52 @@ export class TransactionClient implements ITransactionClient {
             throw new BusinessError("The trunkTransaction must be an object of type Hash");
         }
 
-        const getTrytesRequest: IGetTrytesRequest = {
-            hashes: [trunkTransaction.toTrytes().toString()]
-        };
+        const allBundleTransactions: Transaction[] = [];
+        let newTrunkTransaction = trunkTransaction;
+        let newBundleHash = bundleHash;
 
-        const getTrytesResponse = await this._apiClient.getTrytes(getTrytesRequest);
+        do {
+            const getTrytesRequest: IGetTrytesRequest = {
+                hashes: [newTrunkTransaction.toTrytes().toString()]
+            };
 
-        const trytes = !ObjectHelper.isEmpty(getTrytesResponse) && !ObjectHelper.isEmpty(getTrytesResponse.trytes) && getTrytesResponse.trytes.length > 0 ? getTrytesResponse.trytes[0] : undefined;
+            const getTrytesResponse = await this._apiClient.getTrytes(getTrytesRequest);
+            const trytes = !ObjectHelper.isEmpty(getTrytesResponse) &&
+                            !ObjectHelper.isEmpty(getTrytesResponse.trytes) &&
+                            getTrytesResponse.trytes.length > 0 ? getTrytesResponse.trytes[0] : undefined;
 
-        if (ObjectHelper.isEmpty(trytes)) {
-            throw new BusinessError("Bundle transactions not visible");
-        } else {
-            const transactionObject = Transaction.fromTrytes(Trytes.fromString(trytes));
-            let bundleTransactions: Transaction[] = [];
+            if (ObjectHelper.isEmpty(trytes)) {
+                throw new BusinessError("Bundle transactions not visible");
+            } else {
+                const transactionObject = Transaction.fromTrytes(Trytes.fromString(trytes));
 
-            // If first transaction to search is not a tail, return error
-            const hasHash = !ObjectHelper.isEmpty(bundleHash);
-            if (!hasHash && transactionObject.currentIndex.toNumber() !== 0) {
-                throw new BusinessError("Invalid tail transaction supplied");
-            }
+                // If first transaction to search is not a tail, return error
+                const hasHash = !ObjectHelper.isEmpty(newBundleHash);
+                if (!hasHash && transactionObject.currentIndex.toNumber() !== 0) {
+                    throw new BusinessError("Invalid tail transaction supplied");
+                }
 
-            // If no bundle hash, define it
-            const localBundleHash = hasHash ? bundleHash : transactionObject.bundle;
+                // If no bundle hash, define it
+                const localBundleHash = hasHash ? newBundleHash : transactionObject.bundle;
 
-            // If same bundle hash continue
-            if (localBundleHash.toTrytes().toString() === transactionObject.bundle.toTrytes().toString()) {
-                // Add transaction object to bundle
-                bundleTransactions.push(transactionObject);
+                newTrunkTransaction = undefined;
+                newBundleHash = undefined;
 
-                // If more than one element then continue
-                if (transactionObject.lastIndex.toNumber() !== 0 || transactionObject.currentIndex.toNumber() !== 0) {
-                    const newBundleTransactions = await this.traverseBundle(transactionObject.trunkTransaction, localBundleHash);
+                // If same bundle hash continue
+                if (localBundleHash.toTrytes().toString() === transactionObject.bundle.toTrytes().toString()) {
+                    // Add transaction object to bundle
+                    allBundleTransactions.push(transactionObject);
 
-                    bundleTransactions = bundleTransactions.concat(newBundleTransactions);
+                    // If more than one element then continue
+                    if (transactionObject.lastIndex.toNumber() !== 0 || transactionObject.currentIndex.toNumber() !== 0) {
+                        newTrunkTransaction = transactionObject.trunkTransaction;
+                        newBundleHash = localBundleHash;
+                    }
                 }
             }
+        } while (newTrunkTransaction !== undefined);
 
-            return bundleTransactions;
-        }
+        return allBundleTransactions;
     }
 
     /**
@@ -856,8 +882,11 @@ export class TransactionClient implements ITransactionClient {
      */
     public async findTransactionObjects(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise<Transaction[]> {
         const transactions = await this.findTransactions(bundles, addresses, tags, approvees);
-
-        return this.getTransactionsObjects(transactions);
+        if (transactions.length > 0) {
+            return this.getTransactionsObjects(transactions);
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -880,9 +909,9 @@ export class TransactionClient implements ITransactionClient {
             localStartIndex = 0;
         }
 
-        const addresses = await this.getNewAddress(seed, startIndex, endIndex, false, security);
+        const addresses = await this.getNewAddress(seed, localStartIndex, endIndex, false, security);
 
-        return this.bundlesFromAddresses(addresses, true);
+        return this.bundlesFromAddresses(addresses, inclusionStates);
     }
 
     /**
@@ -902,7 +931,7 @@ export class TransactionClient implements ITransactionClient {
             localStartIndex = 0;
         }
 
-        const addresses = await this.getNewAddress(seed, startIndex, endIndex, false, security);
+        const addresses = await this.getNewAddress(seed, localStartIndex, endIndex, false, security || AddressSecurity.medium);
 
         const bundles = await this.bundlesFromAddresses(addresses, true);
 
@@ -924,7 +953,7 @@ export class TransactionClient implements ITransactionClient {
         for (let i = 0; i < balanceResponse.balances.length; i++) {
             const balance = parseInt(balanceResponse.balances[i], 10);
             if (balance > 0) {
-                accountData.inputs.push(Input.fromParams(accountData.addresses[i], security, localStartIndex + i, balance));
+                accountData.inputs.push(Input.fromParams(accountData.addresses[i], security || AddressSecurity.medium, localStartIndex + i, balance));
                 accountData.balance += balance;
             }
         }
@@ -934,32 +963,30 @@ export class TransactionClient implements ITransactionClient {
 
     /* @internal */
     private async bundlesFromAddresses(addresses: Address[], inclusionStates: boolean): Promise<Bundle[]> {
-        if (!ArrayHelper.isTyped(addresses, Address)) {
-            throw new BusinessError("The addresses must be an array of Address objects");
-        }
-
         const transactionObjects = await this.findTransactionObjects(undefined, addresses, undefined, undefined);
 
         // set of tail transactions
-        const tailTransactions = new Set<Hash>();
-        const nonTailBundleHashes = new Set<Hash>();
+        const tailTransactions = new Set<string>();
+        const nonTailBundleHashes = new Set<string>();
 
         transactionObjects.forEach((transaction) => {
             // Sort tail and nonTails
             if (transaction.currentIndex.toNumber() === 0) {
-                tailTransactions.add(BundleSigning.transactionHash(transaction));
+                tailTransactions.add(BundleSigning.transactionHash(transaction).toTrytes().toString());
             } else {
-                nonTailBundleHashes.add(transaction.bundle);
+                nonTailBundleHashes.add(transaction.bundle.toTrytes().toString());
             }
         });
 
-        const nonTailBundleTransactions = await this.findTransactionObjects(Array.from(nonTailBundleHashes));
+        if (nonTailBundleHashes.size > 0) {
+            const nonTailBundleTransactions = await this.findTransactionObjects(Array.from(nonTailBundleHashes).map(hash => Hash.fromTrytes(Trytes.fromString(hash))));
 
-        nonTailBundleTransactions.forEach((transaction) => {
-            if (transaction.currentIndex.toNumber() === 0) {
-                tailTransactions.add(BundleSigning.transactionHash(transaction));
-            }
-        });
+            nonTailBundleTransactions.forEach((transaction) => {
+                if (transaction.currentIndex.toNumber() === 0) {
+                    tailTransactions.add(BundleSigning.transactionHash(transaction).toTrytes().toString());
+                }
+            });
+        }
 
         const finalBundles: Bundle[] = [];
         const tailTxArray = Array.from(tailTransactions);
@@ -968,13 +995,13 @@ export class TransactionClient implements ITransactionClient {
         // of the tail transactions, and thus the bundles
         let tailTxStates;
         if (inclusionStates) {
-            tailTxStates = await this.getLatestInclusion(tailTxArray);
+            tailTxStates = await this.getLatestInclusion(tailTxArray.map(tail => Hash.fromTrytes(Trytes.fromString(tail))));
         }
 
         // Map each tail transaction to the getBundle function
         // format the returned bundles and add inclusion states if necessary
         for (let i = 0; i < tailTxArray.length; i++) {
-            const bundle: Bundle = await this.getBundle(tailTxArray[i]);
+            const bundle: Bundle = await this.getBundle(Hash.fromTrytes(Trytes.fromString(tailTxArray[i])));
 
             bundle.inclusionState = tailTxStates ? tailTxStates[i] : undefined;
             finalBundles.push(bundle);
@@ -1007,29 +1034,25 @@ export class TransactionClient implements ITransactionClient {
     /* @internal */
     private async addRemainder(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, inputs: Input[],
                                signatureFragments: SignatureFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<Trytes[]> {
+        let finalTrytes: Trytes[];
         let totalTransferValue = totalValue;
-        for (let i = 0; i < inputs.length; i++) {
-
-            const thisBalance = inputs[i].balance;
-            const toSubtract = 0 - thisBalance;
+        for (let i = 0; i < inputs.length && finalTrytes === undefined; i++) {
             const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
 
             // Add input as bundle entry
-            bundle.addTransactions(inputs[i].security, inputs[i].address, toSubtract, tag, timestamp);
+            bundle.addTransactions(inputs[i].security, inputs[i].address, -inputs[i].balance, tag, timestamp);
 
             // If there is a remainder value
             // Add extra output to send remaining funds to
-            if (thisBalance >= totalTransferValue) {
-                const remainder = thisBalance - totalTransferValue;
+            if (inputs[i].balance >= totalTransferValue) {
+                const remainder = inputs[i].balance - totalTransferValue;
 
-                // If user has provided remainder address
-                // Use it to send remaining funds to
-                if (remainder > 0 && transferOptions.remainderAddress !== undefined && transferOptions !== null) {
+                // If user has provided remainder address use it to send remaining funds to
+                if (remainder > 0 && !ObjectHelper.isEmpty(transferOptions) && ObjectHelper.isType(transferOptions.remainderAddress, Address)) {
                     // Remainder bundle entry
                     bundle.addTransactions(1, transferOptions.remainderAddress, remainder, tag, timestamp);
-
                     // Final function for signing inputs
-                    return BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 } else if (remainder > 0) {
                     let startIndex = 0;
                     for (let k = 0; k < inputs.length; k++) {
@@ -1046,20 +1069,20 @@ export class TransactionClient implements ITransactionClient {
                     bundle.addTransactions(1, addresses[addresses.length - 1], remainder, tag, ts);
 
                     // Final function for signing inputs
-                    return BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 } else {
                     // If there is no remainder, do not add transaction to bundle
                     // simply sign and return
-                    return BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 }
             } else {
                 // If multiple inputs provided, subtract the totalTransferValue by
                 // the inputs balance
-                totalTransferValue -= thisBalance;
+                totalTransferValue -= inputs[i].balance;
             }
         }
 
-        return undefined;
+        return finalTrytes;
     }
 
     private async localProofOfWork(trunkTransaction: Hash, branchTransaction: Hash, minWeightMagnitude: number, trytes: Trytes[]): Promise<Trytes[]> {

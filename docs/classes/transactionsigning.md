@@ -25,11 +25,11 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 
 ### «Static» address
 
-► **address**(digests: *`number`[]*): `number`[]
+► **address**(digests: *`Int8Array`*): `Int8Array`
 
 
 
-*Defined in transactions/transactionSigning.ts:80*
+*Defined in transactions/transactionSigning.ts:81*
 
 
 
@@ -37,13 +37,13 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| digests | `number`[]   |  - |
+| digests | `Int8Array`   |  - |
 
 
 
 
 
-**Returns:** `number`[]
+**Returns:** `Int8Array`
 
 
 
@@ -55,11 +55,11 @@ ___
 
 ### «Static» createChecksum
 
-► **createChecksum**(trits: *`number`[]*, checksumLength: *`number`*): `string`
+► **createChecksum**(trits: *`Int8Array`*, checksumLength: *`number`*): `string`
 
 
 
-*Defined in transactions/transactionSigning.ts:92*
+*Defined in transactions/transactionSigning.ts:93*
 
 
 
@@ -67,7 +67,7 @@ ___
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| trits | `number`[]   |  - |
+| trits | `Int8Array`   |  - |
 | checksumLength | `number`   |  - |
 
 
@@ -86,7 +86,7 @@ ___
 
 ### «Static» digests
 
-► **digests**(key: *`number`[]*): `number`[]
+► **digests**(key: *`Int8Array`*): `Int8Array`
 
 
 
@@ -98,13 +98,13 @@ ___
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| key | `number`[]   |  - |
+| key | `Int8Array`   |  - |
 
 
 
 
 
-**Returns:** `number`[]
+**Returns:** `Int8Array`
 
 
 
@@ -116,7 +116,7 @@ ___
 
 ### «Static» key
 
-► **key**(seed: *`Hash`*, index: *`number`*, length: *`number`*): `number`[]
+► **key**(seed: *`Hash`*, index: *`number`*, length: *`number`*): `Int8Array`
 
 
 
@@ -136,7 +136,7 @@ ___
 
 
 
-**Returns:** `number`[]
+**Returns:** `Int8Array`
 
 
 
@@ -148,11 +148,11 @@ ___
 
 ### «Static» signatureFragment
 
-► **signatureFragment**(normalizedBundleFragment: *`number`[]*, keyFragment: *`number`[]*): `number`[]
+► **signatureFragment**(normalizedBundleFragment: *`Int8Array`*, keyFragment: *`Int8Array`*): `Int8Array`
 
 
 
-*Defined in transactions/transactionSigning.ts:104*
+*Defined in transactions/transactionSigning.ts:105*
 
 
 
@@ -160,14 +160,14 @@ ___
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| normalizedBundleFragment | `number`[]   |  - |
-| keyFragment | `number`[]   |  - |
+| normalizedBundleFragment | `Int8Array`   |  - |
+| keyFragment | `Int8Array`   |  - |
 
 
 
 
 
-**Returns:** `number`[]
+**Returns:** `Int8Array`
 
 
 

@@ -120,6 +120,15 @@ export declare class TransactionClient implements ITransactionClient {
      * @param reference The reference to send with the trytes.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
+    attachToTangle(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
+    /**
+     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
+     * @param trytes The trytes to send.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param reference The reference to send with the trytes.
+     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     */
     sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
     /**
      * Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.

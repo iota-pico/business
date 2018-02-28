@@ -20,14 +20,28 @@ Default implementation of the ITransactionClient.
 
 ### Methods
 
+* [attachToTangle](transactionclient.md#attachtotangle)
+* [broadcastBundle](transactionclient.md#broadcastbundle)
+* [findTransactionObjects](transactionclient.md#findtransactionobjects)
 * [findTransactions](transactionclient.md#findtransactions)
+* [getAccountData](transactionclient.md#getaccountdata)
 * [getAddressesByIndex](transactionclient.md#getaddressesbyindex)
 * [getAddressesToUnused](transactionclient.md#getaddressestounused)
+* [getBundle](transactionclient.md#getbundle)
 * [getInputs](transactionclient.md#getinputs)
 * [getLatestInclusion](transactionclient.md#getlatestinclusion)
-* [getTransactionsDetails](transactionclient.md#gettransactionsdetails)
+* [getNewAddress](transactionclient.md#getnewaddress)
 * [getTransactionsInProgress](transactionclient.md#gettransactionsinprogress)
+* [getTransactionsObjects](transactionclient.md#gettransactionsobjects)
+* [getTransfers](transactionclient.md#gettransfers)
+* [initialize](transactionclient.md#initialize)
+* [isPromotable](transactionclient.md#ispromotable)
 * [prepareTransfers](transactionclient.md#preparetransfers)
+* [promoteTransaction](transactionclient.md#promotetransaction)
+* [replayBundle](transactionclient.md#replaybundle)
+* [sendTransfer](transactionclient.md#sendtransfer)
+* [sendTrytes](transactionclient.md#sendtrytes)
+* [traverseBundle](transactionclient.md#traversebundle)
 
 
 
@@ -36,10 +50,10 @@ Default implementation of the ITransactionClient.
 <a id="constructor"></a>
 
 
-### ⊕ **new TransactionClient**(apiClient: *`IApiClient`*, timeProvider?: *[ITimeProvider](../interfaces/itimeprovider.md)*): [TransactionClient](transactionclient.md)
+### ⊕ **new TransactionClient**(apiClient: *`IApiClient`*, proofOfWork?: *`IProofOfWork`*, timeService?: *[ITimeService](../interfaces/itimeservice.md)*, backgroundTaskService?: *[IBackgroundTaskService](../interfaces/ibackgroundtaskservice.md)*): [TransactionClient](transactionclient.md)
 
 
-*Defined in transactions/transactionClient.ts:36*
+*Defined in transactions/transactionClient.ts:63*
 
 
 
@@ -51,7 +65,9 @@ Create a new instance of the TransactionClient.
 | Param | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | apiClient | `IApiClient`  | - |   An API Client to communicate through. |
-| timeProvider | [ITimeProvider](../interfaces/itimeprovider.md)  |  new TimeProvider() |   A class which can provide the time. |
+| proofOfWork | `IProofOfWork`  | - |   Proof of work module to use, if undefined will use remote. |
+| timeService | [ITimeService](../interfaces/itimeservice.md)  |  new TimeService() |   A class which can provide the time. |
+| backgroundTaskService | [IBackgroundTaskService](../interfaces/ibackgroundtaskservice.md)  |  new BackgroundTaskService() |   A class which can provide background tasks. |
 
 
 
@@ -63,6 +79,123 @@ Create a new instance of the TransactionClient.
 
 
 ## Methods
+<a id="attachtotangle"></a>
+
+###  attachToTangle
+
+► **attachToTangle**(trytes: *`Trytes`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[attachToTangle](../interfaces/itransactionclient.md#attachtotangle)*
+
+*Defined in transactions/transactionClient.ts:556*
+
+
+
+Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| trytes | `Trytes`[]   |  The trytes to send. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+| reference | `Hash`   |  The reference to send with the trytes. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="broadcastbundle"></a>
+
+###  broadcastBundle
+
+► **broadcastBundle**(transactionTail: *`Hash`*): `Promise`.<`void`>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[broadcastBundle](../interfaces/itransactionclient.md#broadcastbundle)*
+
+*Defined in transactions/transactionClient.ts:854*
+
+
+
+Re-Broadcasts a transfer.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
+
+
+
+
+
+**Returns:** `Promise`.<`void`>
+Promise which resolves or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="findtransactionobjects"></a>
+
+###  findTransactionObjects
+
+► **findTransactionObjects**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactionObjects](../interfaces/itransactionclient.md#findtransactionobjects)*
+
+*Defined in transactions/transactionClient.ts:883*
+
+
+
+Get transaction objects by fist performing a findTransactions call.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| bundles | `Hash`[]   |  Bundles to lookup transactions for. |
+| addresses | `Address`[]   |  Addresses to lookup transactions for. |
+| tags | `Tag`[]   |  Tags to lookup transactions for. |
+| approvees | `Hash`[]   |  Approvees to lookup transactions for. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions or rejects with an error.
+
+
+
+
+
+
+___
+
 <a id="findtransactions"></a>
 
 ###  findTransactions
@@ -73,21 +206,21 @@ Create a new instance of the TransactionClient.
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactions](../interfaces/itransactionclient.md#findtransactions)*
 
-*Defined in transactions/transactionClient.ts:68*
+*Defined in transactions/transactionClient.ts:114*
 
 
 
-Find the transactions which match the specified input and return. All input values are lists, for which a list of return values (transaction hashes), in the same order, is returned for all individual elements. The input fields can either be bundles, addresses, tags or approvees. Using multiple of these input fields returns the intersection of the values.
+Find the transactions which match the specified input and return. All input values are lists, for which a list of return values (transaction hashes), in the same order, is returned for all individual elements. Using multiple of these input fields returns the intersection of the values.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| bundles | `Hash`[]   |  - |
-| addresses | `Address`[]   |  - |
-| tags | `Tag`[]   |  - |
-| approvees | `Hash`[]   |  - |
+| bundles | `Hash`[]   |  Bundles to lookup transaction hashes for. |
+| addresses | `Address`[]   |  Addresses to lookup transaction hashes for. |
+| tags | `Tag`[]   |  Tags to lookup transaction hashes for. |
+| approvees | `Hash`[]   |  Approvees to lookup transaction hashes for. |
 
 
 
@@ -103,17 +236,57 @@ Promise which resolves with a list of hashes or rejects with error.
 
 ___
 
+<a id="getaccountdata"></a>
+
+###  getAccountData
+
+► **getAccountData**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*): `Promise`.<[AccountData](../#accountdata)>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAccountData](../interfaces/itransactionclient.md#getaccountdata)*
+
+*Defined in transactions/transactionClient.ts:925*
+
+
+
+Similar to getTransfers, just that it returns additional account data.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| seed | `Hash`   |  The seed to get the transfers for |
+| startIndex | `number`   |  The start index to get the transfers for. |
+| endIndex | `number`   |  The end index to get the transfers for. |
+| security | `AddressSecurity`   |  The security level for the transfers. |
+
+
+
+
+
+**Returns:** `Promise`.<[AccountData](../#accountdata)>
+Promise which resolves to the account data or rejects with an error.
+
+
+
+
+
+
+___
+
 <a id="getaddressesbyindex"></a>
 
 ###  getAddressesByIndex
 
-► **getAddressesByIndex**(seed: *`Hash`*, startIndex: *`number`*, createCount: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
+► **getAddressesByIndex**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
 
 
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesByIndex](../interfaces/itransactionclient.md#getaddressesbyindex)*
 
-*Defined in transactions/transactionClient.ts:149*
+*Defined in transactions/transactionClient.ts:253*
 
 
 
@@ -126,7 +299,7 @@ Generates new addresses index-based.
 | ------ | ------ | ------ |
 | seed | `Hash`   |  The seed to generate the addresses from. |
 | startIndex | `number`   |  The start index to generate addresses. |
-| createCount | `number`   |  The number of addresses to create. |
+| endIndex | `number`   |  The end index to generate addresses. |
 | includeChecksum | `boolean`   |  Includes the checksum on addresses. |
 | security | `AddressSecurity`   |  The security level at which to create the addresses. |
 
@@ -154,7 +327,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesToUnused](../interfaces/itransactionclient.md#getaddressestounused)*
 
-*Defined in transactions/transactionClient.ts:182*
+*Defined in transactions/transactionClient.ts:288*
 
 
 
@@ -184,6 +357,43 @@ Promise which resolves to an addresses list, the first unused address is the las
 
 ___
 
+<a id="getbundle"></a>
+
+###  getBundle
+
+► **getBundle**(trunkTransaction: *`Hash`*): `Promise`.<`Bundle`>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getBundle](../interfaces/itransactionclient.md#getbundle)*
+
+*Defined in transactions/transactionClient.ts:740*
+
+
+
+Gets the associated bundle transactions of a single transaction. Does validation of signatures, total sum as well as bundle order.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| trunkTransaction | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
+
+
+
+
+
+**Returns:** `Promise`.<`Bundle`>
+Promise which resolves to the bundle transactions or rejects with an error.
+
+
+
+
+
+
+___
+
 <a id="getinputs"></a>
 
 ###  getInputs
@@ -194,7 +404,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getInputs](../interfaces/itransactionclient.md#getinputs)*
 
-*Defined in transactions/transactionClient.ts:235*
+*Defined in transactions/transactionClient.ts:341*
 
 
 
@@ -235,7 +445,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getLatestInclusion](../interfaces/itransactionclient.md#getlatestinclusion)*
 
-*Defined in transactions/transactionClient.ts:118*
+*Defined in transactions/transactionClient.ts:180*
 
 
 
@@ -262,17 +472,87 @@ Promise which resolves to the list of inclusion states or rejects with error.
 
 ___
 
-<a id="gettransactionsdetails"></a>
+<a id="getnewaddress"></a>
 
-###  getTransactionsDetails
+###  getNewAddress
 
-► **getTransactionsDetails**(transactionHashes: *`Hash`[]*): `Promise`.<`Transaction`[]>
+► **getNewAddress**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, includeChecksum?: *`boolean`*, security?: *`AddressSecurity`*): `Promise`.<`Address`[]>
 
 
 
-*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsDetails](../interfaces/itransactionclient.md#gettransactionsdetails)*
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getNewAddress](../interfaces/itransactionclient.md#getnewaddress)*
 
-*Defined in transactions/transactionClient.ts:97*
+*Defined in transactions/transactionClient.ts:211*
+
+
+
+Generates addresses with index-based or using apis.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| seed | `Hash`   |  The seed to generate the addresses from. |
+| startIndex | `number`   |  The start index to generate addresses. |
+| endIndex | `number`   |  The end index to generate addresses. |
+| includeChecksum | `boolean`   |  Includes the checksum on addresses. |
+| security | `AddressSecurity`   |  The security level at which to create the addresses. |
+
+
+
+
+
+**Returns:** `Promise`.<`Address`[]>
+Promise which resolves to the list of addresses or rejects with error.
+
+
+
+
+
+
+___
+
+<a id="gettransactionsinprogress"></a>
+
+###  getTransactionsInProgress
+
+► **getTransactionsInProgress**(): `Promise`.<`Hash`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
+
+*Defined in transactions/transactionClient.ts:95*
+
+
+
+Returns the list of transaction in progress.
+
+
+
+
+**Returns:** `Promise`.<`Hash`[]>
+Promise which resolves to a list of hashes or rejects with error.
+
+
+
+
+
+
+___
+
+<a id="gettransactionsobjects"></a>
+
+###  getTransactionsObjects
+
+► **getTransactionsObjects**(transactionHashes: *`Hash`[]*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsObjects](../interfaces/itransactionclient.md#gettransactionsobjects)*
+
+*Defined in transactions/transactionClient.ts:159*
 
 
 
@@ -299,27 +579,103 @@ Promise which resolves to the list of transactions or rejects with error.
 
 ___
 
-<a id="gettransactionsinprogress"></a>
+<a id="gettransfers"></a>
 
-###  getTransactionsInProgress
+###  getTransfers
 
-► **getTransactionsInProgress**(): `Promise`.<`Hash`[]>
-
-
-
-*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
-
-*Defined in transactions/transactionClient.ts:52*
+► **getTransfers**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*, inclusionStates?: *`boolean`*): `Promise`.<`Bundle`[]>
 
 
 
-Returns the list of transaction in progress.
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransfers](../interfaces/itransactionclient.md#gettransfers)*
+
+*Defined in transactions/transactionClient.ts:903*
+
+
+
+The transfers which are associated with a seed. The transfers are determined by either calculating deterministically which addresses were already used, or by providing a list of indexes to get the addresses and the associated transfers from. The transfers are sorted by their timestamp.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| seed | `Hash`   |  The seed to get the transfers for |
+| startIndex | `number`   |  The start index to get the transfers for. |
+| endIndex | `number`   |  The end index to get the transfers for. |
+| security | `AddressSecurity`   |  The security level for the transfers. |
+| inclusionStates | `boolean`   |  Do you want inclusion states in the bundles. |
 
 
 
 
-**Returns:** `Promise`.<`Hash`[]>
-Promise which resolves to a list of hashes or rejects with error.
+
+**Returns:** `Promise`.<`Bundle`[]>
+Promise which resolves to the requested bundles or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="initialize"></a>
+
+###  initialize
+
+► **initialize**(): `Promise`.<`void`>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[initialize](../interfaces/itransactionclient.md#initialize)*
+
+*Defined in transactions/transactionClient.ts:85*
+
+
+
+Initialize the client.
+
+
+
+
+**Returns:** `Promise`.<`void`>
+
+
+
+
+
+___
+
+<a id="ispromotable"></a>
+
+###  isPromotable
+
+► **isPromotable**(transactionTail: *`Hash`*): `Promise`.<`boolean`>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isPromotable](../interfaces/itransactionclient.md#ispromotable)*
+
+*Defined in transactions/transactionClient.ts:666*
+
+
+
+Find out if a transaction is promotable.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
+
+
+
+
+
+**Returns:** `Promise`.<`boolean`>
+Promise which resolves to true if the transaction is promotable rejects with an error.
 
 
 
@@ -332,13 +688,13 @@ ___
 
 ###  prepareTransfers
 
-► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, inputs: *`Input`[]*, remainderAddress: *`Address`*, security: *`AddressSecurity`*, hmacKey: *`Trytes`*): `Promise`.<`Trytes`[]>
+► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Trytes`[]>
 
 
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[prepareTransfers](../interfaces/itransactionclient.md#preparetransfers)*
 
-*Defined in transactions/transactionClient.ts:298*
+*Defined in transactions/transactionClient.ts:400*
 
 
 
@@ -351,10 +707,7 @@ Prepares transfer by generating bundle, finding and signing inputs.
 | ------ | ------ | ------ |
 | seed | `Hash`   |  The seed to prepare the transfer for. |
 | transfers | `Transfer`[]   |  The transfers to prepare. |
-| inputs | `Input`[]   |  List of inputs used for funding the transfer. |
-| remainderAddress | `Address`   |  If defined, this address will be used for sending the remainder value (of the inputs) to. |
-| security | `AddressSecurity`   |  Security level to be used for the private key / addresses. |
-| hmacKey | `Trytes`   |  Hmac key to sign the bundle. |
+| transferOptions | [TransferOptions](../#transferoptions)   |       @property inputs List of inputs used for funding the transfer.     @property security Security level to be used for the private key / addresses.     @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.     @property hmacKey Hmac key to sign the bundle.     @property reference The transaction to reference. |
 
 
 
@@ -362,6 +715,206 @@ Prepares transfer by generating bundle, finding and signing inputs.
 
 **Returns:** `Promise`.<`Trytes`[]>
 Promise which resolves to the array of Trytes for the transfer or rejects with error.
+
+
+
+
+
+
+___
+
+<a id="promotetransaction"></a>
+
+###  promoteTransaction
+
+► **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[promoteTransaction](../interfaces/itransactionclient.md#promotetransaction)*
+
+*Defined in transactions/transactionClient.ts:694*
+
+
+
+Promotes a transaction by adding spam on top of it, as long as it is promotable. Will promote by adding transfers on top of the current one with delay interval. Use promoteOptions.interrupt to terminate the promotion. If promoteOptions.delay is set to 0 only one promotion transfer will be sent.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+| transfers | `Transfer`[]   |  The transfers to send. |
+| promoteOptions | [PromoteOptions](../#promoteoptions)   |  Additional options for the promote. @property delay Delay between promotion transfers @property interrupt Flag or method to terminate promotion. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="replaybundle"></a>
+
+###  replayBundle
+
+► **replayBundle**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[replayBundle](../interfaces/itransactionclient.md#replaybundle)*
+
+*Defined in transactions/transactionClient.ts:825*
+
+
+
+Replays a transfer by doing Proof of Work again.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="sendtransfer"></a>
+
+###  sendTransfer
+
+► **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransfer](../interfaces/itransactionclient.md#sendtransfer)*
+
+*Defined in transactions/transactionClient.ts:639*
+
+
+
+Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| seed | `Hash`   |  The seed to send the transfer for. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+| transfers | `Transfer`[]   |  The transfers to send. |
+| transferOptions | [TransferOptions](../#transferoptions)   |  Additional options for the transfer. @property inputs List of inputs used for funding the transfer. @property security Security level to be used for the private key / addresses. @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to. @property hmacKey Hmac key to sign the bundle. |
+| reference | `Hash`   |  The reference to send with the trytes. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="sendtrytes"></a>
+
+###  sendTrytes
+
+► **sendTrytes**(trytes: *`Trytes`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTrytes](../interfaces/itransactionclient.md#sendtrytes)*
+
+*Defined in transactions/transactionClient.ts:607*
+
+
+
+Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| trytes | `Trytes`[]   |  The trytes to send. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+| reference | `Hash`   |  The reference to send with the trytes. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="traversebundle"></a>
+
+###  traverseBundle
+
+► **traverseBundle**(trunkTransaction: *`Hash`*, bundleHash?: *`Hash`*): `Promise`.<`Transaction`[]>
+
+
+
+*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[traverseBundle](../interfaces/itransactionclient.md#traversebundle)*
+
+*Defined in transactions/transactionClient.ts:765*
+
+
+
+Traverse the Bundle by going down the trunkTransactions until the bundle hash of the transaction is no longer the same.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| trunkTransaction | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
+| bundleHash | `Hash`   |  The bundle hash to match. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the bundle transactions or rejects with an error.
 
 
 
