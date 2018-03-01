@@ -20,7 +20,7 @@ import { TransactionSigning } from "./transactionSigning";
  */
 export class BundleSigning {
     /* @internal */
-    public static signInputsAndReturn(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, signatureFragments: SignatureFragment[], inputs: Input[], addedHMAC: boolean): Trytes[] {
+    public static signInputsAndReturn(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, signatureFragments: SignatureFragment[], inputs: Input[], addedHMAC: boolean): Transaction[] {
         BundleSigning.finalizeBundle(bundle);
         bundle.addSignatureFragments(signatureFragments);
 
@@ -101,14 +101,7 @@ export class BundleSigning {
             hmac.addHMAC(bundle);
         }
 
-        const bundleTrytes: Trytes[] = [];
-
-        // Convert all bundle entries into trytes
-        bundle.transactions.forEach((tx) => {
-            bundleTrytes.push(tx.toTrytes());
-        });
-
-        return bundleTrytes.reverse();
+        return bundle.transactions.reverse();
     }
 
     /* @internal */

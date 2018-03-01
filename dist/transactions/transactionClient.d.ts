@@ -1,4 +1,6 @@
 import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
+import { ITimeService } from "@iota-pico/core/dist//interfaces/ITimeService";
+import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -8,10 +10,7 @@ import { Input } from "@iota-pico/data/dist/data/input";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
-import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { AccountData } from "../interfaces/accountData";
-import { IBackgroundTaskService } from "../interfaces/IBackgroundTaskService";
-import { ITimeService } from "../interfaces/ITimeService";
 import { ITransactionClient } from "../interfaces/ITransactionClient";
 import { PromoteOptions } from "../interfaces/promoteOptions";
 import { TransferOptions } from "../interfaces/transferOptions";
@@ -111,27 +110,27 @@ export declare class TransactionClient implements ITransactionClient {
      *      @property reference The transaction to reference.
      * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
      */
-    prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Trytes[]>;
+    prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Transaction[]>;
     /**
-     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
-     * @param trytes The trytes to send.
+     * Attach the transactions to the tangle by doing proof of work.
+     * @param transactions The transactions to attach.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    attachToTangle(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
+    attachToTangle(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
     /**
-     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
-     * @param trytes The trytes to send.
+     * Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
+     * @param transactions The transactions to send.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
+    sendTransactions(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
     /**
-     * Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
+     * Wrapper function that does prepareTransfers and then sendTransactions.
      * @param seed The seed to send the transfer for.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
@@ -141,7 +140,7 @@ export declare class TransactionClient implements ITransactionClient {
      *      @property security Security level to be used for the private key / addresses.
      *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
      *      @property hmacKey Hmac key to sign the bundle.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise<Transaction[]>;
@@ -151,6 +150,12 @@ export declare class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to true if the transaction is promotable rejects with an error.
      */
     isPromotable(transactionTail: Hash): Promise<boolean>;
+    /**
+     * Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
+     * @param addresses Input address you want to have tested.
+     * @returns Promise which resolves to true if the addresses are reattachable or rejects with an error.
+     */
+    isReattachable(addresses: Address[]): Promise<boolean[]>;
     /**
      * Promotes a transaction by adding spam on top of it, as long as it is promotable.
      * Will promote by adding transfers on top of the current one with delay interval.
@@ -169,10 +174,10 @@ export declare class TransactionClient implements ITransactionClient {
     /**
      * Gets the associated bundle transactions of a single transaction.
      * Does validation of signatures, total sum as well as bundle order.
-     * @param trunkTransaction Hash of a trunk or a tail transaction of a bundle.
+     * @param transactionHash Hash of a trunk or a tail transaction of a bundle.
      * @returns Promise which resolves to the bundle transactions or rejects with an error.
      */
-    getBundle(trunkTransaction: Hash): Promise<Bundle>;
+    getBundle(transactionHash: Hash): Promise<Bundle>;
     /**
      * Traverse the Bundle by going down the trunkTransactions until
      * the bundle hash of the transaction is no longer the same.
@@ -182,19 +187,19 @@ export declare class TransactionClient implements ITransactionClient {
      */
     traverseBundle(trunkTransaction: Hash, bundleHash?: Hash): Promise<Transaction[]>;
     /**
-     * Replays a transfer by doing Proof of Work again.
-     * @param transactionTail The hash of the transaction to be promoted.
+     * Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
+     * @param transactionHash The hash of the transaction to be promoted.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    replayBundle(transactionTail: Hash, depth: number, minWeightMagnitude: number): Promise<Transaction[]>;
+    reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise<Transaction[]>;
     /**
-     * Re-Broadcasts a transfer.
-     * @param transactionTail The hash of the transaction to be promoted.
+     * Wrapper which gets a bundle and then broadcasts it.
+     * @param transactionHash The hash of the transaction to be re-broadcast.
      * @returns Promise which resolves or rejects with an error.
      */
-    broadcastBundle(transactionTail: Hash): Promise<void>;
+    rebroadcastBundle(transactionHash: Hash): Promise<void>;
     /**
      * Get transaction objects by fist performing a findTransactions call.
      * @param addresses The addresses to get the transaction objects for.
@@ -226,5 +231,5 @@ export declare class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the account data or rejects with an error.
      */
     getAccountData(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity): Promise<AccountData>;
-    private localProofOfWork(trunkTransaction, branchTransaction, minWeightMagnitude, trytes);
+    private localProofOfWork(trunkTransaction, branchTransaction, minWeightMagnitude, transactions);
 }

@@ -9,9 +9,13 @@ import { IGetTransactionsToApproveRequest } from "@iota-pico/api/dist/models/IGe
 import { IGetTrytesRequest } from "@iota-pico/api/dist/models/IGetTrytesRequest";
 import { IStoreTransactionsRequest } from "@iota-pico/api/dist/models/IStoreTransactionsRequest";
 import { IWereAddressesSpentFromRequest } from "@iota-pico/api/dist/models/IWereAddressesSpentFromRequest";
+import { ITimeService } from "@iota-pico/core/dist//interfaces/ITimeService";
+import { BackgroundTaskService } from "@iota-pico/core/dist//services/backgroundTaskService";
+import { TimeService } from "@iota-pico/core/dist//services/timeService";
 import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
 import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
+import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -27,13 +31,9 @@ import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
 import { AccountData } from "../interfaces/accountData";
-import { IBackgroundTaskService } from "../interfaces/IBackgroundTaskService";
-import { ITimeService } from "../interfaces/ITimeService";
 import { ITransactionClient } from "../interfaces/ITransactionClient";
 import { PromoteOptions } from "../interfaces/promoteOptions";
 import { TransferOptions } from "../interfaces/transferOptions";
-import { BackgroundTaskService } from "../services/backgroundTaskService";
-import { TimeService } from "../services/timeService";
 import { BundleSigning } from "./bundleSigning";
 import { TransactionSigning } from "./transactionSigning";
 
@@ -397,7 +397,7 @@ export class TransactionClient implements ITransactionClient {
      *      @property reference The transaction to reference.
      * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
      */
-    public async prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Trytes[]> {
+    public async prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Transaction[]> {
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -483,7 +483,7 @@ export class TransactionClient implements ITransactionClient {
             totalValue += transfers[i].value;
         }
 
-        let preparedTrytes;
+        let preparedTransactions: Transaction[];
 
         // Get inputs if we are sending tokens
         if (totalValue) {
@@ -521,41 +521,35 @@ export class TransactionClient implements ITransactionClient {
                     throw new BusinessError("Not enough balance in the input addresses to satisfy the total for the transfer");
                 }
 
-                preparedTrytes = this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC);
             } else {
                 // No inputs supplied so we need to get some
                 const inputsResponse = await this.getInputs(seed, 0, undefined, localTransferOptions.security, totalValue);
 
-                preparedTrytes = this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC);
             }
         } else {
-
             // If no input required, don't sign and simply finalize the bundle
             BundleSigning.finalizeBundle(bundle);
             bundle.addSignatureFragments(signatureFragments);
 
-            const bundleTrytes: Trytes[] = [];
-            bundle.transactions.forEach((tx) => {
-                bundleTrytes.push(tx.toTrytes());
-            });
-
-            preparedTrytes = bundleTrytes.reverse();
+            preparedTransactions = bundle.transactions.reverse();
         }
 
-        return preparedTrytes;
+        return preparedTransactions;
     }
 
     /**
-     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
-     * @param trytes The trytes to send.
+     * Attach the transactions to the tangle by doing proof of work.
+     * @param transactions The transactions to attach.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    public async attachToTangle(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
-        if (!ArrayHelper.isTyped(trytes, Trytes)) {
-            throw new BusinessError("The trytes must be an array of type Trytes");
+    public async attachToTangle(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
+        if (!ArrayHelper.isTyped(transactions, Transaction)) {
+            throw new BusinessError("The transactions must be an array of type Transaction");
         }
 
         if (!NumberHelper.isInteger(depth) || depth <= 0) {
@@ -573,42 +567,41 @@ export class TransactionClient implements ITransactionClient {
 
         const transactionsToApprove = await this._apiClient.getTransactionsToApprove(transactionsToApproveRequest);
 
-        let powTrytes: string[];
+        let powTrytes: Transaction[];
         if (this._proofOfWork) {
-            const localPowTrytes = await this.localProofOfWork(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
-                                                               Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
-                                                               minWeightMagnitude,
-                                                               trytes);
-            powTrytes = localPowTrytes.map(t => t.toString());
+            powTrytes = await this.localProofOfWork(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
+                                                    Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
+                                                    minWeightMagnitude,
+                                                    transactions);
         } else {
             const attachToTangleRequest: IAttachToTangleRequest = {
                 trunkTransaction: transactionsToApprove.trunkTransaction,
                 branchTransaction: transactionsToApprove.branchTransaction,
                 minWeightMagnitude: minWeightMagnitude,
-                trytes: trytes.map(t => t.toString())
+                trytes: transactions.map(t => t.toTrytes().toString())
             };
 
             const attachToTangleResponse = await this._apiClient.attachToTangle(attachToTangleRequest);
 
-            powTrytes = attachToTangleResponse.trytes;
+            powTrytes = attachToTangleResponse.trytes.map(returnTrytes => Transaction.fromTrytes(Trytes.fromString(returnTrytes)));
         }
 
-        return powTrytes.map(attachTrytes => Transaction.fromTrytes(Trytes.fromString(attachTrytes)));
+        return powTrytes;
     }
 
     /**
-     * Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
-     * @param trytes The trytes to send.
+     * Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
+     * @param transactions The transactions to send.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    public async sendTrytes(trytes: Trytes[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
-        const transactions = await this.attachToTangle(trytes, depth, minWeightMagnitude, reference);
+    public async sendTransactions(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]> {
+        const attachedTransactions = await this.attachToTangle(transactions, depth, minWeightMagnitude, reference);
 
         const storeTransactionsRequest: IStoreTransactionsRequest = {
-            trytes: transactions.map(t => t.toTrytes().toString())
+            trytes: attachedTransactions.map(t => t.toTrytes().toString())
         };
 
         await this._apiClient.storeTransactions(storeTransactionsRequest);
@@ -619,11 +612,11 @@ export class TransactionClient implements ITransactionClient {
 
         await this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
 
-        return transactions;
+        return attachedTransactions;
     }
 
     /**
-     * Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
+     * Wrapper function that does prepareTransfers and then sendTransactions.
      * @param seed The seed to send the transfer for.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
@@ -633,29 +626,13 @@ export class TransactionClient implements ITransactionClient {
      *      @property security Security level to be used for the private key / addresses.
      *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
      *      @property hmacKey Hmac key to sign the bundle.
-     * @param reference The reference to send with the trytes.
+     * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     public async sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise<Transaction[]> {
-        if (!ObjectHelper.isType(seed, Hash)) {
-            throw new BusinessError("The seed must be of type Hash");
-        }
-
-        if (!NumberHelper.isInteger(depth) || depth <= 0) {
-            throw new BusinessError("The depth must be a number > 0", { depth });
-        }
-
-        if (!NumberHelper.isInteger(minWeightMagnitude) || minWeightMagnitude <= 0) {
-            throw new BusinessError("The minWeightMagnitude must be a number > 0", { minWeightMagnitude });
-        }
-
-        if (!ArrayHelper.isTyped(transfers, Transfer)) {
-            throw new BusinessError("The transfers must an array of Transfer objects");
-        }
-
         const transferTrytes = await this.prepareTransfers(seed, transfers, transferOptions);
 
-        return this.sendTrytes(transferTrytes, depth, minWeightMagnitude, reference);
+        return this.sendTransactions(transferTrytes, depth, minWeightMagnitude, reference);
     }
 
     /**
@@ -675,6 +652,66 @@ export class TransactionClient implements ITransactionClient {
         const checkConsistencyResponse = await this._apiClient.checkConsistency(checkConsistencyRequest);
 
         return checkConsistencyResponse.state;
+    }
+
+    /**
+     * Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
+     * @param addresses Input address you want to have tested.
+     * @returns Promise which resolves to true if the addresses are reattachable or rejects with an error.
+     */
+    public async isReattachable(addresses: Address[]): Promise<boolean[]> {
+        if (!ArrayHelper.isTyped(addresses, Address)) {
+            throw new BusinessError("The addresses must be an object of type Address");
+        }
+
+        const addrsTxsMap: { [address: string]: Hash[] } = {};
+
+        for (let i = 0; i < addresses.length; i++) {
+            const addressString = addresses[i].toTrytes().toString();
+            addrsTxsMap[addressString] = [];
+        }
+
+        const transactions = await this.findTransactionObjects(undefined, addresses);
+
+        const valueTransactions: Hash[] = [];
+        transactions.forEach((transaction) => {
+            if (transaction.value.toNumber() < 0) {
+                const txAddress = transaction.address;
+                const txHash = BundleSigning.transactionHash(transaction);
+
+                addrsTxsMap[txAddress.toTrytes().toString()].push(txHash);
+
+                valueTransactions.push(txHash);
+            }
+        });
+
+        let results: boolean[];
+        if (valueTransactions.length > 0) {
+            const inclusionStates = await this.getLatestInclusion(valueTransactions);
+            results = addresses.map((address) => {
+                let shouldReattach = true;
+
+                const txs = addrsTxsMap[address.toTrytes().toString()];
+
+                for (let i = 0; i < txs.length; i++) {
+                    const txIndex = valueTransactions.indexOf(txs[i]);
+                    shouldReattach = !inclusionStates[txIndex];
+                    if (!shouldReattach) {
+                        break;
+                    }
+                }
+
+                return shouldReattach;
+            });
+        } else {
+            results = [];
+
+            for (let i = 0; i < addresses.length; i++) {
+                results.push(true);
+            }
+        }
+
+        return results;
     }
 
     /**
@@ -709,40 +746,43 @@ export class TransactionClient implements ITransactionClient {
         }
 
         const localPromoteOptions = promoteOptions || {};
+        if (ObjectHelper.isEmpty(localPromoteOptions.interrupt)) {
+            localPromoteOptions.interrupt = false;
+        }
 
-        const isPromotable = await this.isPromotable(transactionTail);
+        if (localPromoteOptions.interrupt === false || (typeof localPromoteOptions.interrupt === "function" && !localPromoteOptions.interrupt())) {
+            const isPromotable = await this.isPromotable(transactionTail);
 
-        if (isPromotable) {
-            if (localPromoteOptions.interrupt === false || (typeof localPromoteOptions.interrupt === "function" && !localPromoteOptions.interrupt())) {
+            if (isPromotable) {
                 const sendTransferResponse = await this.sendTransfer(Hash.fromTrytes(transfers[0].address.toTrytes()), depth, minWeightMagnitude, transfers, undefined, transactionTail);
 
-                if (localPromoteOptions.delay !== undefined) {
+                if (NumberHelper.isInteger(localPromoteOptions.delay)) {
                     return this._backgroundTaskService.create<Transaction[]>(
-                        async () => this.promoteTransaction(transactionTail, depth, minWeightMagnitude, transfers, promoteOptions),
+                        async () => this.promoteTransaction(transactionTail, depth, minWeightMagnitude, transfers, localPromoteOptions),
                         localPromoteOptions.delay);
                 } else {
                     return sendTransferResponse;
                 }
             } else {
-                return undefined;
+                throw new BusinessError("Transaction is not promotable");
             }
         } else {
-            throw new BusinessError("Transaction is not promotable");
+            return undefined;
         }
     }
 
     /**
      * Gets the associated bundle transactions of a single transaction.
      * Does validation of signatures, total sum as well as bundle order.
-     * @param trunkTransaction Hash of a trunk or a tail transaction of a bundle.
+     * @param transactionHash Hash of a trunk or a tail transaction of a bundle.
      * @returns Promise which resolves to the bundle transactions or rejects with an error.
      */
-    public async getBundle(trunkTransaction: Hash): Promise<Bundle> {
-        if (!ObjectHelper.isType(trunkTransaction, Hash)) {
-            throw new BusinessError("The trunkTransaction must be an object of type Hash");
+    public async getBundle(transactionHash: Hash): Promise<Bundle> {
+        if (!ObjectHelper.isType(transactionHash, Hash)) {
+            throw new BusinessError("The transactionHash must be an object of type Hash");
         }
 
-        const transactions = await this.traverseBundle(trunkTransaction);
+        const transactions = await this.traverseBundle(transactionHash);
 
         const isValid = BundleSigning.isValid(transactions);
 
@@ -816,56 +856,28 @@ export class TransactionClient implements ITransactionClient {
     }
 
     /**
-     * Replays a transfer by doing Proof of Work again.
-     * @param transactionTail The hash of the transaction to be promoted.
+     * Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
+     * @param transactionHash The hash of the transaction to be promoted.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    public async replayBundle(transactionTail: Hash, depth: number, minWeightMagnitude: number): Promise<Transaction[]> {
-        if (!ObjectHelper.isType(transactionTail, Hash)) {
-            throw new BusinessError("The transactionTail must be an object of type Hash");
-        }
+    public async reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise<Transaction[]> {
+        const bundle = await this.getBundle(transactionHash);
 
-        if (!NumberHelper.isInteger(depth) || depth <= 0) {
-            throw new BusinessError("The depth must be a number > 0", { depth });
-        }
-
-        if (!NumberHelper.isInteger(minWeightMagnitude) || minWeightMagnitude <= 0) {
-            throw new BusinessError("The minWeightMagnitude must be a number > 0", { minWeightMagnitude });
-        }
-
-        const bundle = await this.getBundle(transactionTail);
-
-        const bundleTrytes: Trytes[] = [];
-
-        bundle.transactions.forEach((transaction) => {
-            bundleTrytes.push(transaction.toTrytes());
-        });
-
-        return this.sendTrytes(bundleTrytes.reverse(), depth, minWeightMagnitude);
+        return this.sendTransactions(bundle.transactions.reverse(), depth, minWeightMagnitude);
     }
 
     /**
-     * Re-Broadcasts a transfer.
-     * @param transactionTail The hash of the transaction to be promoted.
+     * Wrapper which gets a bundle and then broadcasts it.
+     * @param transactionHash The hash of the transaction to be re-broadcast.
      * @returns Promise which resolves or rejects with an error.
      */
-    public async broadcastBundle(transactionTail: Hash): Promise<void> {
-        if (!ObjectHelper.isType(transactionTail, Hash)) {
-            throw new BusinessError("The transactionTail must be an object of type Hash");
-        }
-
-        const bundle = await this.getBundle(transactionTail);
-
-        const bundleTrytes: Trytes[] = [];
-
-        bundle.transactions.forEach((transaction) => {
-            bundleTrytes.push(transaction.toTrytes());
-        });
+    public async rebroadcastBundle(transactionHash: Hash): Promise<void> {
+        const bundle = await this.getBundle(transactionHash);
 
         const broadcastTransactionsRequest: IBroadcastTransactionsRequest = {
-            trytes: bundleTrytes.reverse().map(bt => bt.toString())
+            trytes: bundle.transactions.reverse().map(bt => bt.toTrytes().toString())
         };
 
         return this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
@@ -1033,10 +1045,10 @@ export class TransactionClient implements ITransactionClient {
 
     /* @internal */
     private async addRemainder(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, inputs: Input[],
-                               signatureFragments: SignatureFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<Trytes[]> {
-        let finalTrytes: Trytes[];
+                               signatureFragments: SignatureFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<Transaction[]> {
+        let finalTransactions: Transaction[];
         let totalTransferValue = totalValue;
-        for (let i = 0; i < inputs.length && finalTrytes === undefined; i++) {
+        for (let i = 0; i < inputs.length && finalTransactions === undefined; i++) {
             const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
 
             // Add input as bundle entry
@@ -1052,7 +1064,7 @@ export class TransactionClient implements ITransactionClient {
                     // Remainder bundle entry
                     bundle.addTransactions(1, transferOptions.remainderAddress, remainder, tag, timestamp);
                     // Final function for signing inputs
-                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 } else if (remainder > 0) {
                     let startIndex = 0;
                     for (let k = 0; k < inputs.length; k++) {
@@ -1069,11 +1081,11 @@ export class TransactionClient implements ITransactionClient {
                     bundle.addTransactions(1, addresses[addresses.length - 1], remainder, tag, ts);
 
                     // Final function for signing inputs
-                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 } else {
                     // If there is no remainder, do not add transaction to bundle
                     // simply sign and return
-                    finalTrytes = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
                 }
             } else {
                 // If multiple inputs provided, subtract the totalTransferValue by
@@ -1082,23 +1094,21 @@ export class TransactionClient implements ITransactionClient {
             }
         }
 
-        return finalTrytes;
+        return finalTransactions;
     }
 
-    private async localProofOfWork(trunkTransaction: Hash, branchTransaction: Hash, minWeightMagnitude: number, trytes: Trytes[]): Promise<Trytes[]> {
-        const finalTrytes: Trytes[] = [];
+    private async localProofOfWork(trunkTransaction: Hash, branchTransaction: Hash, minWeightMagnitude: number, transactions: Transaction[]): Promise<Transaction[]> {
         let previousTransactionHash: Hash;
+        const finalTransactions = [];
 
-        for (let i = 0; i < trytes.length; i++) {
+        for (let i = 0; i < transactions.length; i++) {
             // Start with last index transaction
             // Assign it the trunk / branch which the user has supplied
-            // IF there is a bundle, chain  the bundle transactions via
+            // If there is a bundle, chain the bundle transactions via
             // trunkTransaction together
-            const transaction = Transaction.fromTrytes(trytes[i]);
-            transaction.tag = transaction.tag || transaction.obsoleteTag;
-            transaction.attachmentTimestamp = TryteNumber.fromNumber(Date.now());
-            transaction.attachmentTimestampLowerBound = TryteNumber.fromNumber(0);
-            transaction.attachmentTimestampUpperBound = TryteNumber.fromNumber(TransactionClient.MAX_TIMESTAMP_VALUE);
+            transactions[i].attachmentTimestamp = TryteNumber.fromNumber(this._timeService.msSinceEpoch());
+            transactions[i].attachmentTimestampLowerBound = TryteNumber.fromNumber(0);
+            transactions[i].attachmentTimestampUpperBound = TryteNumber.fromNumber(TransactionClient.MAX_TIMESTAMP_VALUE);
 
             // If this is the first transaction, to be processed
             // Make sure that it's the last in the bundle and then
@@ -1106,31 +1116,30 @@ export class TransactionClient implements ITransactionClient {
 
             if (ObjectHelper.isEmpty(previousTransactionHash)) {
                 // Check if last transaction in the bundle
-                if (transaction.lastIndex.toNumber() !== transaction.currentIndex.toNumber()) {
+                if (transactions[i].lastIndex.toNumber() !== transactions[i].currentIndex.toNumber()) {
                     throw new BusinessError("Wrong bundle order. The bundle should be ordered in descending order from currentIndex");
                 }
-                transaction.trunkTransaction = trunkTransaction;
-                transaction.branchTransaction = branchTransaction;
+                transactions[i].trunkTransaction = trunkTransaction;
+                transactions[i].branchTransaction = branchTransaction;
             } else {
-                transaction.trunkTransaction = previousTransactionHash;
-                transaction.branchTransaction = trunkTransaction;
+                transactions[i].trunkTransaction = previousTransactionHash;
+                transactions[i].branchTransaction = trunkTransaction;
             }
 
-            const newTrytes = transaction.toTrytes();
+            const newTrytes = transactions[i].toTrytes();
 
             const returnedTrytes = await this._proofOfWork.pow(newTrytes, minWeightMagnitude);
-            const nonce = returnedTrytes.toString().substr(-Hash.LENGTH);
 
-            const newTrytesWithNonce = `${newTrytes.toString().substr(0, Transaction.LENGTH - Hash.LENGTH)}${nonce}`;
-            const newTransactionWithNonce = Transaction.fromTrytes(Trytes.fromString(newTrytesWithNonce));
+            transactions[i].nonce = Tag.fromTrytes(returnedTrytes.sub(Transaction.LENGTH - Tag.LENGTH, Tag.LENGTH));
 
-            // Calculate the has of the new transaction with nonce and use that as the previous hash for next entry
-            previousTransactionHash = BundleSigning.transactionHash(newTransactionWithNonce);
+            // Calculate the hash of the new transaction with nonce and use that as the previous hash for next entry
+            const returnTransaction = Transaction.fromTrytes(returnedTrytes);
+            previousTransactionHash = BundleSigning.transactionHash(returnTransaction);
 
-            finalTrytes.push(returnedTrytes);
+            finalTransactions.push(returnTransaction);
         }
 
         // reverse the order so that it's ascending from currentIndex
-        return Promise.resolve(finalTrytes.reverse());
+        return Promise.resolve(finalTransactions.reverse());
     }
 }
