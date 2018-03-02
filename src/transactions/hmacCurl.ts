@@ -1,6 +1,6 @@
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
-import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 
@@ -38,9 +38,9 @@ export class HmacCurl {
                 curl.absorb(bundleHashTrits, 0, bundleHashTrits.length);
                 curl.squeeze(hmac, 0, hmac.length);
                 const hmacTrytes = Trits.fromArray(hmac).toTrytes().toString();
-                const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureFragment.LENGTH);
+                const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureMessageFragment.LENGTH);
                 bundle.transactions[i].signatureMessageFragment =
-                    SignatureFragment.fromTrytes(Trytes.fromString(hmacTrytes + rest));
+                    SignatureMessageFragment.fromTrytes(Trytes.fromString(hmacTrytes + rest));
             }
         }
     }

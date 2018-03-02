@@ -4,7 +4,7 @@ import { Address } from "@iota-pico/data/dist/data/address";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Input } from "@iota-pico/data/dist/data/input";
-import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Trits } from "@iota-pico/data/dist/data/trits";
@@ -20,25 +20,30 @@ import { TransactionSigning } from "./transactionSigning";
  */
 export class BundleSigning {
     /* @internal */
-    public static signInputsAndReturn(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, signatureFragments: SignatureFragment[], inputs: Input[], addedHMAC: boolean): Transaction[] {
+    public static signInputs(seed: Hash,
+                             bundle: Bundle,
+                             transferOptions: TransferOptions,
+                             signatureMessageFragments: SignatureMessageFragment[],
+                             inputs: Input[],
+                             addedHMAC: boolean): Transaction[] {
         BundleSigning.finalizeBundle(bundle);
-        bundle.addSignatureFragments(signatureFragments);
+        bundle.addSignatureMessageFragments(signatureMessageFragments);
 
         //  SIGNING OF INPUTS
         //
         //  Here we do the actual signing of the inputs
         //  Iterate over all bundle transactions, find the inputs
-        //  Get the corresponding private key and calculate the signatureFragment
+        //  Get the corresponding private key and calculate the signatureMessageFragment
         for (let i = 0; i < bundle.transactions.length; i++) {
             if (bundle.transactions[i].value.toNumber() < 0) {
-                const thisAddress = bundle.transactions[i].address;
+                const addressTrytes = bundle.transactions[i].address.toTrytes().toString();
 
                 // Get the corresponding keyIndex and security of the address
                 let keyIndex;
                 let keySecurity;
                 for (let k = 0; k < inputs.length; k++) {
 
-                    if (inputs[k].address === thisAddress) {
+                    if (inputs[k].address.toTrytes().toString() === addressTrytes) {
 
                         keyIndex = inputs[k].keyIndex;
                         keySecurity = inputs[k].security ? inputs[k].security : transferOptions.security;
@@ -66,11 +71,11 @@ export class BundleSigning {
                 //  First bundle fragment uses the first 27 trytes
                 const firstBundleFragment = normalizedBundleFragments[0];
 
-                //  Calculate the new signatureFragment with the first bundle fragment
-                const firstSignedFragment = TransactionSigning.signatureFragment(firstBundleFragment, firstFragment);
+                //  Calculate the new signatureMessageFragment with the first bundle fragment
+                const firstSignedFragment = TransactionSigning.signatureMessageFragment(firstBundleFragment, firstFragment);
 
-                //  Convert signature to trytes and assign the new signatureFragment
-                bundle.transactions[i].signatureMessageFragment = SignatureFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
+                //  Convert signature to trytes and assign the new signatureMessageFragment
+                bundle.transactions[i].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
 
                 // if user chooses higher than 27-tryte security
                 // for each security level, add an additional signature
@@ -79,7 +84,7 @@ export class BundleSigning {
                     //  Because the signature is > 2187 trytes, we need to
                     //  find the subsequent transaction to add the remainder of the signature
                     //  Same address as well as value = 0 (as we already spent the input)
-                    if (bundle.transactions[i + j].address === thisAddress && bundle.transactions[i + j].value.toNumber() === 0) {
+                    if (bundle.transactions[i + j].address.toTrytes().toString() === addressTrytes && bundle.transactions[i + j].value.toNumber() === 0) {
 
                         // Use the next 6561 trits
                         const nextFragment = key.slice(6561 * j, (j + 1) * 6561);
@@ -87,10 +92,10 @@ export class BundleSigning {
                         const nextBundleFragment = normalizedBundleFragments[j];
 
                         //  Calculate the new signature
-                        const nextSignedFragment = TransactionSigning.signatureFragment(nextBundleFragment, nextFragment);
+                        const nextSignedFragment = TransactionSigning.signatureMessageFragment(nextBundleFragment, nextFragment);
 
                         //  Convert signature to trytes and assign it again to this bundle entry
-                        bundle.transactions[i + j].signatureMessageFragment = SignatureFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
+                        bundle.transactions[i + j].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
                     }
                 }
             }
@@ -106,43 +111,45 @@ export class BundleSigning {
 
     /* @internal */
     public static finalizeBundle(bundle: Bundle): void {
-        let validBundle = false;
+        if (bundle.transactions.length > 0) {
+            let validBundle = false;
 
-        while (!validBundle) {
+            while (!validBundle) {
 
-            const kerl = SpongeFactory.instance().create("kerl");
-            kerl.initialize();
+                const kerl = SpongeFactory.instance().create("kerl");
+                kerl.initialize();
 
-            for (let i = 0; i < bundle.transactions.length; i++) {
-                bundle.transactions[i].currentIndex = TryteNumber.fromNumber(i);
-                bundle.transactions[i].lastIndex = TryteNumber.fromNumber(bundle.transactions.length - 1);
+                for (let i = 0; i < bundle.transactions.length; i++) {
+                    bundle.transactions[i].currentIndex = TryteNumber.fromNumber(i);
+                    bundle.transactions[i].lastIndex = TryteNumber.fromNumber(bundle.transactions.length - 1);
 
-                const bundleEssence = Trits.fromTrytes(Trytes.fromString(
-                    bundle.transactions[i].address.toTrytes().toString()
-                    + bundle.transactions[i].value.toTrytes().toString() + Transaction.CHECK_VALUE
-                    + bundle.transactions[i].obsoleteTag.toTrytes().toString()
-                    + bundle.transactions[i].timestamp.toTrytes().toString()
-                    + bundle.transactions[i].currentIndex.toTrytes().toString()
-                    + bundle.transactions[i].lastIndex.toTrytes().toString()
-                )).toArray();
-                kerl.absorb(bundleEssence, 0, bundleEssence.length);
-            }
+                    const bundleEssence = Trits.fromTrytes(Trytes.fromString(
+                        bundle.transactions[i].address.toTrytes().toString()
+                        + bundle.transactions[i].value.toTrytes().toString() + Transaction.CHECK_VALUE
+                        + bundle.transactions[i].obsoleteTag.toTrytes().toString()
+                        + bundle.transactions[i].timestamp.toTrytes().toString()
+                        + bundle.transactions[i].currentIndex.toTrytes().toString()
+                        + bundle.transactions[i].lastIndex.toTrytes().toString()
+                    )).toArray();
+                    kerl.absorb(bundleEssence, 0, bundleEssence.length);
+                }
 
-            const hashTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
-            kerl.squeeze(hashTrits, 0, hashTrits.length);
+                const hashTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+                kerl.squeeze(hashTrits, 0, hashTrits.length);
 
-            const hash = Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
-            for (let i = 0; i < bundle.transactions.length; i++) {
-                bundle.transactions[i].bundle = hash;
-            }
+                const hash = Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
+                for (let i = 0; i < bundle.transactions.length; i++) {
+                    bundle.transactions[i].bundle = hash;
+                }
 
-            const normalizedHash = this.normalizedBundle(hash);
-            if (normalizedHash.indexOf(13 /* = M */) !== -1) {
-                // Insecure bundle. Increment Tag and recompute bundle hash.
-                const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromNumberArray([1]));
-                bundle.transactions[0].obsoleteTag = Tag.fromTrytes(increasedTag.toTrytes());
-            } else {
-                validBundle = true;
+                const normalizedHash = this.normalizedBundle(hash);
+                if (normalizedHash.indexOf(13 /* = M */) !== -1) {
+                    // Insecure bundle. Increment Tag and recompute bundle hash.
+                    const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromNumberArray([1]));
+                    bundle.transactions[0].obsoleteTag = Tag.fromTrytes(increasedTag.toTrytes());
+                } else {
+                    validBundle = true;
+                }
             }
         }
     }
@@ -196,7 +203,7 @@ export class BundleSigning {
             kerl.initialize();
 
             // Prepare for signature validation
-            const signaturesToValidate: { address: Address; signatureFragments: SignatureFragment[] }[] = [];
+            const signaturesToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] }[] = [];
 
             isValid = true;
             for (let t = 0; t < transactions.length && isValid; t++) {
@@ -211,14 +218,14 @@ export class BundleSigning {
                     const thisTxTrytes = bundleTx.toTrytes();
 
                     // Absorb bundle hash + value + timestamp + lastIndex + currentIndex trytes.
-                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(SignatureFragment.LENGTH, 162)).toArray();
+                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(SignatureMessageFragment.LENGTH, 162)).toArray();
                     kerl.absorb(thisTxTrits, 0, thisTxTrits.length);
 
                     // Check if input transaction
                     if (bundleTx.value.toNumber() < 0) {
-                        const newSignatureToValidate: { address: Address; signatureFragments: SignatureFragment[] } = {
+                        const newSignatureToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] } = {
                             address: bundleTx.address,
-                            signatureFragments: [ bundleTx.signatureMessageFragment ]
+                            signatureMessageFragments: [bundleTx.signatureMessageFragment]
                         };
 
                         // Find the subsequent txs with the remaining signature fragment
@@ -227,8 +234,8 @@ export class BundleSigning {
 
                             // Check if new tx is part of the signature fragment
                             if (newBundleTx.address.toTrytes().toString() === bundleTx.address.toTrytes().toString()
-                                 && newBundleTx.value.toNumber() === 0) {
-                                newSignatureToValidate.signatureFragments.push(newBundleTx.signatureMessageFragment);
+                                && newBundleTx.value.toNumber() === 0) {
+                                newSignatureToValidate.signatureMessageFragments.push(newBundleTx.signatureMessageFragment);
                             }
                         }
 
@@ -258,7 +265,7 @@ export class BundleSigning {
                     } else {
                         // Validate the signatures
                         for (let i = 0; i < signaturesToValidate.length && isValid; i++) {
-                            const isValidSignature = BundleSigning.validateSignatures(signaturesToValidate[i].address, signaturesToValidate[i].signatureFragments, bundleHash);
+                            const isValidSignature = BundleSigning.validateSignatures(signaturesToValidate[i].address, signaturesToValidate[i].signatureMessageFragments, bundleHash);
 
                             if (!isValidSignature) {
                                 isValid = false;
@@ -273,7 +280,7 @@ export class BundleSigning {
     }
 
     /* @internal */
-    public static validateSignatures(expectedAddress: Address, signatureFragments: SignatureFragment[], bundleHash: Hash): boolean {
+    public static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean {
         const normalizedBundleFragments = [];
         const normalizedBundleHash = BundleSigning.normalizedBundle(bundleHash);
 
@@ -283,10 +290,10 @@ export class BundleSigning {
         }
 
         // Get digests
-        const digests = new Int8Array(signatureFragments.length * 243);
+        const digests = new Int8Array(signatureMessageFragments.length * 243);
 
-        for (let i = 0; i < signatureFragments.length; i++) {
-            const digestBuffer = BundleSigning.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureFragments[i].toTrytes()).toArray());
+        for (let i = 0; i < signatureMessageFragments.length; i++) {
+            const digestBuffer = BundleSigning.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureMessageFragments[i].toTrytes()).toArray());
 
             for (let j = 0; j < 243; j++) {
                 digests[i * 243 + j] = digestBuffer[j];
@@ -297,14 +304,14 @@ export class BundleSigning {
     }
 
     /* @internal */
-    public static digest(normalizedBundleFragment: Int8Array, signatureFragmentTrits: Int8Array): Int8Array {
+    public static digest(normalizedBundleFragment: Int8Array, signatureMessageFragmentTrits: Int8Array): Int8Array {
         let buffer: Int8Array;
 
         const kerl = SpongeFactory.instance().create("kerl");
         kerl.initialize();
 
         for (let i = 0; i < 27; i++) {
-            buffer = new Int8Array(signatureFragmentTrits.slice(i * 243, (i + 1) * 243));
+            buffer = new Int8Array(signatureMessageFragmentTrits.slice(i * 243, (i + 1) * 243));
 
             for (let j = normalizedBundleFragment[i] + 13; j-- > 0;) {
                 const jKerl = SpongeFactory.instance().create("kerl");

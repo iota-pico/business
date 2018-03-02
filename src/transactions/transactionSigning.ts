@@ -102,14 +102,14 @@ export class TransactionSigning {
         return Trits.fromArray(checksumTrits).toTrytes().toString().substring(81 - checksumLength, 81);
     }
 
-    public static signatureFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
-        const signatureFragment = keyFragment.slice();
+    public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
+        const signatureMessageFragment = keyFragment.slice();
         let hash: Int8Array;
 
         const kerl = SpongeFactory.instance().create("kerl");
 
         for (let i = 0; i < 27; i++) {
-            hash = signatureFragment.slice(i * 243, (i + 1) * 243);
+            hash = signatureMessageFragment.slice(i * 243, (i + 1) * 243);
 
             for (let j = 0; j < 13 - normalizedBundleFragment[i]; j++) {
                 kerl.initialize();
@@ -119,10 +119,10 @@ export class TransactionSigning {
             }
 
             for (let j = 0; j < 243; j++) {
-                signatureFragment[i * 243 + j] = hash[j];
+                signatureMessageFragment[i * 243 + j] = hash[j];
             }
         }
 
-        return signatureFragment;
+        return signatureMessageFragment;
     }
 }

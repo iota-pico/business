@@ -16,7 +16,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 * [finalizeBundle](bundlesigning.md#finalizebundle)
 * [isValid](bundlesigning.md#isvalid)
 * [normalizedBundle](bundlesigning.md#normalizedbundle)
-* [signInputsAndReturn](bundlesigning.md#signinputsandreturn)
+* [signInputs](bundlesigning.md#signinputs)
 * [transactionHash](bundlesigning.md#transactionhash)
 * [validateSignatures](bundlesigning.md#validatesignatures)
 
@@ -58,7 +58,7 @@ ___
 
 ### «Static» digest
 
-► **digest**(normalizedBundleFragment: *`Int8Array`*, signatureFragmentTrits: *`Int8Array`*): `Int8Array`
+► **digest**(normalizedBundleFragment: *`Int8Array`*, signatureMessageFragmentTrits: *`Int8Array`*): `Int8Array`
 
 
 
@@ -71,7 +71,7 @@ ___
 | Param | Type | Description |
 | ------ | ------ | ------ |
 | normalizedBundleFragment | `Int8Array`   |  - |
-| signatureFragmentTrits | `Int8Array`   |  - |
+| signatureMessageFragmentTrits | `Int8Array`   |  - |
 
 
 
@@ -93,7 +93,7 @@ ___
 
 
 
-*Defined in transactions/bundleSigning.ts:115*
+*Defined in transactions/bundleSigning.ts:113*
 
 
 
@@ -175,11 +175,11 @@ ___
 
 ___
 
-<a id="signinputsandreturn"></a>
+<a id="signinputs"></a>
 
-### «Static» signInputsAndReturn
+### «Static» signInputs
 
-► **signInputsAndReturn**(seed: *`Hash`*, bundle: *`Bundle`*, transferOptions: *[TransferOptions](../#transferoptions)*, signatureFragments: *`SignatureFragment`[]*, inputs: *`Input`[]*, addedHMAC: *`boolean`*): `Trytes`[]
+► **signInputs**(seed: *`Hash`*, bundle: *`Bundle`*, transferOptions: *[TransferOptions](../#transferoptions)*, signatureMessageFragments: *`SignatureMessageFragment`[]*, inputs: *`Input`[]*, addedHMAC: *`boolean`*): `Transaction`[]
 
 
 
@@ -194,7 +194,7 @@ ___
 | seed | `Hash`   |  - |
 | bundle | `Bundle`   |  - |
 | transferOptions | [TransferOptions](../#transferoptions)   |  - |
-| signatureFragments | `SignatureFragment`[]   |  - |
+| signatureMessageFragments | `SignatureMessageFragment`[]   |  - |
 | inputs | `Input`[]   |  - |
 | addedHMAC | `boolean`   |  - |
 
@@ -202,7 +202,7 @@ ___
 
 
 
-**Returns:** `Trytes`[]
+**Returns:** `Transaction`[]
 
 
 
@@ -244,7 +244,7 @@ ___
 
 ### «Static» validateSignatures
 
-► **validateSignatures**(expectedAddress: *`Address`*, signatureFragments: *`SignatureFragment`[]*, bundleHash: *`Hash`*): `boolean`
+► **validateSignatures**(expectedAddress: *`Address`*, signatureMessageFragments: *`SignatureMessageFragment`[]*, bundleHash: *`Hash`*): `boolean`
 
 
 
@@ -257,7 +257,7 @@ ___
 | Param | Type | Description |
 | ------ | ------ | ------ |
 | expectedAddress | `Address`   |  - |
-| signatureFragments | `SignatureFragment`[]   |  - |
+| signatureMessageFragments | `SignatureMessageFragment`[]   |  - |
 | bundleHash | `Hash`   |  - |
 
 

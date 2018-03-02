@@ -8,5 +8,5 @@ export declare class TransactionSigning {
     static digests(key: Int8Array): Int8Array;
     static address(digests: Int8Array): Int8Array;
     static createChecksum(trits: Int8Array, checksumLength: number): string;
-    static signatureFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array;
+    static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array;
 }

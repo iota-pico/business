@@ -7,19 +7,15 @@
 
 ### Classes
 
-* [BackgroundTaskService](classes/backgroundtaskservice.md)
 * [BundleSigning](classes/bundlesigning.md)
 * [BusinessError](classes/businesserror.md)
 * [HmacCurl](classes/hmaccurl.md)
-* [TimeService](classes/timeservice.md)
 * [TransactionClient](classes/transactionclient.md)
 * [TransactionSigning](classes/transactionsigning.md)
 
 
 ### Interfaces
 
-* [IBackgroundTaskService](interfaces/ibackgroundtaskservice.md)
-* [ITimeService](interfaces/itimeservice.md)
 * [ITransactionClient](interfaces/itransactionclient.md)
 
 

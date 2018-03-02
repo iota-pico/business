@@ -1,6 +1,6 @@
 import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
-import { ITimeService } from "@iota-pico/core/dist//interfaces/ITimeService";
 import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
+import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -199,7 +199,7 @@ export declare class TransactionClient implements ITransactionClient {
      * @param transactionHash The hash of the transaction to be re-broadcast.
      * @returns Promise which resolves or rejects with an error.
      */
-    rebroadcastBundle(transactionHash: Hash): Promise<void>;
+    rebroadcastBundle(transactionHash: Hash): Promise<Bundle>;
     /**
      * Get transaction objects by fist performing a findTransactions call.
      * @param addresses The addresses to get the transaction objects for.
@@ -231,5 +231,5 @@ export declare class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the account data or rejects with an error.
      */
     getAccountData(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity): Promise<AccountData>;
-    private localProofOfWork(trunkTransaction, branchTransaction, minWeightMagnitude, transactions);
+    private proofOfWorkIterate(trunkTransaction, branchTransaction, transactions, minWeightMagnitude);
 }

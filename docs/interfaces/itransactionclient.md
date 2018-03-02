@@ -19,25 +19,25 @@ Represents a client for performing transactions using the api if required.
 
 ###  attachToTangle
 
-► **attachToTangle**(trytes: *`Trytes`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+► **attachToTangle**(transactions: *`Transaction`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
 
 
 
-*Defined in interfaces/ITransactionClient.ts:118*
+*Defined in interfaces/ITransactionClient.ts:117*
 
 
 
-Attach the trytes to the tangle by doing proof of work.
+Attach the transactions to the tangle by doing proof of work.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| trytes | `Trytes`[]   |  The trytes to attach. |
+| transactions | `Transaction`[]   |  The transactions to attach. |
 | depth | `number`   |  Value that determines how far to go for tip selection. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
-| reference | `Hash`   |  The reference to send with the trytes. |
+| reference | `Hash`   |  The reference to send with the transactions. |
 
 
 
@@ -45,41 +45,6 @@ Attach the trytes to the tangle by doing proof of work.
 
 **Returns:** `Promise`.<`Transaction`[]>
 Promise which resolves to the list of transactions created or rejects with an error.
-
-
-
-
-
-
-___
-
-<a id="broadcastbundle"></a>
-
-###  broadcastBundle
-
-► **broadcastBundle**(transactionTail: *`Hash`*): `Promise`.<`void`>
-
-
-
-*Defined in interfaces/ITransactionClient.ts:200*
-
-
-
-Re-Broadcasts a transfer.
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
-
-
-
-
-
-**Returns:** `Promise`.<`void`>
-Promise which resolves or rejects with an error.
 
 
 
@@ -96,7 +61,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:211*
+*Defined in interfaces/ITransactionClient.ts:217*
 
 
 
@@ -134,7 +99,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:40*
+*Defined in interfaces/ITransactionClient.ts:39*
 
 
 
@@ -172,7 +137,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:234*
+*Defined in interfaces/ITransactionClient.ts:240*
 
 
 
@@ -210,7 +175,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:74*
+*Defined in interfaces/ITransactionClient.ts:73*
 
 
 
@@ -249,7 +214,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:84*
+*Defined in interfaces/ITransactionClient.ts:83*
 
 
 
@@ -283,11 +248,11 @@ ___
 
 ###  getBundle
 
-► **getBundle**(trunkTransaction: *`Hash`*): `Promise`.<`Bundle`>
+► **getBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
 
 
 
-*Defined in interfaces/ITransactionClient.ts:175*
+*Defined in interfaces/ITransactionClient.ts:181*
 
 
 
@@ -298,7 +263,7 @@ Gets the associated bundle transactions of a single transaction. Does validation
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| trunkTransaction | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
+| transactionHash | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
 
 
 
@@ -322,7 +287,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:95*
+*Defined in interfaces/ITransactionClient.ts:94*
 
 
 
@@ -361,7 +326,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:52*
+*Defined in interfaces/ITransactionClient.ts:51*
 
 
 
@@ -396,7 +361,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:63*
+*Defined in interfaces/ITransactionClient.ts:62*
 
 
 
@@ -435,7 +400,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:28*
+*Defined in interfaces/ITransactionClient.ts:27*
 
 
 
@@ -462,7 +427,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:46*
+*Defined in interfaces/ITransactionClient.ts:45*
 
 
 
@@ -497,7 +462,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:224*
+*Defined in interfaces/ITransactionClient.ts:230*
 
 
 
@@ -536,7 +501,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:22*
+*Defined in interfaces/ITransactionClient.ts:21*
 
 
 
@@ -561,7 +526,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:151*
+*Defined in interfaces/ITransactionClient.ts:150*
 
 
 
@@ -588,15 +553,50 @@ Promise which resolves to true if the transaction is promotable rejects with an 
 
 ___
 
+<a id="isreattachable"></a>
+
+###  isReattachable
+
+► **isReattachable**(addresses: *`Address`[]*): `Promise`.<`boolean`[]>
+
+
+
+*Defined in interfaces/ITransactionClient.ts:157*
+
+
+
+Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| addresses | `Address`[]   |  Input address you want to have tested. |
+
+
+
+
+
+**Returns:** `Promise`.<`boolean`[]>
+Promise which resolves to true if the addresses are reattachable or rejects with an error.
+
+
+
+
+
+
+___
+
 <a id="preparetransfers"></a>
 
 ###  prepareTransfers
 
-► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Trytes`[]>
+► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Transaction`[]>
 
 
 
-*Defined in interfaces/ITransactionClient.ts:108*
+*Defined in interfaces/ITransactionClient.ts:107*
 
 
 
@@ -615,8 +615,8 @@ Prepares transfer by generating bundle, finding and signing inputs.
 
 
 
-**Returns:** `Promise`.<`Trytes`[]>
-Promise which resolves to the array of Trytes for the transfer or rejects with error.
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the array of Transactions for the transfer or rejects with error.
 
 
 
@@ -633,7 +633,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:167*
+*Defined in interfaces/ITransactionClient.ts:173*
 
 
 
@@ -664,28 +664,101 @@ Promise which resolves to the list of transactions created or rejects with an er
 
 ___
 
-<a id="replaybundle"></a>
+<a id="reattachbundle"></a>
 
-###  replayBundle
+###  reattachBundle
 
-► **replayBundle**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Transaction`[]>
-
-
-
-*Defined in interfaces/ITransactionClient.ts:193*
+► **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Transaction`[]>
 
 
 
-Replays a transfer by doing Proof of Work again.
+*Defined in interfaces/ITransactionClient.ts:199*
+
+
+
+Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
+| transactionHash | `Hash`   |  The hash of the transaction to be promoted. |
 | depth | `number`   |  Value that determines how far to go for tip selection. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+
+
+
+
+
+**Returns:** `Promise`.<`Transaction`[]>
+Promise which resolves to the list of transactions created or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="rebroadcastbundle"></a>
+
+###  rebroadcastBundle
+
+► **rebroadcastBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
+
+
+
+*Defined in interfaces/ITransactionClient.ts:206*
+
+
+
+Wrapper which gets a bundle and then broadcasts it.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactionHash | `Hash`   |  The hash of the transaction to be re-broadcast. |
+
+
+
+
+
+**Returns:** `Promise`.<`Bundle`>
+Promise which resolves or rejects with an error.
+
+
+
+
+
+
+___
+
+<a id="sendtransactions"></a>
+
+###  sendTransactions
+
+► **sendTransactions**(transactions: *`Transaction`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+
+
+
+*Defined in interfaces/ITransactionClient.ts:127*
+
+
+
+Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
+
+
+**Parameters:**
+
+| Param | Type | Description |
+| ------ | ------ | ------ |
+| transactions | `Transaction`[]   |  The transactions to send. |
+| depth | `number`   |  Value that determines how far to go for tip selection. |
+| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
+| reference | `Hash`   |  The reference to send with the transactions. |
 
 
 
@@ -709,11 +782,11 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:144*
+*Defined in interfaces/ITransactionClient.ts:143*
 
 
 
-Wrapper function that does prepareTransfers, as well as attachToTangle and finally, it broadcasts and stores the transactions locally.
+Wrapper function that does prepareTransfers and then sendTransactions.
 
 
 **Parameters:**
@@ -725,45 +798,7 @@ Wrapper function that does prepareTransfers, as well as attachToTangle and final
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 | transfers | `Transfer`[]   |  The transfers to send. |
 | transferOptions | [TransferOptions](../#transferoptions)   |  Additional options for the transfer. @property inputs List of inputs used for funding the transfer. @property security Security level to be used for the private key / addresses. @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to. @property hmacKey Hmac key to sign the bundle. |
-| reference | `Hash`   |  The reference to send with the trytes. |
-
-
-
-
-
-**Returns:** `Promise`.<`Transaction`[]>
-Promise which resolves to the list of transactions created or rejects with an error.
-
-
-
-
-
-
-___
-
-<a id="sendtrytes"></a>
-
-###  sendTrytes
-
-► **sendTrytes**(trytes: *`Trytes`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
-
-
-
-*Defined in interfaces/ITransactionClient.ts:128*
-
-
-
-Wrapper function that does attachToTangle and finally, it broadcasts and stores the transactions.
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| trytes | `Trytes`[]   |  The trytes to send. |
-| depth | `number`   |  Value that determines how far to go for tip selection. |
-| minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
-| reference | `Hash`   |  The reference to send with the trytes. |
+| reference | `Hash`   |  The reference to send with the transactions. |
 
 
 
@@ -787,7 +822,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:184*
+*Defined in interfaces/ITransactionClient.ts:190*
 
 
 

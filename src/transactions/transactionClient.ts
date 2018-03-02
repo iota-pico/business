@@ -9,20 +9,20 @@ import { IGetTransactionsToApproveRequest } from "@iota-pico/api/dist/models/IGe
 import { IGetTrytesRequest } from "@iota-pico/api/dist/models/IGetTrytesRequest";
 import { IStoreTransactionsRequest } from "@iota-pico/api/dist/models/IStoreTransactionsRequest";
 import { IWereAddressesSpentFromRequest } from "@iota-pico/api/dist/models/IWereAddressesSpentFromRequest";
-import { ITimeService } from "@iota-pico/core/dist//interfaces/ITimeService";
-import { BackgroundTaskService } from "@iota-pico/core/dist//services/backgroundTaskService";
-import { TimeService } from "@iota-pico/core/dist//services/timeService";
 import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
 import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
 import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
+import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
+import { BackgroundTaskService } from "@iota-pico/core/dist/services/backgroundTaskService";
+import { TimeService } from "@iota-pico/core/dist/services/timeService";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Input } from "@iota-pico/data/dist/data/input";
-import { SignatureFragment } from "@iota-pico/data/dist/data/signatureFragment";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
@@ -429,46 +429,46 @@ export class TransactionClient implements ITransactionClient {
         let lastTag: Tag;
 
         let totalValue: number = 0;
-        const signatureFragments: SignatureFragment[] = [];
+        const signatureMessageFragments: SignatureMessageFragment[] = [];
 
         //  Iterate over all transfers, get totalValue
-        //  and prepare the signatureFragments, message and tag
+        //  and prepare the Messages, message and tag
         for (let i = 0; i < transfers.length; i++) {
             let signatureMessageLength = 1;
 
             // If message longer than 2187 trytes, increase signatureMessageLength (add 2nd transaction)
             const messageString = transfers[i].message.toString();
-            if (messageString.length > SignatureFragment.LENGTH) {
+            if (messageString.length > SignatureMessageFragment.LENGTH) {
                 // Get total length, message / maxLength (2187 trytes)
-                signatureMessageLength += Math.floor(messageString.length / SignatureFragment.LENGTH);
+                signatureMessageLength += Math.floor(messageString.length / SignatureMessageFragment.LENGTH);
 
                 let msgCopy = messageString;
 
                 // While there is still a message, copy it
                 while (msgCopy) {
-                    let fragment = msgCopy.slice(0, SignatureFragment.LENGTH);
-                    msgCopy = msgCopy.slice(SignatureFragment.LENGTH, msgCopy.length);
+                    let fragment = msgCopy.slice(0, SignatureMessageFragment.LENGTH);
+                    msgCopy = msgCopy.slice(SignatureMessageFragment.LENGTH, msgCopy.length);
 
                     // Pad remainder of fragment
-                    for (let j = 0; fragment.length < SignatureFragment.LENGTH; j++) {
+                    for (let j = 0; fragment.length < SignatureMessageFragment.LENGTH; j++) {
                         fragment += "9";
                     }
 
-                    signatureFragments.push(SignatureFragment.fromTrytes(Trytes.fromString(fragment)));
+                    signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
                 }
             } else {
                 // Else, get single fragment with 2187 of 9's trytes
                 let fragment = "";
 
                 if (messageString) {
-                    fragment = messageString.slice(0, SignatureFragment.LENGTH);
+                    fragment = messageString.slice(0, SignatureMessageFragment.LENGTH);
                 }
 
-                for (let j = 0; fragment.length < SignatureFragment.LENGTH; j++) {
+                for (let j = 0; fragment.length < SignatureMessageFragment.LENGTH; j++) {
                     fragment += "9";
                 }
 
-                signatureFragments.push(SignatureFragment.fromTrytes(Trytes.fromString(fragment)));
+                signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
             }
 
             // get current timestamp in seconds
@@ -521,17 +521,17 @@ export class TransactionClient implements ITransactionClient {
                     throw new BusinessError("Not enough balance in the input addresses to satisfy the total for the transfer");
                 }
 
-                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, confirmedInputs, signatureMessageFragments, totalValue, lastTag, addedHMAC);
             } else {
                 // No inputs supplied so we need to get some
                 const inputsResponse = await this.getInputs(seed, 0, undefined, localTransferOptions.security, totalValue);
 
-                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureFragments, totalValue, lastTag, addedHMAC);
+                preparedTransactions = await this.addRemainder(seed, bundle, localTransferOptions, inputsResponse.inputs, signatureMessageFragments, totalValue, lastTag, addedHMAC);
             }
         } else {
             // If no input required, don't sign and simply finalize the bundle
             BundleSigning.finalizeBundle(bundle);
-            bundle.addSignatureFragments(signatureFragments);
+            bundle.addSignatureMessageFragments(signatureMessageFragments);
 
             preparedTransactions = bundle.transactions.reverse();
         }
@@ -569,10 +569,19 @@ export class TransactionClient implements ITransactionClient {
 
         let powTrytes: Transaction[];
         if (this._proofOfWork) {
-            powTrytes = await this.localProofOfWork(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
-                                                    Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
-                                                    minWeightMagnitude,
-                                                    transactions);
+            if (this._proofOfWork.performsSingle()) {
+                powTrytes = await this.proofOfWorkIterate(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
+                                                          Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
+                                                          transactions,
+                                                          minWeightMagnitude);
+            } else {
+                const allTrytes = await this._proofOfWork.pow(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
+                                                              Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
+                                                              transactions.map(t => t.toTrytes()),
+                                                              minWeightMagnitude);
+
+                powTrytes = allTrytes.map(returnTrytes => Transaction.fromTrytes(returnTrytes));
+            }
         } else {
             const attachToTangleRequest: IAttachToTangleRequest = {
                 trunkTransaction: transactionsToApprove.trunkTransaction,
@@ -873,14 +882,16 @@ export class TransactionClient implements ITransactionClient {
      * @param transactionHash The hash of the transaction to be re-broadcast.
      * @returns Promise which resolves or rejects with an error.
      */
-    public async rebroadcastBundle(transactionHash: Hash): Promise<void> {
+    public async rebroadcastBundle(transactionHash: Hash): Promise<Bundle> {
         const bundle = await this.getBundle(transactionHash);
 
         const broadcastTransactionsRequest: IBroadcastTransactionsRequest = {
             trytes: bundle.transactions.reverse().map(bt => bt.toTrytes().toString())
         };
 
-        return this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
+        await this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
+
+        return bundle;
     }
 
     /**
@@ -1045,10 +1056,10 @@ export class TransactionClient implements ITransactionClient {
 
     /* @internal */
     private async addRemainder(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, inputs: Input[],
-                               signatureFragments: SignatureFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<Transaction[]> {
+                               signatureMessageFragments: SignatureMessageFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<Transaction[]> {
         let finalTransactions: Transaction[];
         let totalTransferValue = totalValue;
-        for (let i = 0; i < inputs.length && finalTransactions === undefined; i++) {
+        for (let i = 0; i < inputs.length && ObjectHelper.isEmpty(finalTransactions); i++) {
             const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
 
             // Add input as bundle entry
@@ -1064,7 +1075,7 @@ export class TransactionClient implements ITransactionClient {
                     // Remainder bundle entry
                     bundle.addTransactions(1, transferOptions.remainderAddress, remainder, tag, timestamp);
                     // Final function for signing inputs
-                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, addedHMAC);
                 } else if (remainder > 0) {
                     let startIndex = 0;
                     for (let k = 0; k < inputs.length; k++) {
@@ -1081,11 +1092,11 @@ export class TransactionClient implements ITransactionClient {
                     bundle.addTransactions(1, addresses[addresses.length - 1], remainder, tag, ts);
 
                     // Final function for signing inputs
-                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, addedHMAC);
                 } else {
                     // If there is no remainder, do not add transaction to bundle
                     // simply sign and return
-                    finalTransactions = BundleSigning.signInputsAndReturn(seed, bundle, transferOptions, signatureFragments, inputs, addedHMAC);
+                    finalTransactions = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, addedHMAC);
                 }
             } else {
                 // If multiple inputs provided, subtract the totalTransferValue by
@@ -1097,10 +1108,10 @@ export class TransactionClient implements ITransactionClient {
         return finalTransactions;
     }
 
-    private async localProofOfWork(trunkTransaction: Hash, branchTransaction: Hash, minWeightMagnitude: number, transactions: Transaction[]): Promise<Transaction[]> {
-        let previousTransactionHash: Hash;
+    private async proofOfWorkIterate(trunkTransaction: Hash, branchTransaction: Hash, transactions: Transaction[], minWeightMagnitude: number): Promise<Transaction[]> {
         const finalTransactions = [];
 
+        let previousTransactionHash: Hash;
         for (let i = 0; i < transactions.length; i++) {
             // Start with last index transaction
             // Assign it the trunk / branch which the user has supplied
@@ -1128,17 +1139,16 @@ export class TransactionClient implements ITransactionClient {
 
             const newTrytes = transactions[i].toTrytes();
 
-            const returnedTrytes = await this._proofOfWork.pow(newTrytes, minWeightMagnitude);
+            const returnedTrytes = await this._proofOfWork.pow(trunkTransaction, branchTransaction, [ newTrytes ], minWeightMagnitude);
 
-            transactions[i].nonce = Tag.fromTrytes(returnedTrytes.sub(Transaction.LENGTH - Tag.LENGTH, Tag.LENGTH));
+            transactions[i].nonce = Tag.fromTrytes(returnedTrytes[0].sub(Transaction.LENGTH - Tag.LENGTH, Tag.LENGTH));
 
             // Calculate the hash of the new transaction with nonce and use that as the previous hash for next entry
-            const returnTransaction = Transaction.fromTrytes(returnedTrytes);
+            const returnTransaction = Transaction.fromTrytes(returnedTrytes[0]);
             previousTransactionHash = BundleSigning.transactionHash(returnTransaction);
 
             finalTransactions.push(returnTransaction);
         }
-
         // reverse the order so that it's ascending from currentIndex
         return Promise.resolve(finalTransactions.reverse());
     }

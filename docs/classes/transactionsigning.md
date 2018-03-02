@@ -15,7 +15,7 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 * [createChecksum](transactionsigning.md#createchecksum)
 * [digests](transactionsigning.md#digests)
 * [key](transactionsigning.md#key)
-* [signatureFragment](transactionsigning.md#signaturefragment)
+* [signatureMessageFragment](transactionsigning.md#signaturemessagefragment)
 
 
 
@@ -144,11 +144,11 @@ ___
 
 ___
 
-<a id="signaturefragment"></a>
+<a id="signaturemessagefragment"></a>
 
-### «Static» signatureFragment
+### «Static» signatureMessageFragment
 
-► **signatureFragment**(normalizedBundleFragment: *`Int8Array`*, keyFragment: *`Int8Array`*): `Int8Array`
+► **signatureMessageFragment**(normalizedBundleFragment: *`Int8Array`*, keyFragment: *`Int8Array`*): `Int8Array`
 
 
 

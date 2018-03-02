@@ -203,7 +203,7 @@ export interface ITransactionClient {
      * @param transactionHash The hash of the transaction to be re-broadcast.
      * @returns Promise which resolves or rejects with an error.
      */
-    rebroadcastBundle(transactionHash: Hash): Promise<void>;
+    rebroadcastBundle(transactionHash: Hash): Promise<Bundle>;
 
     /**
      * Get transaction objects by fist performing a findTransactions call.
