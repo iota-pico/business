@@ -36,6 +36,7 @@ import { PromoteOptions } from "../interfaces/promoteOptions";
 import { TransferOptions } from "../interfaces/transferOptions";
 import { BundleSigning } from "./bundleSigning";
 import { TransactionSigning } from "./transactionSigning";
+import { BundleHelper } from "./bundleHelper";
 
 /**
  * Default implementation of the ITransactionClient.
@@ -425,63 +426,12 @@ export class TransactionClient implements ITransactionClient {
         });
 
         // Create a new bundle
-        const bundle = new Bundle();
-        let lastTag: Tag;
+        const prepared = BundleHelper.prepareBundle(this._timeService, transfers);
 
-        let totalValue: number = 0;
-        const signatureMessageFragments: SignatureMessageFragment[] = [];
-
-        //  Iterate over all transfers, get totalValue
-        //  and prepare the Messages, message and tag
-        for (let i = 0; i < transfers.length; i++) {
-            let signatureMessageLength = 1;
-
-            // If message longer than 2187 trytes, increase signatureMessageLength (add 2nd transaction)
-            const messageString = transfers[i].message.toString();
-            if (messageString.length > SignatureMessageFragment.LENGTH) {
-                // Get total length, message / maxLength (2187 trytes)
-                signatureMessageLength += Math.floor(messageString.length / SignatureMessageFragment.LENGTH);
-
-                let msgCopy = messageString;
-
-                // While there is still a message, copy it
-                while (msgCopy) {
-                    let fragment = msgCopy.slice(0, SignatureMessageFragment.LENGTH);
-                    msgCopy = msgCopy.slice(SignatureMessageFragment.LENGTH, msgCopy.length);
-
-                    // Pad remainder of fragment
-                    for (let j = 0; fragment.length < SignatureMessageFragment.LENGTH; j++) {
-                        fragment += "9";
-                    }
-
-                    signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
-                }
-            } else {
-                // Else, get single fragment with 2187 of 9's trytes
-                let fragment = "";
-
-                if (messageString) {
-                    fragment = messageString.slice(0, SignatureMessageFragment.LENGTH);
-                }
-
-                for (let j = 0; fragment.length < SignatureMessageFragment.LENGTH; j++) {
-                    fragment += "9";
-                }
-
-                signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
-            }
-
-            // get current timestamp in seconds
-            const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
-
-            lastTag = transfers[i].tag;
-
-            // Add first entries to the bundle
-            bundle.addTransactions(signatureMessageLength, transfers[i].address, transfers[i].value, transfers[i].tag, timestamp);
-
-            // Sum up total value
-            totalValue += transfers[i].value;
-        }
+        const bundle = prepared.bundle;
+        const lastTag = prepared.lastTag;
+        const totalValue = prepared.totalValue;
+        const signatureMessageFragments = prepared.signatureMessageFragments;
 
         let preparedTransactions: Transaction[];
 
@@ -1152,4 +1102,5 @@ export class TransactionClient implements ITransactionClient {
         // reverse the order so that it's ascending from currentIndex
         return Promise.resolve(finalTransactions.reverse());
     }
+
 }

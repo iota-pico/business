@@ -1,4 +1,5 @@
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 
@@ -7,7 +8,7 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
  * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export class TransactionSigning {
-    public static key(seed: Hash, index: number, length: number): Int8Array {
+    public static key(seed: Hash, index: number, length: AddressSecurity): Int8Array {
         const seedTrits = Trits.fromTrytes(seed.toTrytes());
         const indexTrits = Trits.fromNumber(index);
         const subseed = Trits.add(seedTrits, indexTrits).toArray();
