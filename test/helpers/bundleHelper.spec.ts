@@ -1,5 +1,5 @@
 /**
- * Tests for BundleSigning.
+ * Tests for BundleHelper.
  */
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -12,12 +12,12 @@ import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import * as chai from "chai";
+import { BundleHelper } from "../../src/helpers/bundleHelper";
 import { TransferOptions } from "../../src/interfaces/transferOptions";
-import { BundleSigning } from "../../src/transactions/bundleSigning";
 
-describe("BundleSigning", () => {
+describe("BundleHelper", () => {
     it("can be created", () => {
-        const obj = new BundleSigning();
+        const obj = new BundleHelper();
         chai.should().exist(obj);
     });
 
@@ -33,8 +33,8 @@ describe("BundleSigning", () => {
 
             const inputs: Input[] = [ ];
 
-            const ret = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
-            chai.expect(ret.length).to.be.equal(0);
+            BundleHelper.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
+            chai.expect(bundle.transactions.length).to.be.equal(0);
         });
 
         it("can be created", () => {
@@ -59,8 +59,8 @@ describe("BundleSigning", () => {
                                  100)
             ];
 
-            const ret = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
-            chai.expect(ret.length).to.be.equal(2);
+            BundleHelper.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
+            chai.expect(bundle.transactions.length).to.be.equal(2);
         });
 
         it("can be created with override security", () => {
@@ -91,8 +91,8 @@ describe("BundleSigning", () => {
 
             inputs[0].security = undefined;
 
-            const ret = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
-            chai.expect(ret.length).to.be.equal(2);
+            BundleHelper.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
+            chai.expect(bundle.transactions.length).to.be.equal(2);
         });
 
         it("can be created with addtional value transactions", () => {
@@ -124,16 +124,16 @@ describe("BundleSigning", () => {
                                  100)
             ];
 
-            const ret = BundleSigning.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
-            chai.expect(ret.length).to.be.equal(2);
+            BundleHelper.signInputs(seed, bundle, transferOptions, signatureMessageFragments, inputs, false);
+            chai.expect(bundle.transactions.length).to.be.equal(2);
         });
     });
 
     describe("isValid", () => {
         it("can not be valid with no transactions", () => {
-            const transactions: Transaction[] = [ ];
-
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = [];
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
 
@@ -156,7 +156,9 @@ describe("BundleSigning", () => {
                                        Tag.fromTrytes(Trytes.fromString("H".repeat(27))))
              ];
 
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = transactions;
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
 
@@ -179,7 +181,9 @@ describe("BundleSigning", () => {
                                        Tag.fromTrytes(Trytes.fromString("H".repeat(27))))
              ];
 
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = transactions;
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
 
@@ -202,7 +206,9 @@ describe("BundleSigning", () => {
                                        Tag.fromTrytes(Trytes.fromString("H".repeat(27))))
              ];
 
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = transactions;
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
 
@@ -225,7 +231,9 @@ describe("BundleSigning", () => {
                                        Tag.fromTrytes(Trytes.fromString("H".repeat(27))))
              ];
 
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = transactions;
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
 
@@ -263,7 +271,9 @@ describe("BundleSigning", () => {
                                        Tag.fromTrytes(Trytes.fromString("H".repeat(27))))
              ];
 
-            const ret = BundleSigning.isValid(transactions);
+            const bundle: Bundle = new Bundle();
+            bundle.transactions = transactions;
+            const ret = BundleHelper.isValid(bundle);
             chai.expect(ret).to.be.equal(false);
         });
     });

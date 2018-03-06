@@ -3,7 +3,7 @@
  */
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import * as chai from "chai";
-import { HmacCurl } from "../../src/transactions/hmacCurl";
+import { HmacCurl } from "../../src/sign/hmacCurl";
 
 describe("HmacCurl", () => {
     it("can be created", () => {

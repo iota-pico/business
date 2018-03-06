@@ -7,11 +7,13 @@
 
 ### Classes
 
-* [BundleSigning](classes/bundlesigning.md)
+* [BundleHelper](classes/bundlehelper.md)
 * [BusinessError](classes/businesserror.md)
 * [HmacCurl](classes/hmaccurl.md)
+* [MultiSigAddress](classes/multisigaddress.md)
+* [MultiSigClient](classes/multisigclient.md)
+* [Signing](classes/signing.md)
 * [TransactionClient](classes/transactionclient.md)
-* [TransactionSigning](classes/transactionsigning.md)
 
 
 ### Interfaces

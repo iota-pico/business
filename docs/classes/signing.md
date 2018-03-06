@@ -1,8 +1,8 @@
-[@iota-pico/business](../README.md) > [TransactionSigning](../classes/transactionsigning.md)
+[@iota-pico/business](../README.md) > [Signing](../classes/signing.md)
 
 
 
-# Class: TransactionSigning
+# Class: Signing
 
 
 Helper class for signing transactions. Original [https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js](https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js)
@@ -11,11 +11,11 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 
 ### Methods
 
-* [address](transactionsigning.md#address)
-* [createChecksum](transactionsigning.md#createchecksum)
-* [digests](transactionsigning.md#digests)
-* [key](transactionsigning.md#key)
-* [signatureMessageFragment](transactionsigning.md#signaturemessagefragment)
+* [address](signing.md#address)
+* [createChecksum](signing.md#createchecksum)
+* [digests](signing.md#digests)
+* [key](signing.md#key)
+* [validateSignatures](signing.md#validatesignatures)
 
 
 
@@ -29,7 +29,7 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 
 
 
-*Defined in transactions/transactionSigning.ts:81*
+*Defined in sign/signing.ts:88*
 
 
 
@@ -59,7 +59,7 @@ ___
 
 
 
-*Defined in transactions/transactionSigning.ts:93*
+*Defined in sign/signing.ts:101*
 
 
 
@@ -90,7 +90,7 @@ ___
 
 
 
-*Defined in transactions/transactionSigning.ts:41*
+*Defined in sign/signing.ts:47*
 
 
 
@@ -116,11 +116,11 @@ ___
 
 ### «Static» key
 
-► **key**(seed: *`Hash`*, index: *`number`*, length: *`number`*): `Int8Array`
+► **key**(seed: *`Hash`*, index: *`number`*, length: *`AddressSecurity`*): `Int8Array`
 
 
 
-*Defined in transactions/transactionSigning.ts:10*
+*Defined in sign/signing.ts:15*
 
 
 
@@ -130,7 +130,7 @@ ___
 | ------ | ------ | ------ |
 | seed | `Hash`   |  - |
 | index | `number`   |  - |
-| length | `number`   |  - |
+| length | `AddressSecurity`   |  - |
 
 
 
@@ -144,15 +144,15 @@ ___
 
 ___
 
-<a id="signaturemessagefragment"></a>
+<a id="validatesignatures"></a>
 
-### «Static» signatureMessageFragment
+### «Static» validateSignatures
 
-► **signatureMessageFragment**(normalizedBundleFragment: *`Int8Array`*, keyFragment: *`Int8Array`*): `Int8Array`
+► **validateSignatures**(expectedAddress: *`Address`*, signatureMessageFragments: *`SignatureMessageFragment`[]*, bundleHash: *`Hash`*): `boolean`
 
 
 
-*Defined in transactions/transactionSigning.ts:105*
+*Defined in sign/signing.ts:114*
 
 
 
@@ -160,14 +160,15 @@ ___
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| normalizedBundleFragment | `Int8Array`   |  - |
-| keyFragment | `Int8Array`   |  - |
+| expectedAddress | `Address`   |  - |
+| signatureMessageFragments | `SignatureMessageFragment`[]   |  - |
+| bundleHash | `Hash`   |  - |
 
 
 
 
 
-**Returns:** `Int8Array`
+**Returns:** `boolean`
 
 
 

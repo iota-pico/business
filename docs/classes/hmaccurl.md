@@ -30,7 +30,7 @@ Hashed Message Authentication Code using Curl.
 ### ⊕ **new HmacCurl**(key: *`Trytes`*): [HmacCurl](hmaccurl.md)
 
 
-*Defined in transactions/hmacCurl.ts:15*
+*Defined in sign/hmacCurl.ts:15*
 
 
 
@@ -61,7 +61,7 @@ Create a new instance of the HmacCurl.
 
 
 
-*Defined in transactions/hmacCurl.ts:28*
+*Defined in sign/hmacCurl.ts:28*
 
 
 

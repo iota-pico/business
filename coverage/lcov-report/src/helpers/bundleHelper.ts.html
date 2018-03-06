@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/transactions/bundleSigning.ts</title>
+    <title>Code coverage report for src/helpers/bundleHelper.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\index.html">All files</a> / <a href="index.html">src/transactions</a> bundleSigning.ts
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/helpers</a> bundleHelper.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>155/155</span>
+        <span class='fraction'>196/196</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>44/44</span>
+        <span class='fraction'>54/54</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>8/8</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>155/155</span>
+        <span class='fraction'>196/196</span>
       </div>
     </div>
   </div>
@@ -399,27 +399,194 @@
 354
 355
 356
-357</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">2735x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">41150x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -429,8 +596,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -452,53 +617,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">39x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -507,90 +629,137 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">1489x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">4952x</span>
-<span class="cline-any cline-yes">4952x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4952x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">51x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4952x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">4952x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1489x</span>
-<span class="cline-any cline-yes">1489x</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1472x</span>
-<span class="cline-any cline-yes">1472x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1509x</span>
-<span class="cline-any cline-yes">1509x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1509x</span>
-<span class="cline-any cline-yes">4527x</span>
-<span class="cline-any cline-yes">4527x</span>
-<span class="cline-any cline-yes">122229x</span>
-<span class="cline-any cline-yes">122229x</span>
-<span class="cline-any cline-yes">122229x</span>
-<span class="cline-any cline-yes">122229x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4527x</span>
-<span class="cline-any cline-yes">2324x</span>
-<span class="cline-any cline-yes">76519x</span>
-<span class="cline-any cline-yes">179646x</span>
-<span class="cline-any cline-yes">76519x</span>
-<span class="cline-any cline-yes">76519x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2203x</span>
-<span class="cline-any cline-yes">72713x</span>
-<span class="cline-any cline-yes">168957x</span>
-<span class="cline-any cline-yes">72713x</span>
-<span class="cline-any cline-yes">72713x</span>
+<span class="cline-any cline-yes">20x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1509x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">8094x</span>
+<span class="cline-any cline-yes">8094x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8094x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8094x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">8094x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-yes">1926x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1906x</span>
+<span class="cline-any cline-yes">1906x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1952x</span>
+<span class="cline-any cline-yes">1952x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1952x</span>
+<span class="cline-any cline-yes">5856x</span>
+<span class="cline-any cline-yes">5856x</span>
+<span class="cline-any cline-yes">158112x</span>
+<span class="cline-any cline-yes">158112x</span>
+<span class="cline-any cline-yes">158112x</span>
+<span class="cline-any cline-yes">158112x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5856x</span>
+<span class="cline-any cline-yes">2979x</span>
+<span class="cline-any cline-yes">98080x</span>
+<span class="cline-any cline-yes">231458x</span>
+<span class="cline-any cline-yes">98080x</span>
+<span class="cline-any cline-yes">98080x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2877x</span>
+<span class="cline-any cline-yes">95232x</span>
+<span class="cline-any cline-yes">220993x</span>
+<span class="cline-any cline-yes">95232x</span>
+<span class="cline-any cline-yes">95232x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1952x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -662,12 +831,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -682,112 +854,206 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">3159x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">351x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">351x</span>
-<span class="cline-any cline-yes">4563x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4563x</span>
-<span class="cline-any cline-yes">4563x</span>
-<span class="cline-any cline-yes">4563x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">351x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">648x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">648x</span>
+<span class="cline-any cline-yes">8424x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8424x</span>
+<span class="cline-any cline-yes">8424x</span>
+<span class="cline-any cline-yes">8424x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">648x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
+<span class="cline-any cline-yes">999x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">999x</span>
+<span class="cline-any cline-yes">12987x</span>
+<span class="cline-any cline-yes">12987x</span>
+<span class="cline-any cline-yes">12987x</span>
+<span class="cline-any cline-yes">12987x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">999x</span>
+<span class="cline-any cline-yes">242757x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Address } from "@iota-pico/data/dist/data/address";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Input } from "@iota-pico/data/dist/data/input";
 import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
+import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { TryteNumber } from "../../../iota-pico-data/dist/data/tryteNumber";
 import { TransferOptions } from "../interfaces/transferOptions";
-import { HmacCurl } from "./hmacCurl";
-import { TransactionSigning } from "./transactionSigning";
+import { HmacCurl } from "../sign/hmacCurl";
+import { Signing } from "../sign/signing";
 &nbsp;
 /**
  * Helper class for signing bundles.
  * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
-export class BundleSigning {
+export class BundleHelper {
+    public static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
+        bundle: Bundle; totalValue: number; signatureMessageFragments: SignatureMessageFragment[]; lastTag: Tag; } {
+        const bundle = new Bundle();
+        let lastTag: Tag;
+&nbsp;
+        let totalValue: number = 0;
+        const signatureMessageFragments: SignatureMessageFragment[] = [];
+&nbsp;
+        //  Iterate over all transfers, get totalValue
+        //  and prepare the Messages, message and tag
+        for (let i = 0; i &lt; transfers.length; i++) {
+            let signatureMessageLength = 1;
+&nbsp;
+            // If message longer than 2187 trytes, increase signatureMessageLength (add 2nd transaction)
+            const messageString = transfers[i].message.toString();
+            if (messageString.length &gt; SignatureMessageFragment.LENGTH) {
+                // Get total length, message / maxLength (2187 trytes)
+                signatureMessageLength += Math.floor(messageString.length / SignatureMessageFragment.LENGTH);
+&nbsp;
+                let msgCopy = messageString;
+&nbsp;
+                // While there is still a message, copy it
+                while (msgCopy) {
+                    let fragment = msgCopy.slice(0, SignatureMessageFragment.LENGTH);
+                    msgCopy = msgCopy.slice(SignatureMessageFragment.LENGTH, msgCopy.length);
+&nbsp;
+                    // Pad remainder of fragment
+                    for (let j = 0; fragment.length &lt; SignatureMessageFragment.LENGTH; j++) {
+                        fragment += "9";
+                    }
+&nbsp;
+                    signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
+                }
+            } else {
+                // Else, get single fragment with 2187 of 9's trytes
+                let fragment = "";
+&nbsp;
+                if (messageString) {
+                    fragment = messageString.slice(0, SignatureMessageFragment.LENGTH);
+                }
+&nbsp;
+                for (let j = 0; fragment.length &lt; SignatureMessageFragment.LENGTH; j++) {
+                    fragment += "9";
+                }
+&nbsp;
+                signatureMessageFragments.push(SignatureMessageFragment.fromTrytes(Trytes.fromString(fragment)));
+            }
+&nbsp;
+            // get current timestamp in seconds
+            const timestamp = Math.floor(timeService.msSinceEpoch() / 1000);
+&nbsp;
+            lastTag = transfers[i].tag;
+&nbsp;
+            // Add first entries to the bundle
+            bundle.addTransactions(signatureMessageLength, transfers[i].address, transfers[i].value, transfers[i].tag, timestamp);
+&nbsp;
+            // Sum up total value
+            totalValue += transfers[i].value;
+        }
+&nbsp;
+        return { bundle, totalValue, lastTag, signatureMessageFragments };
+    }
+&nbsp;
     /* @internal */
     public static signInputs(seed: Hash,
                              bundle: Bundle,
                              transferOptions: TransferOptions,
                              signatureMessageFragments: SignatureMessageFragment[],
                              inputs: Input[],
-                             addedHMAC: boolean): Transaction[] {
-        BundleSigning.finalizeBundle(bundle);
+                             addedHMAC: boolean): void {
+        BundleHelper.finalizeBundle(bundle);
         bundle.addSignatureMessageFragments(signatureMessageFragments);
 &nbsp;
-        //  SIGNING OF INPUTS
-        //
         //  Here we do the actual signing of the inputs
         //  Iterate over all bundle transactions, find the inputs
         //  Get the corresponding private key and calculate the signatureMessageFragment
@@ -808,53 +1074,10 @@ export class BundleSigning {
                     }
                 }
 &nbsp;
-                const bundleHash = bundle.transactions[i].bundle;
-&nbsp;
                 // Get corresponding private key of address
-                const key = TransactionSigning.key(seed, keyIndex, keySecurity);
+                const key = Signing.key(seed, keyIndex, keySecurity);
 &nbsp;
-                //  Get the normalized bundle hash
-                const normalizedBundleHash = BundleSigning.normalizedBundle(bundleHash);
-                const normalizedBundleFragments: Int8Array[] = [];
-&nbsp;
-                // Split hash into 3 fragments
-                for (let l = 0; l &lt; 3; l++) {
-                    normalizedBundleFragments[l] = normalizedBundleHash.slice(l * 27, (l + 1) * 27);
-                }
-&nbsp;
-                //  First 6561 trits for the firstFragment
-                const firstFragment = key.slice(0, 6561);
-&nbsp;
-                //  First bundle fragment uses the first 27 trytes
-                const firstBundleFragment = normalizedBundleFragments[0];
-&nbsp;
-                //  Calculate the new signatureMessageFragment with the first bundle fragment
-                const firstSignedFragment = TransactionSigning.signatureMessageFragment(firstBundleFragment, firstFragment);
-&nbsp;
-                //  Convert signature to trytes and assign the new signatureMessageFragment
-                bundle.transactions[i].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
-&nbsp;
-                // if user chooses higher than 27-tryte security
-                // for each security level, add an additional signature
-                for (let j = 1; j &lt; keySecurity; j++) {
-&nbsp;
-                    //  Because the signature is &gt; 2187 trytes, we need to
-                    //  find the subsequent transaction to add the remainder of the signature
-                    //  Same address as well as value = 0 (as we already spent the input)
-                    if (bundle.transactions[i + j].address.toTrytes().toString() === addressTrytes &amp;&amp; bundle.transactions[i + j].value.toNumber() === 0) {
-&nbsp;
-                        // Use the next 6561 trits
-                        const nextFragment = key.slice(6561 * j, (j + 1) * 6561);
-&nbsp;
-                        const nextBundleFragment = normalizedBundleFragments[j];
-&nbsp;
-                        //  Calculate the new signature
-                        const nextSignedFragment = TransactionSigning.signatureMessageFragment(nextBundleFragment, nextFragment);
-&nbsp;
-                        //  Convert signature to trytes and assign it again to this bundle entry
-                        bundle.transactions[i + j].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
-                    }
-                }
+                BundleHelper.signTransactions(bundle, i, 0, key, addressTrytes, keySecurity);
             }
         }
 &nbsp;
@@ -862,8 +1085,55 @@ export class BundleSigning {
             const hmac = new HmacCurl(transferOptions.hmacKey);
             hmac.addHMAC(bundle);
         }
+    }
 &nbsp;
-        return bundle.transactions.reverse();
+    /* @internal */
+    public static signTransactions(bundle: Bundle, index: number, firstUnsignedIndex: number, keyTrits: Int8Array, addressTrytes: string, security: AddressSecurity): void {
+        const bundleHash = bundle.transactions[index].bundle;
+&nbsp;
+        //  Get the normalized bundle hash
+        const normalizedBundleHash = BundleHelper.normalizedHash(bundleHash);
+        const normalizedBundleFragments: Int8Array[] = [];
+&nbsp;
+        // Split hash into 3 fragments
+        for (let l = 0; l &lt; 3; l++) {
+            normalizedBundleFragments[l] = normalizedBundleHash.slice(l * 27, (l + 1) * 27);
+        }
+&nbsp;
+        //  First 6561 trits for the firstFragment
+        const firstFragment = keyTrits.slice(0, 6561);
+&nbsp;
+        //  First bundle fragment uses the first 27 trytes
+        const firstBundleFragment = normalizedBundleFragments[firstUnsignedIndex];
+&nbsp;
+        //  Calculate the new signatureMessageFragment with the first bundle fragment
+        const firstSignedFragment = BundleHelper.signatureMessageFragment(firstBundleFragment, firstFragment);
+&nbsp;
+        //  Convert signature to trytes and assign the new signatureMessageFragment
+        bundle.transactions[index].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
+&nbsp;
+        // if user chooses higher than 27-tryte security
+        // for each security level, add an additional signature
+        for (let j = 1; j &lt; security; j++) {
+&nbsp;
+            //  Because the signature is &gt; 2187 trytes, we need to
+            //  find the subsequent transaction to add the remainder of the signature
+            //  Same address as well as value = 0 (as we already spent the input)
+            if (bundle.transactions[index + j].address.toTrytes().toString() === addressTrytes
+                     &amp;&amp; bundle.transactions[index + j].value.toNumber() === 0) {
+&nbsp;
+                // Use the next 6561 trits
+                const nextFragment = keyTrits.slice(6561 * j, (j + 1) * 6561);
+&nbsp;
+                const nextBundleFragment = normalizedBundleFragments[j];
+&nbsp;
+                //  Calculate the new signature
+                const nextSignedFragment = BundleHelper.signatureMessageFragment(nextBundleFragment, nextFragment);
+&nbsp;
+                //  Convert signature to trytes and assign it again to this bundle entry
+                bundle.transactions[index + j].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
+            }
+        }
     }
 &nbsp;
     /* @internal */
@@ -899,7 +1169,7 @@ export class BundleSigning {
                     bundle.transactions[i].bundle = hash;
                 }
 &nbsp;
-                const normalizedHash = this.normalizedBundle(hash);
+                const normalizedHash = this.normalizedHash(hash);
                 if (normalizedHash.indexOf(13 /* = M */) !== -1) {
                     // Insecure bundle. Increment Tag and recompute bundle hash.
                     const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromNumberArray([1]));
@@ -912,7 +1182,7 @@ export class BundleSigning {
     }
 &nbsp;
     /* @internal */
-    public static normalizedBundle(bundleHash: Hash): Int8Array {
+    public static normalizedHash(bundleHash: Hash): Int8Array {
         const normalizedBundle = new Int8Array(4 * 27);
         const hashString = bundleHash.toTrytes().toString();
 &nbsp;
@@ -950,10 +1220,10 @@ export class BundleSigning {
     }
 &nbsp;
     /* @internal */
-    public static isValid(transactions: Transaction[]): boolean {
+    public static isValid(bundle: Bundle): boolean {
         let isValid = false;
 &nbsp;
-        if (ArrayHelper.isTyped(transactions, Transaction)) {
+        if (ArrayHelper.isTyped(bundle.transactions, Transaction)) {
             let totalSum = 0;
 &nbsp;
             const kerl = SpongeFactory.instance().create("kerl");
@@ -963,8 +1233,8 @@ export class BundleSigning {
             const signaturesToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] }[] = [];
 &nbsp;
             isValid = true;
-            for (let t = 0; t &lt; transactions.length &amp;&amp; isValid; t++) {
-                const bundleTx = transactions[t];
+            for (let t = 0; t &lt; bundle.transactions.length &amp;&amp; isValid; t++) {
+                const bundleTx = bundle.transactions[t];
                 totalSum += bundleTx.value.toNumber();
 &nbsp;
                 // currentIndex has to be equal to the index in the array
@@ -986,8 +1256,8 @@ export class BundleSigning {
                         };
 &nbsp;
                         // Find the subsequent txs with the remaining signature fragment
-                        for (let i = t; i &lt; transactions.length - 1; i++) {
-                            const newBundleTx = transactions[i + 1];
+                        for (let i = t; i &lt; bundle.transactions.length - 1; i++) {
+                            const newBundleTx = bundle.transactions[i + 1];
 &nbsp;
                             // Check if new tx is part of the signature fragment
                             if (newBundleTx.address.toTrytes().toString() === bundleTx.address.toTrytes().toString()
@@ -1012,17 +1282,20 @@ export class BundleSigning {
                 const bundleFromTxsTrytes = Trits.fromArray(bundleFromTxs).toTrytes().toString();
 &nbsp;
                 // Check if bundle hash is the same as returned by tx object
-                const bundleHash = transactions[0].bundle;
+                const bundleHash = bundle.transactions[0].bundle;
                 if (bundleFromTxsTrytes !== bundleHash.toTrytes().toString()) {
                     isValid = false;
                 } else {
                     // Last tx in the bundle should have currentIndex === lastIndex
-                    if (transactions[transactions.length - 1].currentIndex.toNumber() !== transactions[transactions.length - 1].lastIndex.toNumber()) {
+                    if (bundle.transactions[bundle.transactions.length - 1].currentIndex.toNumber() !==
+                            bundle.transactions[bundle.transactions.length - 1].lastIndex.toNumber()) {
                         isValid = false;
                     } else {
                         // Validate the signatures
                         for (let i = 0; i &lt; signaturesToValidate.length &amp;&amp; isValid; i++) {
-                            const isValidSignature = BundleSigning.validateSignatures(signaturesToValidate[i].address, signaturesToValidate[i].signatureMessageFragments, bundleHash);
+                            const isValidSignature = Signing.validateSignatures(signaturesToValidate[i].address,
+                                                                                signaturesToValidate[i].signatureMessageFragments,
+                                                                                bundleHash);
 &nbsp;
                             if (!isValidSignature) {
                                 isValid = false;
@@ -1037,27 +1310,30 @@ export class BundleSigning {
     }
 &nbsp;
     /* @internal */
-    public static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean {
-        const normalizedBundleFragments = [];
-        const normalizedBundleHash = BundleSigning.normalizedBundle(bundleHash);
+    public static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean {
+        let bundleHash;
+        const signatureFragments = [];
+        const inputAddressTrytes = inputAddress.toTrytes().toString();
 &nbsp;
-        // Split hash into 3 fragments
-        for (let f = 0; f &lt; 3; f++) {
-            normalizedBundleFragments[f] = normalizedBundleHash.slice(f * 27, (f + 1) * 27);
-        }
+        for (let i = 0; i &lt; signedBundle.transactions.length; i++) {
+            if (signedBundle.transactions[i].address.toTrytes().toString() === inputAddressTrytes) {
+                bundleHash = signedBundle.transactions[i].bundle;
 &nbsp;
-        // Get digests
-        const digests = new Int8Array(signatureMessageFragments.length * 243);
+                // if we reached remainder bundle
+                if (signedBundle.transactions[i].signatureMessageFragment.toTrytes().toString() ===
+                    SignatureMessageFragment.EMPTY.toTrytes().toString()) {
+                    break;
+                }
 &nbsp;
-        for (let i = 0; i &lt; signatureMessageFragments.length; i++) {
-            const digestBuffer = BundleSigning.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureMessageFragments[i].toTrytes()).toArray());
-&nbsp;
-            for (let j = 0; j &lt; 243; j++) {
-                digests[i * 243 + j] = digestBuffer[j];
+                signatureFragments.push(signedBundle.transactions[i].signatureMessageFragment);
             }
         }
 &nbsp;
-        return expectedAddress.toTrytes().toString() === Trits.fromArray(BundleSigning.address(digests)).toTrytes().toString();
+        if (!bundleHash) {
+            return false;
+        }
+&nbsp;
+        return Signing.validateSignatures(inputAddress, signatureFragments, bundleHash);
     }
 &nbsp;
     /* @internal */
@@ -1105,10 +1381,37 @@ export class BundleSigning {
 &nbsp;
         curl.initialize();
         curl.absorb(transactionTrits, 0, transactionTrits.length);
+&nbsp;
         const hashTrits = new Int8Array(curl.getConstants().HASH_LENGTH);
         curl.squeeze(hashTrits, 0, hashTrits.length);
 &nbsp;
         return Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
+    }
+&nbsp;
+    /* @internal */
+    public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
+        const signatureMessageFragment = keyFragment.slice();
+        let hash: Int8Array;
+&nbsp;
+        const kerl = SpongeFactory.instance().create("kerl");
+        const hashLength = kerl.getConstants().HASH_LENGTH;
+&nbsp;
+        for (let i = 0; i &lt; 27; i++) {
+            hash = signatureMessageFragment.slice(i * hashLength, (i + 1) * hashLength);
+&nbsp;
+            for (let j = 0; j &lt; 13 - normalizedBundleFragment[i]; j++) {
+                kerl.initialize();
+                kerl.reset();
+                kerl.absorb(hash, 0, hashLength);
+                kerl.squeeze(hash, 0, hashLength);
+            }
+&nbsp;
+            for (let j = 0; j &lt; hashLength; j++) {
+                signatureMessageFragment[i * hashLength + j] = hash[j];
+            }
+        }
+&nbsp;
+        return signatureMessageFragment;
     }
 }
 &nbsp;</pre></td></tr>
@@ -1117,7 +1420,7 @@ export class BundleSigning {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Mar 02 2018 14:40:04 GMT+0300 (Turkey Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Mar 06 2018 14:22:10 GMT+0300 (Turkey Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

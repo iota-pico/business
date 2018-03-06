@@ -1,13 +1,17 @@
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
+import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Hash } from "@iota-pico/data/dist/data/hash";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Trits } from "@iota-pico/data/dist/data/trits";
+import { BundleHelper } from "../helpers/bundleHelper";
 
 /**
  * Helper class for signing transactions.
  * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
-export class TransactionSigning {
+export class Signing {
+    /* @internal */
     public static key(seed: Hash, index: number, length: AddressSecurity): Int8Array {
         const seedTrits = Trits.fromTrytes(seed.toTrytes());
         const indexTrits = Trits.fromNumber(index);
@@ -39,6 +43,7 @@ export class TransactionSigning {
         return key;
     }
 
+    /* @internal */
     public static digests(key: Int8Array): Int8Array {
         const keyLenDiv = Math.floor(key.length / 6561);
 
@@ -79,6 +84,7 @@ export class TransactionSigning {
         return digests;
     }
 
+    /* @internal */
     public static address(digests: Int8Array): Int8Array {
         const kerl = SpongeFactory.instance().create("kerl");
 
@@ -91,6 +97,7 @@ export class TransactionSigning {
         return addressTrits;
     }
 
+    /* @internal */
     public static createChecksum(trits: Int8Array, checksumLength: number): string {
         const kerl = SpongeFactory.instance().create("kerl");
         kerl.initialize();
@@ -103,27 +110,27 @@ export class TransactionSigning {
         return Trits.fromArray(checksumTrits).toTrytes().toString().substring(81 - checksumLength, 81);
     }
 
-    public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
-        const signatureMessageFragment = keyFragment.slice();
-        let hash: Int8Array;
+    /* @internal */
+    public static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean {
+        const normalizedBundleFragments = [];
+        const normalizedBundleHash = BundleHelper.normalizedHash(bundleHash);
 
-        const kerl = SpongeFactory.instance().create("kerl");
+        // Split hash into 3 fragments
+        for (let f = 0; f < 3; f++) {
+            normalizedBundleFragments[f] = normalizedBundleHash.slice(f * 27, (f + 1) * 27);
+        }
 
-        for (let i = 0; i < 27; i++) {
-            hash = signatureMessageFragment.slice(i * 243, (i + 1) * 243);
+        // Get digests
+        const digests = new Int8Array(signatureMessageFragments.length * 243);
 
-            for (let j = 0; j < 13 - normalizedBundleFragment[i]; j++) {
-                kerl.initialize();
-                kerl.reset();
-                kerl.absorb(hash, 0, hash.length);
-                kerl.squeeze(hash, 0, kerl.getConstants().HASH_LENGTH);
-            }
+        for (let i = 0; i < signatureMessageFragments.length; i++) {
+            const digestBuffer = BundleHelper.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureMessageFragments[i].toTrytes()).toArray());
 
             for (let j = 0; j < 243; j++) {
-                signatureMessageFragment[i * 243 + j] = hash[j];
+                digests[i * 243 + j] = digestBuffer[j];
             }
         }
 
-        return signatureMessageFragment;
+        return expectedAddress.toTrytes().toString() === Trits.fromArray(BundleHelper.address(digests)).toTrytes().toString();
     }
 }

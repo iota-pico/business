@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/transactions/transactionSigning.ts</title>
+    <title>Code coverage report for src/sign/signing.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\index.html">All files</a> / <a href="index.html">src/transactions</a> transactionSigning.ts
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/sign</a> signing.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>70/70</span>
+        <span class='fraction'>69/69</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>70/70</span>
+        <span class='fraction'>69/69</span>
       </div>
     </div>
   </div>
@@ -171,8 +171,20 @@
 126
 127
 128
-129</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+129
+130
+131
+132
+133
+134
+135
+136
+137</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -181,86 +193,90 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">82x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
-<span class="cline-any cline-yes">143x</span>
-<span class="cline-any cline-yes">3861x</span>
-<span class="cline-any cline-yes">3861x</span>
-<span class="cline-any cline-yes">938223x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">113x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">82x</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-yes">236x</span>
+<span class="cline-any cline-yes">6372x</span>
+<span class="cline-any cline-yes">6372x</span>
+<span class="cline-any cline-yes">1548396x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">113x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">93x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">93x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">93x</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">5103x</span>
+<span class="cline-any cline-yes">5103x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5103x</span>
+<span class="cline-any cline-yes">132678x</span>
+<span class="cline-any cline-yes">132678x</span>
+<span class="cline-any cline-yes">132678x</span>
+<span class="cline-any cline-yes">132678x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5103x</span>
+<span class="cline-any cline-yes">1240029x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">189x</span>
+<span class="cline-any cline-yes">45927x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">93x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">69x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">69x</span>
+<span class="cline-any cline-yes">69x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">3159x</span>
-<span class="cline-any cline-yes">3159x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3159x</span>
-<span class="cline-any cline-yes">82134x</span>
-<span class="cline-any cline-yes">82134x</span>
-<span class="cline-any cline-yes">82134x</span>
-<span class="cline-any cline-yes">82134x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3159x</span>
-<span class="cline-any cline-yes">767637x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">117x</span>
-<span class="cline-any cline-yes">28431x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-yes">69x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">69x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -276,39 +292,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">675x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">675x</span>
-<span class="cline-any cline-yes">8775x</span>
-<span class="cline-any cline-yes">8775x</span>
-<span class="cline-any cline-yes">8775x</span>
-<span class="cline-any cline-yes">8775x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">675x</span>
-<span class="cline-any cline-yes">164025x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">5832x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
+import { Address } from "@iota-pico/data/dist/data/address";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Hash } from "@iota-pico/data/dist/data/hash";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
 import { Trits } from "@iota-pico/data/dist/data/trits";
+import { BundleHelper } from "../helpers/bundleHelper";
 &nbsp;
 /**
  * Helper class for signing transactions.
  * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
-export class TransactionSigning {
-    public static key(seed: Hash, index: number, length: number): Int8Array {
+export class Signing {
+    /* @internal */
+    public static key(seed: Hash, index: number, length: AddressSecurity): Int8Array {
         const seedTrits = Trits.fromTrytes(seed.toTrytes());
         const indexTrits = Trits.fromNumber(index);
         const subseed = Trits.add(seedTrits, indexTrits).toArray();
@@ -339,6 +360,7 @@ export class TransactionSigning {
         return key;
     }
 &nbsp;
+    /* @internal */
     public static digests(key: Int8Array): Int8Array {
         const keyLenDiv = Math.floor(key.length / 6561);
 &nbsp;
@@ -379,6 +401,7 @@ export class TransactionSigning {
         return digests;
     }
 &nbsp;
+    /* @internal */
     public static address(digests: Int8Array): Int8Array {
         const kerl = SpongeFactory.instance().create("kerl");
 &nbsp;
@@ -391,6 +414,7 @@ export class TransactionSigning {
         return addressTrits;
     }
 &nbsp;
+    /* @internal */
     public static createChecksum(trits: Int8Array, checksumLength: number): string {
         const kerl = SpongeFactory.instance().create("kerl");
         kerl.initialize();
@@ -403,28 +427,28 @@ export class TransactionSigning {
         return Trits.fromArray(checksumTrits).toTrytes().toString().substring(81 - checksumLength, 81);
     }
 &nbsp;
-    public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
-        const signatureMessageFragment = keyFragment.slice();
-        let hash: Int8Array;
+    /* @internal */
+    public static validateSignatures(expectedAddress: Address, signatureMessageFragments: SignatureMessageFragment[], bundleHash: Hash): boolean {
+        const normalizedBundleFragments = [];
+        const normalizedBundleHash = BundleHelper.normalizedHash(bundleHash);
 &nbsp;
-        const kerl = SpongeFactory.instance().create("kerl");
+        // Split hash into 3 fragments
+        for (let f = 0; f &lt; 3; f++) {
+            normalizedBundleFragments[f] = normalizedBundleHash.slice(f * 27, (f + 1) * 27);
+        }
 &nbsp;
-        for (let i = 0; i &lt; 27; i++) {
-            hash = signatureMessageFragment.slice(i * 243, (i + 1) * 243);
+        // Get digests
+        const digests = new Int8Array(signatureMessageFragments.length * 243);
 &nbsp;
-            for (let j = 0; j &lt; 13 - normalizedBundleFragment[i]; j++) {
-                kerl.initialize();
-                kerl.reset();
-                kerl.absorb(hash, 0, hash.length);
-                kerl.squeeze(hash, 0, kerl.getConstants().HASH_LENGTH);
-            }
+        for (let i = 0; i &lt; signatureMessageFragments.length; i++) {
+            const digestBuffer = BundleHelper.digest(normalizedBundleFragments[i % 3], Trits.fromTrytes(signatureMessageFragments[i].toTrytes()).toArray());
 &nbsp;
             for (let j = 0; j &lt; 243; j++) {
-                signatureMessageFragment[i * 243 + j] = hash[j];
+                digests[i * 243 + j] = digestBuffer[j];
             }
         }
 &nbsp;
-        return signatureMessageFragment;
+        return expectedAddress.toTrytes().toString() === Trits.fromArray(BundleHelper.address(digests)).toTrytes().toString();
     }
 }
 &nbsp;</pre></td></tr>
@@ -433,7 +457,7 @@ export class TransactionSigning {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Mar 02 2018 14:40:04 GMT+0300 (Turkey Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Mar 06 2018 14:22:10 GMT+0300 (Turkey Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

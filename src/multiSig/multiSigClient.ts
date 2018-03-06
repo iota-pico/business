@@ -1,24 +1,24 @@
 import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
+import { IGetBalancesRequest } from "@iota-pico/api/dist/models/IGetBalancesRequest";
+import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
+import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
+import { TimeService } from "@iota-pico/core/dist/services/timeService";
+import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
+import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Hash } from "@iota-pico/data/dist/data/hash";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
+import { Tag } from "@iota-pico/data/dist/data/tag";
+import { Transaction } from "@iota-pico/data/dist/data/transaction";
+import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
-import { TransactionSigning } from "../transactions/transactionSigning";
-import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
+import { BundleHelper } from "../helpers/bundleHelper";
+import { Signing } from "../sign/signing";
 import { MultiSigAddress } from "./multiSigAddress";
-import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
-import { Address } from "@iota-pico/data/dist/data/address";
-import { Transfer } from "@iota-pico/data/dist/data/transfer";
-import { Tag } from "@iota-pico/data/dist/data/tag";
-import { Bundle } from "@iota-pico/data/dist/data/bundle";
-import { BundleHelper } from "../transactions/bundleHelper";
-import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
-import { TimeService } from "@iota-pico/core/dist/services/timeService";
-import { IGetBalancesRequest } from "@iota-pico/api/dist/models/IGetBalancesRequest";
-import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
-import { BundleSigning } from "..";
 
 /**
  * Multiple signatures.
@@ -51,14 +51,14 @@ export class MultiSigClient {
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed should be an object of type Hash");
         }
-        if (!NumberHelper.isInteger(index) && index >= 0) {
+        if (!NumberHelper.isInteger(index) || index < 0) {
             throw new BusinessError("The index should be a number >= 0");
         }
         if (!NumberHelper.isInteger(security) || security < 1 || security > 3) {
             throw new BusinessError("The security must be between 1 and 3", { security });
         }
 
-        return Trits.fromArray(TransactionSigning.key(seed, index, security)).toTrytes();
+        return Trits.fromArray(Signing.key(seed, index, security)).toTrytes();
     }
 
     /**
@@ -66,22 +66,22 @@ export class MultiSigClient {
      * @param seed The seed to get the digest for.
      * @param index The address index to use.
      * @param security The security level to use.
-     * @returns The hash for the digest.
+     * @returns The trytes for the digest.
      */
-    public static getDigest(seed: Hash, index: number, security: AddressSecurity): Hash {
+    public static getDigest(seed: Hash, index: number, security: AddressSecurity): Trytes {
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed should be an object of type Hash");
         }
-        if (!NumberHelper.isInteger(index) && index >= 0) {
+        if (!NumberHelper.isInteger(index) || index < 0) {
             throw new BusinessError("The index should be a number >= 0");
         }
         if (!NumberHelper.isInteger(security) || security < 1 || security > 3) {
             throw new BusinessError("The security must be between 1 and 3", { security });
         }
 
-        const key = TransactionSigning.key(seed, index, security);
+        const key = Signing.key(seed, index, security);
 
-        return Hash.fromTrytes(Trits.fromArray(TransactionSigning.digests(key)).toTrytes());
+        return Trits.fromArray(Signing.digests(key)).toTrytes();
     }
 
     /**
@@ -90,26 +90,75 @@ export class MultiSigClient {
      * @param digests The digests to use to validate the address.
      * @returns True if the address matches the digests.
      */
-    public static validateAddress(address: Address, digests: Hash[]): boolean {
+    public static validateAddress(address: Address, digests: Trytes[]): boolean {
         if (!ObjectHelper.isType(address, Address)) {
             throw new BusinessError("The address should be an object of type Address");
         }
-        if (!ArrayHelper.isTyped(digests, Hash)) {
-            throw new BusinessError("The digests should be an array of type Hash");
+        if (!ArrayHelper.isTyped(digests, Trytes)) {
+            throw new BusinessError("The digests should be an array of type Trytes");
         }
 
         return address.toTrytes().toString() ===
                         new MultiSigAddress().finalize(digests).toTrytes().toString();
     }
 
-    public async prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise<Transaction[]> {
+    /**
+     * Adds the cosigner signatures to the corresponding bundle transactions.
+     * @param bundle The bundle to sign.
+     * @param address The address to match the transactions.
+     * @param key The key to sign the transactions with.
+     */
+    public static addSignature(bundle: Bundle, address: Address, key: Trytes): void {
+        if (!ObjectHelper.isType(bundle, Bundle)) {
+            throw new BusinessError("The bundle should be an object of type Bundle");
+        }
+
+        if (!ArrayHelper.isTyped(bundle.transactions, Transaction)) {
+            throw new BusinessError("The bundle.transactions should be an array of type Transaction");
+        }
+
         if (!ObjectHelper.isType(address, Address)) {
             throw new BusinessError("The address should be an object of type Address");
         }
-        if (!NumberHelper.isInteger(securitySum) && securitySum >= 0) {
+
+        if (!ObjectHelper.isType(key, Trytes)) {
+            throw new BusinessError("The key should be an object of type Trytes");
+        }
+
+        const keyTrits = Trits.fromTrytes(key).toArray();
+
+        // Get the security used for the private key
+        // 1 security level = 2187 trytes
+        const security = keyTrits.length / 3 / 2187;
+
+        // First get the total number of already signed transactions
+        // use that for the bundle hash calculation as well as knowing
+        // where to add the signature
+        let numSignedTxs = 0;
+
+        const addressTrytes = address.toTrytes().toString();
+
+        for (let i = 0; i < bundle.transactions.length; i++) {
+            if (bundle.transactions[i].address.toTrytes().toString() === addressTrytes) {
+                if (bundle.transactions[i].signatureMessageFragment.toTrytes().toString() !== SignatureMessageFragment.EMPTY.toTrytes().toString()) {
+                    // If transaction is already signed, increase counter
+                    numSignedTxs++;
+                } else {
+                    BundleHelper.signTransactions(bundle, i, numSignedTxs % 3, keyTrits, addressTrytes, security);
+                    break;
+                }
+            }
+        }
+    }
+
+    public async prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise<Bundle> {
+        if (!ObjectHelper.isType(address, Address)) {
+            throw new BusinessError("The address should be an object of type Address");
+        }
+        if (!NumberHelper.isInteger(securitySum) || securitySum < 0) {
             throw new BusinessError("The securitySum should be a number >= 0");
         }
-        if (!NumberHelper.isInteger(balance) && balance >= 0) {
+        if (!NumberHelper.isInteger(balance) || balance < 0) {
             throw new BusinessError("The balance should be a number >= 0");
         }
         if (!ArrayHelper.isTyped(transfers, Transfer)) {
@@ -130,10 +179,10 @@ export class MultiSigClient {
         const prepared = BundleHelper.prepareBundle(this._timeService, transfers);
 
         if (prepared.totalValue === 0) {
-            throw new BusinessError("Invalid value transfer: the transfer does not require a signature.");
+            throw new BusinessError("The total transfer value is 0, the transfer does not require a signature");
         } else {
-            let finalBalance = balance;
-            if (finalBalance === 0) {
+            let totalBalance = balance;
+            if (totalBalance === 0) {
                 const request: IGetBalancesRequest = {
                     addresses: [ address.toTrytes().toString() ],
                     threshold: 100
@@ -141,48 +190,34 @@ export class MultiSigClient {
 
                 const response = await this._apiClient.getBalances(request);
 
-                finalBalance = parseInt(response.balances[0], 10);
+                totalBalance = parseInt(response.balances[0], 10);
             }
 
-            this.createBundle(address, securitySum, prepared.totalValue, finalBalance, prepared.bundle, prepared.signatureMessageFragments, prepared.lastTag, remainderAddress);
-        }
+            if (prepared.totalValue > totalBalance) {
+                throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
+            }
 
-        return prepared.bundle.transactions;
-    }
-
-    private createBundle(address: Address, securitySum: number, totalValue: number, totalBalance: number,
-                         bundle: Bundle, signatureMessageFragments: SignatureMessageFragment[], lastTag: Tag, remainderAddress: Address): void {
-        if (totalValue > totalBalance) {
-            throw new BusinessError("Not enough balance to satisfy the value", { totalValue, totalBalance });
-        }
-        if (totalBalance > 0) {
-            const toSubtract = -totalBalance;
             const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
 
             // Add input as bundle entry
             // Only a single entry, signatures will be added later
-            bundle.addTransactions(securitySum, address, toSubtract, lastTag, timestamp);
-        }
+            prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
 
-        // If there is a remainder value
-        // Add extra output to send remaining funds to
-        if (totalBalance > totalValue) {
-            const remainder = totalBalance - totalValue;
+            // If there is a remainder value
+            // Add extra output to send remaining funds to
+            if (totalBalance > prepared.totalValue) {
+                if (ObjectHelper.isEmpty(remainderAddress)) {
+                    throw new BusinessError("Transfer has remainder but no remainder address was provided");
+                }
 
-            // Remainder bundle entry if necessary
-            if (ObjectHelper.isEmpty(remainderAddress)) {
-                throw new BusinessError("Transfer has remainder but there is remainder address defined");
+                prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
             }
 
-            const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
-            bundle.addTransactions(1, remainderAddress, remainder, lastTag, timestamp);
+            BundleHelper.finalizeBundle(prepared.bundle);
+            prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
         }
 
-        BundleSigning.finalizeBundle(bundle);
-        bundle.addSignatureMessageFragments(signatureMessageFragments);
+        return prepared.bundle;
     }
 
-    public addSignature() : void {
-        
-    }
 }

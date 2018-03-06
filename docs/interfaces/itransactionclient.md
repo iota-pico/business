@@ -19,7 +19,7 @@ Represents a client for performing transactions using the api if required.
 
 ###  attachToTangle
 
-► **attachToTangle**(transactions: *`Transaction`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+► **attachToTangle**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 
 
@@ -34,7 +34,7 @@ Attach the transactions to the tangle by doing proof of work.
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| transactions | `Transaction`[]   |  The transactions to attach. |
+| bundle | `Bundle`   |  The bundle of transactions to attach. |
 | depth | `number`   |  Value that determines how far to go for tip selection. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 | reference | `Hash`   |  The reference to send with the transactions. |
@@ -43,8 +43,8 @@ Attach the transactions to the tangle by doing proof of work.
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
-Promise which resolves to the list of transactions created or rejects with an error.
+**Returns:** `Promise`.<`Bundle`>
+Promise which resolves to the bundle of transactions created or rejects with an error.
 
 
 
@@ -592,7 +592,7 @@ ___
 
 ###  prepareTransfers
 
-► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Transaction`[]>
+► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Bundle`>
 
 
 
@@ -615,7 +615,7 @@ Prepares transfer by generating bundle, finding and signing inputs.
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
+**Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the array of Transactions for the transfer or rejects with error.
 
 
@@ -629,7 +629,7 @@ ___
 
 ###  promoteTransaction
 
-► **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`.<`Transaction`[]>
+► **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`.<`Bundle`>
 
 
 
@@ -654,7 +654,7 @@ Promotes a transaction by adding spam on top of it, as long as it is promotable.
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
+**Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
 
 
@@ -668,7 +668,7 @@ ___
 
 ###  reattachBundle
 
-► **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Transaction`[]>
+► **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Bundle`>
 
 
 
@@ -691,7 +691,7 @@ Wrapper which gets a bundle and then replays a transfer by doing Proof of Work a
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
+**Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
 
 
@@ -740,7 +740,7 @@ ___
 
 ###  sendTransactions
 
-► **sendTransactions**(transactions: *`Transaction`[]*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+► **sendTransactions**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 
 
@@ -755,7 +755,7 @@ Wrapper function that does attachToTangle and then stores and broadcasts the tra
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| transactions | `Transaction`[]   |  The transactions to send. |
+| bundle | `Bundle`   |  The bundle of transactions to send. |
 | depth | `number`   |  Value that determines how far to go for tip selection. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 | reference | `Hash`   |  The reference to send with the transactions. |
@@ -764,8 +764,8 @@ Wrapper function that does attachToTangle and then stores and broadcasts the tra
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
-Promise which resolves to the list of transactions created or rejects with an error.
+**Returns:** `Promise`.<`Bundle`>
+Promise which resolves to the bundle of transactions created or rejects with an error.
 
 
 
@@ -778,7 +778,7 @@ ___
 
 ###  sendTransfer
 
-► **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`.<`Transaction`[]>
+► **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 
 
@@ -804,7 +804,7 @@ Wrapper function that does prepareTransfers and then sendTransactions.
 
 
 
-**Returns:** `Promise`.<`Transaction`[]>
+**Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
 
 

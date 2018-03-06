@@ -110,25 +110,25 @@ export declare class TransactionClient implements ITransactionClient {
      *      @property reference The transaction to reference.
      * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
      */
-    prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Transaction[]>;
+    prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Bundle>;
     /**
      * Attach the transactions to the tangle by doing proof of work.
-     * @param transactions The transactions to attach.
+     * @param bundle The bundle of transactions to attach.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @param reference The reference to send with the transactions.
-     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
      */
-    attachToTangle(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
+    attachToTangle(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Bundle>;
     /**
      * Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
-     * @param transactions The transactions to send.
+     * @param bundle The bundle of transactions to send.
      * @param depth Value that determines how far to go for tip selection.
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @param reference The reference to send with the transactions.
-     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
      */
-    sendTransactions(transactions: Transaction[], depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Transaction[]>;
+    sendTransactions(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Bundle>;
     /**
      * Wrapper function that does prepareTransfers and then sendTransactions.
      * @param seed The seed to send the transfer for.
@@ -143,7 +143,7 @@ export declare class TransactionClient implements ITransactionClient {
      * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise<Transaction[]>;
+    sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise<Bundle>;
     /**
      * Find out if a transaction is promotable.
      * @param transactionTail The hash of the transaction to be promoted.
@@ -170,7 +170,7 @@ export declare class TransactionClient implements ITransactionClient {
      *      @property interrupt Flag or method to terminate promotion.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    promoteTransaction(transactionTail: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], promoteOptions?: PromoteOptions): Promise<Transaction[]>;
+    promoteTransaction(transactionTail: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], promoteOptions?: PromoteOptions): Promise<Bundle>;
     /**
      * Gets the associated bundle transactions of a single transaction.
      * Does validation of signatures, total sum as well as bundle order.
@@ -193,7 +193,7 @@ export declare class TransactionClient implements ITransactionClient {
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
-    reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise<Transaction[]>;
+    reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise<Bundle>;
     /**
      * Wrapper which gets a bundle and then broadcasts it.
      * @param transactionHash The hash of the transaction to be re-broadcast.

@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/multiSig/multiSigClient.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/multiSig</a> multiSigClient.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>91/91</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>69/69</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>91/91</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
+import { IGetBalancesRequest } from "@iota-pico/api/dist/models/IGetBalancesRequest";
+import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
+import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
+import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
+import { TimeService } from "@iota-pico/core/dist/services/timeService";
+import { Address } from "@iota-pico/data/dist/data/address";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
+import { Bundle } from "@iota-pico/data/dist/data/bundle";
+import { Hash } from "@iota-pico/data/dist/data/hash";
+import { SignatureMessageFragment } from "@iota-pico/data/dist/data/signatureMessageFragment";
+import { Tag } from "@iota-pico/data/dist/data/tag";
+import { Transaction } from "@iota-pico/data/dist/data/transaction";
+import { Transfer } from "@iota-pico/data/dist/data/transfer";
+import { Trits } from "@iota-pico/data/dist/data/trits";
+import { Trytes } from "@iota-pico/data/dist/data/trytes";
+import { BusinessError } from "../error/businessError";
+import { BundleHelper } from "../helpers/bundleHelper";
+import { Signing } from "../sign/signing";
+import { MultiSigAddress } from "./multiSigAddress";
+&nbsp;
+/**
+ * Multiple signatures.
+ * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/multisig/multisig.js
+ */
+export class MultiSigClient {
+    /* @internal */
+    private readonly _apiClient: IApiClient;
+    /* @internal */
+    private readonly _timeService: ITimeService;
+&nbsp;
+    /**
+     * Create a new instance of the MultiSigClient.
+     * @param apiClient An API Client to communicate through.
+     * @param timeService A class which can provide the time.
+     */
+    constructor(apiClient: IApiClient, timeService: ITimeService = new TimeService()) {
+        this._apiClient = apiClient;
+        this._timeService = timeService;
+    }
+&nbsp;
+    /**
+     * Get the key value of a seed.
+     * @param seed The seed to get the key for.
+     * @param index The address index to use.
+     * @param security The security level to use.
+     * @returns The trytes for the key.
+     */
+    public static getKey(seed: Hash, index: number, security: AddressSecurity): Trytes {
+        if (!ObjectHelper.isType(seed, Hash)) {
+            throw new BusinessError("The seed should be an object of type Hash");
+        }
+        if (!NumberHelper.isInteger(index) || index &lt; 0) {
+            throw new BusinessError("The index should be a number &gt;= 0");
+        }
+        if (!NumberHelper.isInteger(security) || security &lt; 1 || security &gt; 3) {
+            throw new BusinessError("The security must be between 1 and 3", { security });
+        }
+&nbsp;
+        return Trits.fromArray(Signing.key(seed, index, security)).toTrytes();
+    }
+&nbsp;
+    /**
+     * Get the digest value of a seed.
+     * @param seed The seed to get the digest for.
+     * @param index The address index to use.
+     * @param security The security level to use.
+     * @returns The trytes for the digest.
+     */
+    public static getDigest(seed: Hash, index: number, security: AddressSecurity): Trytes {
+        if (!ObjectHelper.isType(seed, Hash)) {
+            throw new BusinessError("The seed should be an object of type Hash");
+        }
+        if (!NumberHelper.isInteger(index) || index &lt; 0) {
+            throw new BusinessError("The index should be a number &gt;= 0");
+        }
+        if (!NumberHelper.isInteger(security) || security &lt; 1 || security &gt; 3) {
+            throw new BusinessError("The security must be between 1 and 3", { security });
+        }
+&nbsp;
+        const key = Signing.key(seed, index, security);
+&nbsp;
+        return Trits.fromArray(Signing.digests(key)).toTrytes();
+    }
+&nbsp;
+    /**
+     * Validate address.
+     * @param address The address to validate against the digests.
+     * @param digests The digests to use to validate the address.
+     * @returns True if the address matches the digests.
+     */
+    public static validateAddress(address: Address, digests: Trytes[]): boolean {
+        if (!ObjectHelper.isType(address, Address)) {
+            throw new BusinessError("The address should be an object of type Address");
+        }
+        if (!ArrayHelper.isTyped(digests, Trytes)) {
+            throw new BusinessError("The digests should be an array of type Trytes");
+        }
+&nbsp;
+        return address.toTrytes().toString() ===
+                        new MultiSigAddress().finalize(digests).toTrytes().toString();
+    }
+&nbsp;
+    /**
+     * Adds the cosigner signatures to the corresponding bundle transactions.
+     * @param bundle The bundle to sign.
+     * @param address The address to match the transactions.
+     * @param key The key to sign the transactions with.
+     */
+    public static addSignature(bundle: Bundle, address: Address, key: Trytes): void {
+        if (!ObjectHelper.isType(bundle, Bundle)) {
+            throw new BusinessError("The bundle should be an object of type Bundle");
+        }
+&nbsp;
+        if (!ArrayHelper.isTyped(bundle.transactions, Transaction)) {
+            throw new BusinessError("The bundle.transactions should be an array of type Transaction");
+        }
+&nbsp;
+        if (!ObjectHelper.isType(address, Address)) {
+            throw new BusinessError("The address should be an object of type Address");
+        }
+&nbsp;
+        if (!ObjectHelper.isType(key, Trytes)) {
+            throw new BusinessError("The key should be an object of type Trytes");
+        }
+&nbsp;
+        const keyTrits = Trits.fromTrytes(key).toArray();
+&nbsp;
+        // Get the security used for the private key
+        // 1 security level = 2187 trytes
+        const security = keyTrits.length / 3 / 2187;
+&nbsp;
+        // First get the total number of already signed transactions
+        // use that for the bundle hash calculation as well as knowing
+        // where to add the signature
+        let numSignedTxs = 0;
+&nbsp;
+        const addressTrytes = address.toTrytes().toString();
+&nbsp;
+        for (let i = 0; i &lt; bundle.transactions.length; i++) {
+            if (bundle.transactions[i].address.toTrytes().toString() === addressTrytes) {
+                if (bundle.transactions[i].signatureMessageFragment.toTrytes().toString() !== SignatureMessageFragment.EMPTY.toTrytes().toString()) {
+                    // If transaction is already signed, increase counter
+                    numSignedTxs++;
+                } else {
+                    BundleHelper.signTransactions(bundle, i, numSignedTxs % 3, keyTrits, addressTrytes, security);
+                    break;
+                }
+            }
+        }
+    }
+&nbsp;
+    public async prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise&lt;Bundle&gt; {
+        if (!ObjectHelper.isType(address, Address)) {
+            throw new BusinessError("The address should be an object of type Address");
+        }
+        if (!NumberHelper.isInteger(securitySum) || securitySum &lt; 0) {
+            throw new BusinessError("The securitySum should be a number &gt;= 0");
+        }
+        if (!NumberHelper.isInteger(balance) || balance &lt; 0) {
+            throw new BusinessError("The balance should be a number &gt;= 0");
+        }
+        if (!ArrayHelper.isTyped(transfers, Transfer)) {
+            throw new BusinessError("The transfers should be an array of type Transfer");
+        }
+        if (!ObjectHelper.isEmpty(remainderAddress) &amp;&amp; !ObjectHelper.isType(remainderAddress, Address)) {
+            throw new BusinessError("The remainderAddress should be an object of type Address");
+        }
+&nbsp;
+        const emptyTrytes = Trytes.fromString("");
+&nbsp;
+        // If message or tag is not supplied, provide it
+        transfers.forEach((transfer) =&gt; {
+            transfer.message = transfer.message ? transfer.message : emptyTrytes;
+            transfer.tag = transfer.tag || Tag.EMPTY;
+        });
+&nbsp;
+        const prepared = BundleHelper.prepareBundle(this._timeService, transfers);
+&nbsp;
+        if (prepared.totalValue === 0) {
+            throw new BusinessError("The total transfer value is 0, the transfer does not require a signature");
+        } else {
+            let totalBalance = balance;
+            if (totalBalance === 0) {
+                const request: IGetBalancesRequest = {
+                    addresses: [ address.toTrytes().toString() ],
+                    threshold: 100
+                };
+&nbsp;
+                const response = await this._apiClient.getBalances(request);
+&nbsp;
+                totalBalance = parseInt(response.balances[0], 10);
+            }
+&nbsp;
+            if (prepared.totalValue &gt; totalBalance) {
+                throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
+            }
+&nbsp;
+            const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
+&nbsp;
+            // Add input as bundle entry
+            // Only a single entry, signatures will be added later
+            prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
+&nbsp;
+            // If there is a remainder value
+            // Add extra output to send remaining funds to
+            if (totalBalance &gt; prepared.totalValue) {
+                if (ObjectHelper.isEmpty(remainderAddress)) {
+                    throw new BusinessError("Transfer has remainder but no remainder address was provided");
+                }
+&nbsp;
+                prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
+            }
+&nbsp;
+            BundleHelper.finalizeBundle(prepared.bundle);
+            prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
+        }
+&nbsp;
+        return prepared.bundle;
+    }
+&nbsp;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Mar 06 2018 14:22:10 GMT+0300 (Turkey Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>
