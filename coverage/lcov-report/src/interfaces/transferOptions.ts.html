@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/interfaces/accountData.ts</title>
+    <title>Code coverage report for src/interfaces/transferOptions.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\index.html">All files</a> / <a href="index.html">src/interfaces</a> accountData.ts
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/interfaces</a> transferOptions.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -72,18 +72,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Address } from "@iota-pico/data/dist/data/address";
-import { Bundle } from "@iota-pico/data/dist/data/bundle";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Input } from "@iota-pico/data/dist/data/input";
+import { Trytes } from "@iota-pico/data/dist/data/trytes";
 &nbsp;
 /**
- * Account data information.
+ * Options used during prepare transfer process.
  */
-export type AccountData = {
-    latestAddress: Address;
-    addresses: Address[];
-    transfers: Bundle[];
-    inputs: Input[];
-    balance: number;
+export type TransferOptions = {
+    inputs?: Input[];
+    security?: AddressSecurity;
+    remainderAddress?: Address;
+    hmacKey?: Trytes;
 };
 &nbsp;</pre></td></tr>
 </table></pre>

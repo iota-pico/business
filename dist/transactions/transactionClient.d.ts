@@ -27,10 +27,6 @@ export declare class TransactionClient implements ITransactionClient {
      */
     constructor(apiClient: IApiClient, proofOfWork?: IProofOfWork, timeService?: ITimeService, backgroundTaskService?: IBackgroundTaskService);
     /**
-     * Initialize the client.
-     */
-    initialize(): Promise<void>;
-    /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.
      */

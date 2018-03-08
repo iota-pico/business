@@ -16,11 +16,6 @@ import { TransferOptions } from "./transferOptions";
  */
 export interface ITransactionClient {
     /**
-     * Initialize the client.
-     */
-    initialize(): Promise<void>;
-
-    /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.
      */

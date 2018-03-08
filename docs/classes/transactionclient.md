@@ -33,7 +33,6 @@ Default implementation of the ITransactionClient.
 * [getTransactionsInProgress](transactionclient.md#gettransactionsinprogress)
 * [getTransactionsObjects](transactionclient.md#gettransactionsobjects)
 * [getTransfers](transactionclient.md#gettransfers)
-* [initialize](transactionclient.md#initialize)
 * [isPromotable](transactionclient.md#ispromotable)
 * [isReattachable](transactionclient.md#isreattachable)
 * [prepareTransfers](transactionclient.md#preparetransfers)
@@ -90,7 +89,7 @@ Create a new instance of the TransactionClient.
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[attachToTangle](../interfaces/itransactionclient.md#attachtotangle)*
 
-*Defined in transactions/transactionClient.ts:497*
+*Defined in transactions/transactionClient.ts:488*
 
 
 
@@ -130,7 +129,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactionObjects](../interfaces/itransactionclient.md#findtransactionobjects)*
 
-*Defined in transactions/transactionClient.ts:862*
+*Defined in transactions/transactionClient.ts:853*
 
 
 
@@ -170,7 +169,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactions](../interfaces/itransactionclient.md#findtransactions)*
 
-*Defined in transactions/transactionClient.ts:114*
+*Defined in transactions/transactionClient.ts:105*
 
 
 
@@ -210,7 +209,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAccountData](../interfaces/itransactionclient.md#getaccountdata)*
 
-*Defined in transactions/transactionClient.ts:904*
+*Defined in transactions/transactionClient.ts:895*
 
 
 
@@ -250,7 +249,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesByIndex](../interfaces/itransactionclient.md#getaddressesbyindex)*
 
-*Defined in transactions/transactionClient.ts:253*
+*Defined in transactions/transactionClient.ts:244*
 
 
 
@@ -291,7 +290,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesToUnused](../interfaces/itransactionclient.md#getaddressestounused)*
 
-*Defined in transactions/transactionClient.ts:288*
+*Defined in transactions/transactionClient.ts:279*
 
 
 
@@ -331,7 +330,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getBundle](../interfaces/itransactionclient.md#getbundle)*
 
-*Defined in transactions/transactionClient.ts:742*
+*Defined in transactions/transactionClient.ts:733*
 
 
 
@@ -368,7 +367,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getInputs](../interfaces/itransactionclient.md#getinputs)*
 
-*Defined in transactions/transactionClient.ts:341*
+*Defined in transactions/transactionClient.ts:332*
 
 
 
@@ -409,7 +408,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getLatestInclusion](../interfaces/itransactionclient.md#getlatestinclusion)*
 
-*Defined in transactions/transactionClient.ts:180*
+*Defined in transactions/transactionClient.ts:171*
 
 
 
@@ -446,7 +445,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getNewAddress](../interfaces/itransactionclient.md#getnewaddress)*
 
-*Defined in transactions/transactionClient.ts:211*
+*Defined in transactions/transactionClient.ts:202*
 
 
 
@@ -487,7 +486,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
 
-*Defined in transactions/transactionClient.ts:95*
+*Defined in transactions/transactionClient.ts:86*
 
 
 
@@ -516,7 +515,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsObjects](../interfaces/itransactionclient.md#gettransactionsobjects)*
 
-*Defined in transactions/transactionClient.ts:159*
+*Defined in transactions/transactionClient.ts:150*
 
 
 
@@ -553,7 +552,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransfers](../interfaces/itransactionclient.md#gettransfers)*
 
-*Defined in transactions/transactionClient.ts:882*
+*Defined in transactions/transactionClient.ts:873*
 
 
 
@@ -584,33 +583,6 @@ Promise which resolves to the requested bundles or rejects with an error.
 
 ___
 
-<a id="initialize"></a>
-
-###  initialize
-
-► **initialize**(): `Promise`.<`void`>
-
-
-
-*Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[initialize](../interfaces/itransactionclient.md#initialize)*
-
-*Defined in transactions/transactionClient.ts:85*
-
-
-
-Initialize the client.
-
-
-
-
-**Returns:** `Promise`.<`void`>
-
-
-
-
-
-___
-
 <a id="ispromotable"></a>
 
 ###  isPromotable
@@ -621,7 +593,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isPromotable](../interfaces/itransactionclient.md#ispromotable)*
 
-*Defined in transactions/transactionClient.ts:605*
+*Defined in transactions/transactionClient.ts:596*
 
 
 
@@ -658,7 +630,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isReattachable](../interfaces/itransactionclient.md#isreattachable)*
 
-*Defined in transactions/transactionClient.ts:624*
+*Defined in transactions/transactionClient.ts:615*
 
 
 
@@ -695,7 +667,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[prepareTransfers](../interfaces/itransactionclient.md#preparetransfers)*
 
-*Defined in transactions/transactionClient.ts:400*
+*Defined in transactions/transactionClient.ts:391*
 
 
 
@@ -734,7 +706,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[promoteTransaction](../interfaces/itransactionclient.md#promotetransaction)*
 
-*Defined in transactions/transactionClient.ts:693*
+*Defined in transactions/transactionClient.ts:684*
 
 
 
@@ -775,7 +747,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[reattachBundle](../interfaces/itransactionclient.md#reattachbundle)*
 
-*Defined in transactions/transactionClient.ts:828*
+*Defined in transactions/transactionClient.ts:819*
 
 
 
@@ -814,7 +786,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[rebroadcastBundle](../interfaces/itransactionclient.md#rebroadcastbundle)*
 
-*Defined in transactions/transactionClient.ts:841*
+*Defined in transactions/transactionClient.ts:832*
 
 
 
@@ -851,7 +823,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransactions](../interfaces/itransactionclient.md#sendtransactions)*
 
-*Defined in transactions/transactionClient.ts:562*
+*Defined in transactions/transactionClient.ts:553*
 
 
 
@@ -891,7 +863,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransfer](../interfaces/itransactionclient.md#sendtransfer)*
 
-*Defined in transactions/transactionClient.ts:594*
+*Defined in transactions/transactionClient.ts:585*
 
 
 
@@ -933,7 +905,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[traverseBundle](../interfaces/itransactionclient.md#traversebundle)*
 
-*Defined in transactions/transactionClient.ts:768*
+*Defined in transactions/transactionClient.ts:759*
 
 
 

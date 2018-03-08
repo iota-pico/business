@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/interfaces/ITransactionClient.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/interfaces</a> ITransactionClient.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/0</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Address } from "@iota-pico/data/dist/data/address";
+import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
+import { Bundle } from "@iota-pico/data/dist/data/bundle";
+import { Hash } from "@iota-pico/data/dist/data/hash";
+import { Input } from "@iota-pico/data/dist/data/input";
+import { Tag } from "@iota-pico/data/dist/data/tag";
+import { Transaction } from "@iota-pico/data/dist/data/transaction";
+import { Transfer } from "@iota-pico/data/dist/data/transfer";
+import { AccountData } from "./accountData";
+import { PromoteOptions } from "./promoteOptions";
+import { TransferOptions } from "./transferOptions";
+&nbsp;
+/**
+ * Represents a client for performing transactions using the api if required.
+ * @interface
+ */
+export interface ITransactionClient {
+    /**
+     * Returns the list of transaction in progress.
+     * @returns Promise which resolves to a list of hashes or rejects with error.
+     */
+    getTransactionsInProgress(): Promise&lt;Hash[]&gt;;
+&nbsp;
+    /**
+     * Find the transactions which match the specified input and return. All input values are lists,
+     * for which a list of return values (transaction hashes), in the same order, is returned for all
+     * individual elements. Using multiple of these input fields returns the intersection of the values.
+     * @param bundles Bundles to lookup transaction hashes for.
+     * @param addresses Addresses to lookup transaction hashes for.
+     * @param tags Tags to lookup transaction hashes for.
+     * @param approvees Approvees to lookup transaction hashes for.
+     * @returns Promise which resolves with a list of hashes or rejects with error.
+     */
+    findTransactions(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise&lt;Hash[]&gt;;
+&nbsp;
+    /**
+     * Get the transaction details of specific transactions.
+     * @returns Promise which resolves to the list of transactions or rejects with error.
+     */
+    getTransactionsObjects(transactionHashes: Hash[]): Promise&lt;Transaction[]&gt;;
+&nbsp;
+    /**
+     * Get the inclusion states of a list of transaction hashes.
+     * @returns Promise which resolves to the list of inclusion states or rejects with error.
+     */
+    getLatestInclusion(transactionHashes: Hash[]): Promise&lt;boolean[]&gt;;
+&nbsp;
+    /**
+     * Generates addresses with index-based or using apis.
+     * @param seed The seed to generate the addresses from.
+     * @param startIndex The start index to generate addresses.
+     * @param endIndex The end index to generate addresses.
+     * @param includeChecksum Includes the checksum on addresses.
+     * @param security The security level at which to create the addresses.
+     * @returns Promise which resolves to the list of addresses or rejects with error.
+     */
+    getNewAddress(seed: Hash, startIndex?: number, endIndex?: number, includeChecksum?: boolean, security?: AddressSecurity): Promise&lt;Address[]&gt;;
+&nbsp;
+    /**
+     * Generates addresses index-based.
+     * @param seed The seed to generate the addresses from.
+     * @param startIndex The start index to generate addresses.
+     * @param endIndex The end index to generate addresses.
+     * @param includeChecksum Includes the checksum on addresses.
+     * @param security The security level at which to create the addresses.
+     * @returns Promise which resolves to the list of addresses or rejects with error.
+     */
+    getAddressesByIndex(seed: Hash, startIndex: number, endIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise&lt;Address[]&gt;;
+&nbsp;
+    /**
+     * Generates address which havent been used using apis.
+     * @param seed The seed to generate the addresses from.
+     * @param startIndex The start index to generate addresses.
+     * @param includeChecksum Includes the checksum on addresses.
+     * @param security The security level at which to create the addresses.
+     * @returns Promise which resolves to an addresses list, the first unused address is the last in the list or rejects with error.
+     */
+    getAddressesToUnused(seed: Hash, startIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise&lt;Address[]&gt;;
+&nbsp;
+    /**
+     * Get the input data for a range of addresses.
+     * @param seed The seed to get the input data for.
+     * @param startIndex The start index to get the addresses.
+     * @param endIndex The end index to get the addresses.
+     * @param security The security level used to create the addresses.
+     * @param totalRequired The threshold at which total balance to stop gathering addresses.
+     * @returns Promise which resolves to the inputs for each address or rejects with error.
+     */
+    getInputs(seed: Hash, startIndex: number, endIndex: number, security: AddressSecurity, totalRequired: number): Promise&lt;{ inputs: Input[]; totalBalance: number }&gt;;
+&nbsp;
+    /**
+     * Prepares transfer by generating bundle, finding and signing inputs.
+     * @param seed The seed to prepare the transfer for.
+     * @param transfers The transfers to prepare.
+     * @param transferOptions Additional options for the transfer.
+     *      @property inputs List of inputs used for funding the transfer.
+     *      @property security Security level to be used for the private key / addresses.
+     *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
+     *      @property hmacKey Hmac key to sign the bundle.
+     * @returns Promise which resolves to the array of Transactions for the transfer or rejects with error.
+     */
+    prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Attach the transactions to the tangle by doing proof of work.
+     * @param bundle The bundle of transactions to attach.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param reference The reference to send with the transactions.
+     * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
+     */
+    attachToTangle(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
+     * @param bundle The bundle of transactions to send.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param reference The reference to send with the transactions.
+     * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
+     */
+    sendTransactions(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Wrapper function that does prepareTransfers and then sendTransactions.
+     * @param seed The seed to send the transfer for.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param transfers The transfers to send.
+     * @param transferOptions Additional options for the transfer.
+     *      @property inputs List of inputs used for funding the transfer.
+     *      @property security Security level to be used for the private key / addresses.
+     *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
+     *      @property hmacKey Hmac key to sign the bundle.
+     * @param reference The reference to send with the transactions.
+     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     */
+    sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Find out if a transaction is promotable.
+     * @param transactionTail The hash of the transaction to be promoted.
+     * @returns Promise which resolves to true if the transaction is promotable rejects with an error.
+     */
+    isPromotable(transactionTail: Hash): Promise&lt;boolean&gt;;
+&nbsp;
+    /**
+     * Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
+     * @param addresses Input address you want to have tested.
+     * @returns Promise which resolves to true if the addresses are reattachable or rejects with an error.
+     */
+    isReattachable(addresses: Address[]): Promise&lt;boolean[]&gt;;
+&nbsp;
+    /**
+     * Promotes a transaction by adding spam on top of it, as long as it is promotable.
+     * Will promote by adding transfers on top of the current one with delay interval.
+     * Use promoteOptions.interrupt to terminate the promotion.
+     * If promoteOptions.delay is set to 0 only one promotion transfer will be sent.
+     * @param transactionTail The hash of the transaction to be promoted.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @param transfers The transfers to send.
+     * @param promoteOptions Additional options for the promote.
+     *      @property delay Delay between promotion transfers
+     *      @property interrupt Flag or method to terminate promotion.
+     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     */
+    promoteTransaction(transactionTail: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], promoteOptions?: PromoteOptions): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Gets the associated bundle transactions of a single transaction.
+     * Does validation of signatures, total sum as well as bundle order.
+     * @param transactionHash Hash of a trunk or a tail transaction of a bundle.
+     * @returns Promise which resolves to the bundle transactions or rejects with an error.
+     */
+    getBundle(transactionHash: Hash): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Traverse the Bundle by going down the trunkTransactions until
+     * the bundle hash of the transaction is no longer the same.
+     * @param trunkTransaction Hash of a trunk or a tail transaction of a bundle.
+     * @param bundleHash The bundle hash to match.
+     * @returns Promise which resolves to the bundle transactions or rejects with an error.
+     */
+    traverseBundle(trunkTransaction: Hash, bundleHash?: Hash): Promise&lt;Transaction[]&gt;;
+&nbsp;
+    /**
+     * Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
+     * @param transactionHash The hash of the transaction to be promoted.
+     * @param depth Value that determines how far to go for tip selection.
+     * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
+     * @returns Promise which resolves to the list of transactions created or rejects with an error.
+     */
+    reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Wrapper which gets a bundle and then broadcasts it.
+     * @param transactionHash The hash of the transaction to be re-broadcast.
+     * @returns Promise which resolves or rejects with an error.
+     */
+    rebroadcastBundle(transactionHash: Hash): Promise&lt;Bundle&gt;;
+&nbsp;
+    /**
+     * Get transaction objects by fist performing a findTransactions call.
+     * @param addresses The addresses to get the transaction objects for.
+     * @param bundles Bundles to lookup transactions for.
+     * @param addresses Addresses to lookup transactions for.
+     * @param tags Tags to lookup transactions for.
+     * @param approvees Approvees to lookup transactions for.
+     * @returns Promise which resolves to the list of transactions or rejects with an error.
+     */
+    findTransactionObjects(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise&lt;Transaction[]&gt;;
+&nbsp;
+    /**
+     * The transfers which are associated with a seed. The transfers are determined by either calculating
+     * deterministically which addresses were already used, or by providing a list of indexes to get the
+     * addresses and the associated transfers from. The transfers are sorted by their timestamp.
+     * @param seed The seed to get the transfers for
+     * @param startIndex The start index to get the transfers for.
+     * @param endIndex The end index to get the transfers for.
+     * @param security The security level for the transfers.
+     * @param inclusionStates Do you want inclusion states in the bundles.
+     * @returns Promise which resolves to the requested bundles or rejects with an error.
+     */
+    getTransfers(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity, inclusionStates?: boolean): Promise&lt;Bundle[]&gt;;
+&nbsp;
+    /**
+     * Similar to getTransfers, just that it returns additional account data.
+     * @param seed The seed to get the transfers for
+     * @param startIndex The start index to get the transfers for.
+     * @param endIndex The end index to get the transfers for.
+     * @param security The security level for the transfers.
+     * @returns Promise which resolves to the account data or rejects with an error.
+     */
+    getAccountData(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity): Promise&lt;AccountData&gt;;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Mar 08 2018 14:28:18 GMT+0300 (Turkey Standard Time)
+</div>
+</div>
+<script src="..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\sorter.js"></script>
+</body>
+</html>

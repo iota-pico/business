@@ -80,15 +80,6 @@ export class TransactionClient implements ITransactionClient {
     }
 
     /**
-     * Initialize the client.
-     */
-    public async initialize(): Promise<void> {
-        if (this._proofOfWork) {
-            await this._proofOfWork.initialize();
-        }
-    }
-
-    /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.
      */

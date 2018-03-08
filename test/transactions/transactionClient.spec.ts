@@ -37,22 +37,6 @@ describe("TransactionClient", () => {
         chai.should().exist(obj);
     });
 
-    describe("initialize", () => {
-        it("can be called with no proof of work initialization", async () => {
-            const obj = new TransactionClient(apiClientStub);
-            await obj.initialize();
-            chai.should().exist(obj);
-        });
-
-        it("can be called with proof of work initialization", async () => {
-            const proofOfWorkStub = <IProofOfWork>{};
-            proofOfWorkStub.initialize = sandbox.stub().resolves();
-            const obj = new TransactionClient(apiClientStub, proofOfWorkStub);
-            await obj.initialize();
-            chai.should().exist(obj);
-        });
-    });
-
     describe("getTransactionsInProgress", () => {
         it("can be called and have no response", async () => {
             apiClientStub.getTips = sandbox.stub().resolves(undefined);
@@ -1837,7 +1821,6 @@ describe("TransactionClient", () => {
             });
 
             const obj = new TransactionClient(apiClientStub, undefined, timeServiceStub);
-            await obj.initialize();
             const bundle = new Bundle();
             bundle.transactions = trytes.map(t => Transaction.fromTrytes(t));
             const ret = await obj.attachToTangle(bundle, 1, 1, Hash.fromTrytes(Trytes.fromString("A".repeat(81))));

@@ -23,7 +23,7 @@ Represents a client for performing transactions using the api if required.
 
 
 
-*Defined in interfaces/ITransactionClient.ts:117*
+*Defined in interfaces/ITransactionClient.ts:112*
 
 
 
@@ -61,7 +61,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:217*
+*Defined in interfaces/ITransactionClient.ts:212*
 
 
 
@@ -99,7 +99,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:39*
+*Defined in interfaces/ITransactionClient.ts:34*
 
 
 
@@ -137,7 +137,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:240*
+*Defined in interfaces/ITransactionClient.ts:235*
 
 
 
@@ -175,7 +175,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:73*
+*Defined in interfaces/ITransactionClient.ts:68*
 
 
 
@@ -214,7 +214,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:83*
+*Defined in interfaces/ITransactionClient.ts:78*
 
 
 
@@ -252,7 +252,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:181*
+*Defined in interfaces/ITransactionClient.ts:176*
 
 
 
@@ -287,7 +287,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:94*
+*Defined in interfaces/ITransactionClient.ts:89*
 
 
 
@@ -326,7 +326,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:51*
+*Defined in interfaces/ITransactionClient.ts:46*
 
 
 
@@ -361,7 +361,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:62*
+*Defined in interfaces/ITransactionClient.ts:57*
 
 
 
@@ -400,7 +400,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:27*
+*Defined in interfaces/ITransactionClient.ts:22*
 
 
 
@@ -427,7 +427,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:45*
+*Defined in interfaces/ITransactionClient.ts:40*
 
 
 
@@ -462,7 +462,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:230*
+*Defined in interfaces/ITransactionClient.ts:225*
 
 
 
@@ -493,31 +493,6 @@ Promise which resolves to the requested bundles or rejects with an error.
 
 ___
 
-<a id="initialize"></a>
-
-###  initialize
-
-► **initialize**(): `Promise`.<`void`>
-
-
-
-*Defined in interfaces/ITransactionClient.ts:21*
-
-
-
-Initialize the client.
-
-
-
-
-**Returns:** `Promise`.<`void`>
-
-
-
-
-
-___
-
 <a id="ispromotable"></a>
 
 ###  isPromotable
@@ -526,7 +501,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:150*
+*Defined in interfaces/ITransactionClient.ts:145*
 
 
 
@@ -561,7 +536,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:157*
+*Defined in interfaces/ITransactionClient.ts:152*
 
 
 
@@ -596,7 +571,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:107*
+*Defined in interfaces/ITransactionClient.ts:102*
 
 
 
@@ -633,7 +608,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:173*
+*Defined in interfaces/ITransactionClient.ts:168*
 
 
 
@@ -672,7 +647,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:199*
+*Defined in interfaces/ITransactionClient.ts:194*
 
 
 
@@ -709,7 +684,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:206*
+*Defined in interfaces/ITransactionClient.ts:201*
 
 
 
@@ -744,7 +719,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:127*
+*Defined in interfaces/ITransactionClient.ts:122*
 
 
 
@@ -782,7 +757,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:143*
+*Defined in interfaces/ITransactionClient.ts:138*
 
 
 
@@ -822,7 +797,7 @@ ___
 
 
 
-*Defined in interfaces/ITransactionClient.ts:190*
+*Defined in interfaces/ITransactionClient.ts:185*
 
 
 
