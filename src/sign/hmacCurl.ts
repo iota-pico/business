@@ -6,7 +6,6 @@ import { Trytes } from "@iota-pico/data/dist/data/trytes";
 
 /**
  * Hashed Message Authentication Code using Curl.
- * @interface
  */
 export class HmacCurl {
     /* @internal */

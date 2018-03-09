@@ -31,11 +31,11 @@ import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
 import { BundleHelper } from "../helpers/bundleHelper";
-import { AccountData } from "../interfaces/accountData";
 import { ITransactionClient } from "../interfaces/ITransactionClient";
-import { PromoteOptions } from "../interfaces/promoteOptions";
-import { TransferOptions } from "../interfaces/transferOptions";
 import { Signing } from "../sign/signing";
+import { AccountData } from "../types/accountData";
+import { PromoteOptions } from "../types/promoteOptions";
+import { TransferOptions } from "../types/transferOptions";
 
 /**
  * Default implementation of the ITransactionClient.
@@ -1053,6 +1053,7 @@ export class TransactionClient implements ITransactionClient {
         }
     }
 
+    /* @internal */
     private async proofOfWorkIterate(trunkTransaction: Hash, branchTransaction: Hash, transactions: Transaction[], minWeightMagnitude: number): Promise<Transaction[]> {
         const finalTransactions = [];
 

@@ -10,10 +10,10 @@ import { Input } from "@iota-pico/data/dist/data/input";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
-import { AccountData } from "../interfaces/accountData";
 import { ITransactionClient } from "../interfaces/ITransactionClient";
-import { PromoteOptions } from "../interfaces/promoteOptions";
-import { TransferOptions } from "../interfaces/transferOptions";
+import { AccountData } from "../types/accountData";
+import { PromoteOptions } from "../types/promoteOptions";
+import { TransferOptions } from "../types/transferOptions";
 /**
  * Default implementation of the ITransactionClient.
  */
@@ -227,5 +227,4 @@ export declare class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the account data or rejects with an error.
      */
     getAccountData(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity): Promise<AccountData>;
-    private proofOfWorkIterate(trunkTransaction, branchTransaction, transactions, minWeightMagnitude);
 }

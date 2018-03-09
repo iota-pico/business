@@ -37,7 +37,7 @@
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in interfaces/accountData.ts:8*
+*Defined in types/accountData.ts:8*
 
 
 
@@ -92,7 +92,7 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in interfaces/promoteOptions.ts:4*
+*Defined in types/promoteOptions.ts:4*
 
 
 
@@ -126,7 +126,7 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in interfaces/transferOptions.ts:9*
+*Defined in types/transferOptions.ts:9*
 
 
 

@@ -151,6 +151,15 @@ export class MultiSigClient {
         }
     }
 
+    /**
+     * Initiates the creation of a new transfer by generating an empty bundle with the correct number
+     * of bundle entries to be later used for the signing process.
+     * @param address Address which has sufficient balance and is controlled by the co-signers.
+     * @param securitySum the sum of the security levels from all cosigners chosen during the private key generation (getKey / getDigest)
+     * @param balance The balance available for the transfer, if 0 will call getBalances to lookup available.
+     * @param transfers The transfers to perform.
+     * @param remainderAddress If there is a remainder after the transfer then send the amount to this address.
+     */
     public async prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise<Bundle> {
         if (!ObjectHelper.isType(address, Address)) {
             throw new BusinessError("The address should be an object of type Address");

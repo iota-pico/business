@@ -130,6 +130,11 @@ describe("BundleHelper", () => {
     });
 
     describe("isValid", () => {
+        it("can not be valid with no bundle", () => {
+            const ret = BundleHelper.isValid(undefined);
+            chai.expect(ret).to.be.equal(false);
+        });
+
         it("can not be valid with no transactions", () => {
             const bundle: Bundle = new Bundle();
             bundle.transactions = [];
@@ -274,6 +279,13 @@ describe("BundleHelper", () => {
             const bundle: Bundle = new Bundle();
             bundle.transactions = transactions;
             const ret = BundleHelper.isValid(bundle);
+            chai.expect(ret).to.be.equal(false);
+        });
+    });
+
+    describe("validSignatures", () => {
+        it("can not be valid with no bundle", () => {
+            const ret = BundleHelper.validateSignatures(undefined, undefined);
             chai.expect(ret).to.be.equal(false);
         });
     });

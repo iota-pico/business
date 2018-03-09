@@ -6,9 +6,9 @@ import { Input } from "@iota-pico/data/dist/data/input";
 import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
-import { AccountData } from "./accountData";
-import { PromoteOptions } from "./promoteOptions";
-import { TransferOptions } from "./transferOptions";
+import { AccountData } from "../types/accountData";
+import { PromoteOptions } from "../types/promoteOptions";
+import { TransferOptions } from "../types/transferOptions";
 
 /**
  * Represents a client for performing transactions using the api if required.

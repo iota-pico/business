@@ -4,7 +4,7 @@ import { Input } from "@iota-pico/data/dist/data/input";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 
 /**
- * Options used during prepare transfer process.
+ * Options used during prepare transfer process prepareTransfers and sendTransfer.
  */
 export type TransferOptions = {
     inputs?: Input[];

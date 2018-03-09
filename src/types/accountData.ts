@@ -3,7 +3,7 @@ import { Bundle } from "@iota-pico/data/dist/data/bundle";
 import { Input } from "@iota-pico/data/dist/data/input";
 
 /**
- * Account data information.
+ * Account data information returned from getAccountData.
  */
 export type AccountData = {
     latestAddress: Address;

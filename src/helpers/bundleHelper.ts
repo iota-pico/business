@@ -1,4 +1,5 @@
 import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
 import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
 import { Address } from "@iota-pico/data/dist/data/address";
@@ -13,15 +14,147 @@ import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { TryteNumber } from "../../../iota-pico-data/dist/data/tryteNumber";
-import { TransferOptions } from "../interfaces/transferOptions";
 import { HmacCurl } from "../sign/hmacCurl";
 import { Signing } from "../sign/signing";
+import { TransferOptions } from "../types/transferOptions";
 
 /**
  * Helper class for signing bundles.
  * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export class BundleHelper {
+    /**
+     * Is the bundle valid.
+     * @param bundle The bundle to check for validity.
+     * @returns True if the bundle is valid.
+     */
+    public static isValid(bundle: Bundle): boolean {
+        let isValid = false;
+
+        if (ObjectHelper.isType(bundle, Bundle) && ArrayHelper.isTyped(bundle.transactions, Transaction)) {
+            let totalSum = 0;
+
+            const kerl = SpongeFactory.instance().create("kerl");
+            kerl.initialize();
+
+            // Prepare for signature validation
+            const signaturesToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] }[] = [];
+
+            isValid = true;
+            for (let t = 0; t < bundle.transactions.length && isValid; t++) {
+                const bundleTx = bundle.transactions[t];
+                totalSum += bundleTx.value.toNumber();
+
+                // currentIndex has to be equal to the index in the array
+                if (bundleTx.currentIndex.toNumber() !== t) {
+                    isValid = false;
+                } else {
+                    // Get the transaction trytes
+                    const thisTxTrytes = bundleTx.toTrytes();
+
+                    // Absorb bundle hash + value + timestamp + lastIndex + currentIndex trytes.
+                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(SignatureMessageFragment.LENGTH, 162)).toArray();
+                    kerl.absorb(thisTxTrits, 0, thisTxTrits.length);
+
+                    // Check if input transaction
+                    if (bundleTx.value.toNumber() < 0) {
+                        const newSignatureToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] } = {
+                            address: bundleTx.address,
+                            signatureMessageFragments: [bundleTx.signatureMessageFragment]
+                        };
+
+                        // Find the subsequent txs with the remaining signature fragment
+                        for (let i = t; i < bundle.transactions.length - 1; i++) {
+                            const newBundleTx = bundle.transactions[i + 1];
+
+                            // Check if new tx is part of the signature fragment
+                            if (newBundleTx.address.toTrytes().toString() === bundleTx.address.toTrytes().toString()
+                                && newBundleTx.value.toNumber() === 0) {
+                                newSignatureToValidate.signatureMessageFragments.push(newBundleTx.signatureMessageFragment);
+                            }
+                        }
+
+                        signaturesToValidate.push(newSignatureToValidate);
+                    }
+                }
+            }
+
+            // Check for total sum, if not equal 0 return error
+            if (totalSum !== 0) {
+                isValid = false;
+            } else {
+                // get the bundle hash from the bundle transactions
+                const bundleFromTxs = new Int8Array(kerl.getConstants().HASH_LENGTH);
+                kerl.squeeze(bundleFromTxs, 0, bundleFromTxs.length);
+
+                const bundleFromTxsTrytes = Trits.fromArray(bundleFromTxs).toTrytes().toString();
+
+                // Check if bundle hash is the same as returned by tx object
+                const bundleHash = bundle.transactions[0].bundle;
+                if (bundleFromTxsTrytes !== bundleHash.toTrytes().toString()) {
+                    isValid = false;
+                } else {
+                    // Last tx in the bundle should have currentIndex === lastIndex
+                    if (bundle.transactions[bundle.transactions.length - 1].currentIndex.toNumber() !==
+                            bundle.transactions[bundle.transactions.length - 1].lastIndex.toNumber()) {
+                        isValid = false;
+                    } else {
+                        // Validate the signatures
+                        for (let i = 0; i < signaturesToValidate.length && isValid; i++) {
+                            const isValidSignature = Signing.validateSignatures(signaturesToValidate[i].address,
+                                                                                signaturesToValidate[i].signatureMessageFragments,
+                                                                                bundleHash);
+
+                            if (!isValidSignature) {
+                                isValid = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Validate signatures for each of the co-signers in the multi-signature to independently verify that a generated
+     * transaction with the corresponding signatures of the co-signers is valid.
+     * @param signedBundle The signed bundle to check the signatures.
+     * @param inputAddress The address used to initiate the transfer.
+     * @returns True is the signatures are valid.
+     */
+    public static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean {
+        let isValid = false;
+        if (ObjectHelper.isType(signedBundle, Bundle) &&
+            ArrayHelper.isTyped(signedBundle.transactions, Transaction) &&
+            ObjectHelper.isType(inputAddress, Address)) {
+            let bundleHash;
+            const signatureFragments = [];
+            const inputAddressTrytes = inputAddress.toTrytes().toString();
+
+            for (let i = 0; i < signedBundle.transactions.length; i++) {
+                if (signedBundle.transactions[i].address.toTrytes().toString() === inputAddressTrytes) {
+                    bundleHash = signedBundle.transactions[i].bundle;
+
+                    // if we reached remainder bundle
+                    if (signedBundle.transactions[i].signatureMessageFragment.toTrytes().toString() ===
+                        SignatureMessageFragment.EMPTY.toTrytes().toString()) {
+                        break;
+                    }
+
+                    signatureFragments.push(signedBundle.transactions[i].signatureMessageFragment);
+                }
+            }
+
+            if (bundleHash) {
+                isValid = Signing.validateSignatures(inputAddress, signatureFragments, bundleHash);
+            }
+        }
+
+        return isValid;
+    }
+
     public static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
         bundle: Bundle; totalValue: number; signatureMessageFragments: SignatureMessageFragment[]; lastTag: Tag; } {
         const bundle = new Bundle();
@@ -258,123 +391,6 @@ export class BundleHelper {
         }
 
         return normalizedBundle;
-    }
-
-    /* @internal */
-    public static isValid(bundle: Bundle): boolean {
-        let isValid = false;
-
-        if (ArrayHelper.isTyped(bundle.transactions, Transaction)) {
-            let totalSum = 0;
-
-            const kerl = SpongeFactory.instance().create("kerl");
-            kerl.initialize();
-
-            // Prepare for signature validation
-            const signaturesToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] }[] = [];
-
-            isValid = true;
-            for (let t = 0; t < bundle.transactions.length && isValid; t++) {
-                const bundleTx = bundle.transactions[t];
-                totalSum += bundleTx.value.toNumber();
-
-                // currentIndex has to be equal to the index in the array
-                if (bundleTx.currentIndex.toNumber() !== t) {
-                    isValid = false;
-                } else {
-                    // Get the transaction trytes
-                    const thisTxTrytes = bundleTx.toTrytes();
-
-                    // Absorb bundle hash + value + timestamp + lastIndex + currentIndex trytes.
-                    const thisTxTrits = Trits.fromTrytes(thisTxTrytes.sub(SignatureMessageFragment.LENGTH, 162)).toArray();
-                    kerl.absorb(thisTxTrits, 0, thisTxTrits.length);
-
-                    // Check if input transaction
-                    if (bundleTx.value.toNumber() < 0) {
-                        const newSignatureToValidate: { address: Address; signatureMessageFragments: SignatureMessageFragment[] } = {
-                            address: bundleTx.address,
-                            signatureMessageFragments: [bundleTx.signatureMessageFragment]
-                        };
-
-                        // Find the subsequent txs with the remaining signature fragment
-                        for (let i = t; i < bundle.transactions.length - 1; i++) {
-                            const newBundleTx = bundle.transactions[i + 1];
-
-                            // Check if new tx is part of the signature fragment
-                            if (newBundleTx.address.toTrytes().toString() === bundleTx.address.toTrytes().toString()
-                                && newBundleTx.value.toNumber() === 0) {
-                                newSignatureToValidate.signatureMessageFragments.push(newBundleTx.signatureMessageFragment);
-                            }
-                        }
-
-                        signaturesToValidate.push(newSignatureToValidate);
-                    }
-                }
-            }
-
-            // Check for total sum, if not equal 0 return error
-            if (totalSum !== 0) {
-                isValid = false;
-            } else {
-                // get the bundle hash from the bundle transactions
-                const bundleFromTxs = new Int8Array(kerl.getConstants().HASH_LENGTH);
-                kerl.squeeze(bundleFromTxs, 0, bundleFromTxs.length);
-
-                const bundleFromTxsTrytes = Trits.fromArray(bundleFromTxs).toTrytes().toString();
-
-                // Check if bundle hash is the same as returned by tx object
-                const bundleHash = bundle.transactions[0].bundle;
-                if (bundleFromTxsTrytes !== bundleHash.toTrytes().toString()) {
-                    isValid = false;
-                } else {
-                    // Last tx in the bundle should have currentIndex === lastIndex
-                    if (bundle.transactions[bundle.transactions.length - 1].currentIndex.toNumber() !==
-                            bundle.transactions[bundle.transactions.length - 1].lastIndex.toNumber()) {
-                        isValid = false;
-                    } else {
-                        // Validate the signatures
-                        for (let i = 0; i < signaturesToValidate.length && isValid; i++) {
-                            const isValidSignature = Signing.validateSignatures(signaturesToValidate[i].address,
-                                                                                signaturesToValidate[i].signatureMessageFragments,
-                                                                                bundleHash);
-
-                            if (!isValidSignature) {
-                                isValid = false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return isValid;
-    }
-
-    /* @internal */
-    public static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean {
-        let bundleHash;
-        const signatureFragments = [];
-        const inputAddressTrytes = inputAddress.toTrytes().toString();
-
-        for (let i = 0; i < signedBundle.transactions.length; i++) {
-            if (signedBundle.transactions[i].address.toTrytes().toString() === inputAddressTrytes) {
-                bundleHash = signedBundle.transactions[i].bundle;
-
-                // if we reached remainder bundle
-                if (signedBundle.transactions[i].signatureMessageFragment.toTrytes().toString() ===
-                    SignatureMessageFragment.EMPTY.toTrytes().toString()) {
-                    break;
-                }
-
-                signatureFragments.push(signedBundle.transactions[i].signatureMessageFragment);
-            }
-        }
-
-        if (!bundleHash) {
-            return false;
-        }
-
-        return Signing.validateSignatures(inputAddress, signatureFragments, bundleHash);
     }
 
     /* @internal */
