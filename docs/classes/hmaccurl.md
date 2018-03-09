@@ -6,8 +6,6 @@
 
 
 Hashed Message Authentication Code using Curl.
-*__interface__*: 
-
 
 ## Index
 
@@ -30,7 +28,7 @@ Hashed Message Authentication Code using Curl.
 ### ⊕ **new HmacCurl**(key: *`Trytes`*): [HmacCurl](hmaccurl.md)
 
 
-*Defined in sign/hmacCurl.ts:15*
+*Defined in [sign/hmacCurl.ts:14](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/hmacCurl.ts#L14)*
 
 
 
@@ -61,7 +59,7 @@ Create a new instance of the HmacCurl.
 
 
 
-*Defined in sign/hmacCurl.ts:28*
+*Defined in [sign/hmacCurl.ts:27](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/hmacCurl.ts#L27)*
 
 
 

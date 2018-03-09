@@ -6,6 +6,8 @@
 
 
 Helper class for signing transactions. Original [https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js](https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js)
+*__internal__*: 
+
 
 ## Index
 
@@ -29,7 +31,7 @@ Helper class for signing transactions. Original [https://github.com/iotaledger/i
 
 
 
-*Defined in sign/signing.ts:88*
+*Defined in [sign/signing.ts:89](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/signing.ts#L89)*
 
 
 
@@ -59,7 +61,7 @@ ___
 
 
 
-*Defined in sign/signing.ts:101*
+*Defined in [sign/signing.ts:102](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/signing.ts#L102)*
 
 
 
@@ -90,7 +92,7 @@ ___
 
 
 
-*Defined in sign/signing.ts:47*
+*Defined in [sign/signing.ts:48](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/signing.ts#L48)*
 
 
 
@@ -120,7 +122,7 @@ ___
 
 
 
-*Defined in sign/signing.ts:15*
+*Defined in [sign/signing.ts:16](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/signing.ts#L16)*
 
 
 
@@ -152,7 +154,7 @@ ___
 
 
 
-*Defined in sign/signing.ts:114*
+*Defined in [sign/signing.ts:115](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/sign/signing.ts#L115)*
 
 
 

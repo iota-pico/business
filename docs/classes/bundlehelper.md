@@ -35,7 +35,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 
 
-*Defined in helpers/bundleHelper.ts:406*
+*Defined in [helpers/bundleHelper.ts:422](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L422)*
 
 
 
@@ -65,7 +65,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:381*
+*Defined in [helpers/bundleHelper.ts:397](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L397)*
 
 
 
@@ -96,7 +96,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:181*
+*Defined in [helpers/bundleHelper.ts:314](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L314)*
 
 
 
@@ -126,21 +126,26 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:264*
+*Defined in [helpers/bundleHelper.ts:31](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L31)*
 
+
+
+Is the bundle valid.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| bundle | `Bundle`   |  - |
+| bundle | `Bundle`   |  The bundle to check for validity. |
 
 
 
 
 
 **Returns:** `boolean`
+True if the bundle is valid.
+
 
 
 
@@ -156,7 +161,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:226*
+*Defined in [helpers/bundleHelper.ts:359](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L359)*
 
 
 
@@ -186,7 +191,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:25*
+*Defined in [helpers/bundleHelper.ts:158](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L158)*
 
 
 
@@ -217,7 +222,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:89*
+*Defined in [helpers/bundleHelper.ts:222](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L222)*
 
 
 
@@ -252,7 +257,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:132*
+*Defined in [helpers/bundleHelper.ts:265](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L265)*
 
 
 
@@ -287,7 +292,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:433*
+*Defined in [helpers/bundleHelper.ts:449](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L449)*
 
 
 
@@ -318,7 +323,7 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:419*
+*Defined in [helpers/bundleHelper.ts:435](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L435)*
 
 
 
@@ -348,22 +353,27 @@ ___
 
 
 
-*Defined in helpers/bundleHelper.ts:354*
+*Defined in [helpers/bundleHelper.ts:127](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L127)*
 
+
+
+Validate signatures for each of the co-signers in the multi-signature to independently verify that a generated transaction with the corresponding signatures of the co-signers is valid.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| signedBundle | `Bundle`   |  - |
-| inputAddress | `Address`   |  - |
+| signedBundle | `Bundle`   |  The signed bundle to check the signatures. |
+| inputAddress | `Address`   |  The address used to initiate the transfer. |
 
 
 
 
 
 **Returns:** `boolean`
+True is the signatures are valid.
+
 
 
 

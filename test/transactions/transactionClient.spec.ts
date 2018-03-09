@@ -1261,16 +1261,6 @@ describe("TransactionClient", () => {
                 chai.expect(err.message).to.contain("The seed");
             }
         });
-
-        it("can find out if tail hash is promotable", async () => {
-            const obj = new TransactionClient(apiClientStub);
-
-            apiClientStub.checkConsistency = sandbox.stub().resolves({ state: true });
-
-            const response = await obj.isPromotable(Hash.fromTrytes(Trytes.fromString("HSXHHMXFSXMU9BPHHUVZNNMPGMJGDLXAOICGIESRMNAVUWKIQLNCLXCEEOS9XZHTKNFIVHOLWPHCA9999")));
-
-            chai.expect(response).to.be.equal(true);
-        });
     });
 
     describe("getTransfers", () => {

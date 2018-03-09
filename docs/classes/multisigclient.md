@@ -32,7 +32,7 @@ Multiple signatures. Converted [https://github.com/iotaledger/iota.lib.js/blob/m
 ### ⊕ **new MultiSigClient**(apiClient: *`IApiClient`*, timeService?: *`ITimeService`*): [MultiSigClient](multisigclient.md)
 
 
-*Defined in multiSig/multiSigClient.ts:31*
+*Defined in [multiSig/multiSigClient.ts:31](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L31)*
 
 
 
@@ -64,19 +64,22 @@ Create a new instance of the MultiSigClient.
 
 
 
-*Defined in multiSig/multiSigClient.ts:154*
+*Defined in [multiSig/multiSigClient.ts:163](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L163)*
 
+
+
+Initiates the creation of a new transfer by generating an empty bundle with the correct number of bundle entries to be later used for the signing process.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| address | `Address`   |  - |
-| securitySum | `number`   |  - |
-| balance | `number`   |  - |
-| transfers | `Transfer`[]   |  - |
-| remainderAddress | `Address`   |  - |
+| address | `Address`   |  Address which has sufficient balance and is controlled by the co-signers. |
+| securitySum | `number`   |  the sum of the security levels from all cosigners chosen during the private key generation (getKey / getDigest) |
+| balance | `number`   |  The balance available for the transfer, if 0 will call getBalances to lookup available. |
+| transfers | `Transfer`[]   |  The transfers to perform. |
+| remainderAddress | `Address`   |  If there is a remainder after the transfer then send the amount to this address. |
 
 
 
@@ -98,7 +101,7 @@ ___
 
 
 
-*Defined in multiSig/multiSigClient.ts:111*
+*Defined in [multiSig/multiSigClient.ts:111](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L111)*
 
 
 
@@ -133,7 +136,7 @@ ___
 
 
 
-*Defined in multiSig/multiSigClient.ts:71*
+*Defined in [multiSig/multiSigClient.ts:71](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L71)*
 
 
 
@@ -170,7 +173,7 @@ ___
 
 
 
-*Defined in multiSig/multiSigClient.ts:50*
+*Defined in [multiSig/multiSigClient.ts:50](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L50)*
 
 
 
@@ -207,7 +210,7 @@ ___
 
 
 
-*Defined in multiSig/multiSigClient.ts:93*
+*Defined in [multiSig/multiSigClient.ts:93](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/multiSig/multiSigClient.ts#L93)*
 
 
 

@@ -1,5 +1,5 @@
 /**
- * Options used during promote process.
+ * Options used during promote process in promoteTransaction.
  */
 export declare type PromoteOptions = {
     delay?: number;

@@ -37,11 +37,11 @@
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in types/accountData.ts:8*
+*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/accountData.ts#L8)*
 
 
 
-Account data information.
+Account data information returned from getAccountData.
 
 #### Type declaration
 
@@ -92,11 +92,11 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in types/promoteOptions.ts:4*
+*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/promoteOptions.ts#L4)*
 
 
 
-Options used during promote process.
+Options used during promote process in promoteTransaction.
 
 #### Type declaration
 
@@ -126,11 +126,11 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in types/transferOptions.ts:9*
+*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/transferOptions.ts#L9)*
 
 
 
-Options used during prepare transfer process.
+Options used during prepare transfer process prepareTransfers and sendTransfer.
 
 #### Type declaration
 
