@@ -16,8 +16,13 @@ install:
   - cd iotaeco/iota-pico-crypto
   - npm link @iota-pico/core @iota-pico/data
   - npm link
+  - cd ../../
+  - git clone --branch=$TRAVIS_BRANCH https://github.com/iotaeco/iota-pico-api.git iotaeco/iota-pico-api
+  - cd iotaeco/iota-pico-api
+  - npm link @iota-pico/core
+  - npm link
   - cd ../iota-pico-business
-  - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto
+  - npm link @iota-pico/core @iota-pico/data @iota-pico/crypto @iota-pico/api
   - npm install
 script:
   - npm run dist || travis_terminate 1

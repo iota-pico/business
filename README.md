@@ -1,7 +1,7 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iotaeco/iota-pico-business/master/LICENSE) [![Build Status](https://travis-ci.org/iotaeco/iota-pico-business.svg?branch=master)](https://travis-ci.org/iotaeco/iota-pico-business) [![NSP Status](https://nodesecurity.io/orgs/iotaeco/projects/2edc0b1b-a893-43c1-ad41-a3832ca1da4c/badge)](https://nodesecurity.io/orgs/iotaeco/projects/2edc0b1b-a893-43c1-ad41-a3832ca1da4c)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iotaeco/iota-pico-business/master/LICENSE) [![Build Status](https://travis-ci.org/iotaeco/iota-pico-business.svg?branch=master)](https://travis-ci.org/iotaeco/iota-pico-business) [![NSP Status](https://nodesecurity.io/orgs/iotaeco/projects/2a254dad-b9f4-40f3-a6a4-2fc932fab63a)](https://nodesecurity.io/orgs/iotaeco/projects/2a254dad-b9f4-40f3-a6a4-2fc932fab63a)
 [![Coveralls](https://img.shields.io/coveralls/iotaeco/iota-pico-business.svg)](https://coveralls.io/github/iotaeco/iota-pico-business)
 
-# IOTA Pico Framework Transaction
+# IOTA Pico Framework Business
 
 ## Introduction
 
