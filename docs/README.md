@@ -7,12 +7,12 @@
 
 ### Classes
 
+* [AddressHelper](classes/addresshelper.md)
 * [BundleHelper](classes/bundlehelper.md)
 * [BusinessError](classes/businesserror.md)
 * [HmacCurl](classes/hmaccurl.md)
 * [MultiSigAddress](classes/multisigaddress.md)
 * [MultiSigClient](classes/multisigclient.md)
-* [Signing](classes/signing.md)
 * [TransactionClient](classes/transactionclient.md)
 
 
@@ -37,7 +37,7 @@
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/accountData.ts#L8)*
+*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/types/accountData.ts#L8)*
 
 
 
@@ -92,7 +92,7 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/promoteOptions.ts#L4)*
+*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/types/promoteOptions.ts#L4)*
 
 
 
@@ -126,7 +126,7 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/types/transferOptions.ts#L9)*
+*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/types/transferOptions.ts#L9)*
 
 
 

@@ -26,7 +26,7 @@ export class HmacCurl {
      */
     public addHMAC(bundle: Bundle): void {
         const curl = SpongeFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);
-        const hashLength = curl.getConstants().HASH_LENGTH;
+        const hashLength = curl.getConstant("HASH_LENGTH");
         const key = this._keyTrits;
         for (let i = 0; i < bundle.transactions.length; i++) {
             if (bundle.transactions[i].value.toNumber() > 0) {

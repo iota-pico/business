@@ -1,5 +1,5 @@
 # Changelog
 
-## v0.7.0
+## v0.9.0
 
 * First public release

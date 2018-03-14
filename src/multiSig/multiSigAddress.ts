@@ -22,7 +22,7 @@ export class MultiSigAddress {
      */
     constructor() {
         this._kerl = SpongeFactory.instance().create("kerl");
-        this._hashLength = this._kerl.getConstants().HASH_LENGTH;
+        this._hashLength = this._kerl.getConstant("HASH_LENGTH");
         this._kerl.initialize();
     }
 

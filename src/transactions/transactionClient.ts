@@ -13,9 +13,12 @@ import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
 import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
 import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
+import { ILogger } from "@iota-pico/core/dist/interfaces/ILogger";
 import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
+import { NullLogger } from "@iota-pico/core/dist/loggers/nullLogger";
 import { BackgroundTaskService } from "@iota-pico/core/dist/services/backgroundTaskService";
 import { TimeService } from "@iota-pico/core/dist/services/timeService";
+import { ISS } from "@iota-pico/crypto/dist/hash/iss";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -30,9 +33,9 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
 import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
+import { AddressHelper } from "../helpers/addressHelper";
 import { BundleHelper } from "../helpers/bundleHelper";
 import { ITransactionClient } from "../interfaces/ITransactionClient";
-import { Signing } from "../sign/signing";
 import { AccountData } from "../types/accountData";
 import { PromoteOptions } from "../types/promoteOptions";
 import { TransferOptions } from "../types/transferOptions";
@@ -62,21 +65,27 @@ export class TransactionClient implements ITransactionClient {
     /* @internal */
     private readonly _backgroundTaskService: IBackgroundTaskService;
 
+    /* @internal */
+    private readonly _logger: ILogger;
+
     /**
      * Create a new instance of the TransactionClient.
      * @param apiClient An API Client to communicate through.
      * @param proofOfWork Proof of work module to use, if undefined will use remote.
      * @param timeService A class which can provide the time.
      * @param backgroundTaskService A class which can provide background tasks.
+     * @param logger Logger to send transaction info to.
      */
     constructor(apiClient: IApiClient,
                 proofOfWork?: IProofOfWork,
-                timeService: ITimeService = new TimeService(),
-                backgroundTaskService: IBackgroundTaskService = new BackgroundTaskService()) {
+                timeService?: ITimeService,
+                backgroundTaskService?: IBackgroundTaskService,
+                logger?: ILogger) {
         this._apiClient = apiClient;
         this._proofOfWork = proofOfWork;
-        this._timeService = timeService;
-        this._backgroundTaskService = backgroundTaskService;
+        this._timeService = timeService || new TimeService();
+        this._backgroundTaskService = backgroundTaskService || new BackgroundTaskService();
+        this._logger = logger || new NullLogger();
     }
 
     /**
@@ -84,10 +93,14 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to a list of hashes or rejects with error.
      */
     public async getTransactionsInProgress(): Promise<Hash[]> {
+        this._logger.info("===> TransactionClient::getTransactionsInProgress");
         const response = await this._apiClient.getTips();
         if (response && response.hashes) {
-            return response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
+            const resp = response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
+            this._logger.info("<=== TransactionClient::getTransactionsInProgress", resp);
+            return resp;
         } else {
+            this._logger.info("<=== TransactionClient::getTransactionsInProgress", []);
             return [];
         }
     }
@@ -103,6 +116,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves with a list of hashes or rejects with error.
      */
     public async findTransactions(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise<Hash[]> {
+        this._logger.info("===> TransactionClient::findTransactions", bundles, addresses, tags, approvees);
+
         const hasBundle = bundles !== undefined && bundles !== null && bundles.length > 0;
         const hasAddresses = addresses !== undefined && addresses !== null && addresses.length > 0;
         const hasTags = tags !== undefined && tags !== null && tags.length > 0;
@@ -137,8 +152,11 @@ export class TransactionClient implements ITransactionClient {
 
         const response = await this._apiClient.findTransactions(request);
         if (response && response.hashes) {
-            return response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
+            const resp = response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
+            this._logger.info("<=== TransactionClient::findTransactions", resp);
+            return resp;
         } else {
+            this._logger.info("<=== TransactionClient::findTransactions", []);
             return [];
         }
     }
@@ -148,6 +166,7 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of transactions or rejects with error.
      */
     public async getTransactionsObjects(transactionHashes: Hash[]): Promise<Transaction[]> {
+        this._logger.info("===> TransactionClient::getTransactionsObjects", transactionHashes);
         if (!ArrayHelper.isTyped(transactionHashes, Hash)) {
             throw new BusinessError("The transactionHashes must be an array of type Hash");
         }
@@ -158,8 +177,11 @@ export class TransactionClient implements ITransactionClient {
 
         const response = await this._apiClient.getTrytes(request);
         if (response && response.trytes) {
-            return response.trytes.map(trytes => Transaction.fromTrytes(Trytes.fromString(trytes)));
+            const resp = response.trytes.map(trytes => Transaction.fromTrytes(Trytes.fromString(trytes)));
+            this._logger.info("<=== TransactionClient::getTransactionsObjects", resp);
+            return resp;
         } else {
+            this._logger.info("<=== TransactionClient::getTransactionsObjects", []);
             return [];
         }
     }
@@ -169,6 +191,7 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of inclusion states or rejects with error.
      */
     public async getLatestInclusion(transactionHashes: Hash[]): Promise<boolean[]> {
+        this._logger.info("===> TransactionClient::transactionHashes");
         if (!ArrayHelper.isTyped(transactionHashes, Hash)) {
             throw new BusinessError("The transactionHashes must be an array of type Hash");
         }
@@ -181,8 +204,10 @@ export class TransactionClient implements ITransactionClient {
             };
             const response = await this._apiClient.getInclusionStates(request);
             if (response && response.states) {
+                this._logger.info("<=== TransactionClient::transactionHashes", response.states);
                 return response.states;
             } else {
+                this._logger.info("<=== TransactionClient::transactionHashes", []);
                 return [];
             }
         } else {
@@ -200,6 +225,7 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of addresses or rejects with error.
      */
     public async getNewAddress(seed: Hash, startIndex?: number, endIndex?: number, includeChecksum?: boolean, security?: AddressSecurity): Promise<Address[]> {
+        this._logger.info("===> TransactionClient::getNewAddress", seed, startIndex, endIndex, includeChecksum, security);
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -229,6 +255,7 @@ export class TransactionClient implements ITransactionClient {
             addresses = await this.getAddressesToUnused(seed, startIndex, includeChecksum, localSecurity);
         }
 
+        this._logger.info("<=== TransactionClient::getNewAddress", addresses);
         return addresses;
     }
 
@@ -242,6 +269,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of addresses or rejects with error.
      */
     public async getAddressesByIndex(seed: Hash, startIndex: number, endIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise<Address[]> {
+        this._logger.info("===> TransactionClient::getAddressesByIndex", seed, startIndex, endIndex, includeChecksum, security);
+
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -265,6 +294,7 @@ export class TransactionClient implements ITransactionClient {
             addresses.push(this.generateAddress(seed, startIndex + i, security, includeChecksum));
         }
 
+        this._logger.info("<=== TransactionClient::getAddressesByIndex", addresses);
         return Promise.resolve(addresses);
     }
 
@@ -277,6 +307,7 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to an addresses list, the first unused address is the last in the list or rejects with error.
      */
     public async getAddressesToUnused(seed: Hash, startIndex: number, includeChecksum: boolean, security: AddressSecurity): Promise<Address[]> {
+        this._logger.info("===> TransactionClient::getAddressesToUnused", seed, startIndex, includeChecksum, security);
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -317,6 +348,7 @@ export class TransactionClient implements ITransactionClient {
         }
         while (isUsed);
 
+        this._logger.info("<=== TransactionClient::getAddressesToUnused", addresses);
         return Promise.resolve(addresses);
     }
 
@@ -330,6 +362,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the inputs for each address or rejects with error.
      */
     public async getInputs(seed: Hash, startIndex: number, endIndex: number, security: AddressSecurity, totalRequired: number): Promise<{ inputs: Input[]; totalBalance: number }> {
+        this._logger.info("===> TransactionClient::getInputs", seed, startIndex, endIndex, security, totalRequired);
+
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -369,11 +403,14 @@ export class TransactionClient implements ITransactionClient {
             }
         }
 
+        const resp = { inputs, totalBalance };
+        this._logger.info("<=== TransactionClient::getInputs", resp);
+
         if (totalRequired > 0 && totalBalance < totalRequired) {
             throw new BusinessError("Not enough combined balance in the addresses to satisfy the total required", { totalRequired, totalBalance });
         }
 
-        return { inputs, totalBalance };
+        return resp;
     }
 
     /**
@@ -389,6 +426,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
      */
     public async prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::prepareTransfers", seed, transfers, transferOptions);
+
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -474,6 +513,8 @@ export class TransactionClient implements ITransactionClient {
 
         bundle.transactions = bundle.transactions.reverse();
 
+        this._logger.info("<=== TransactionClient::prepareTransfers", bundle);
+
         return bundle;
     }
 
@@ -486,6 +527,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
      */
     public async attachToTangle(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::attachToTangle", bundle, depth, minWeightMagnitude, reference);
+
         if (!ObjectHelper.isType(bundle, Bundle)) {
             throw new BusinessError("The bundle must be an array of type Bundle");
         }
@@ -539,6 +582,7 @@ export class TransactionClient implements ITransactionClient {
 
         const newBundle = new Bundle();
         newBundle.transactions = powTransactions;
+        this._logger.info("<=== TransactionClient::attachToTangle", newBundle);
         return newBundle;
     }
 
@@ -551,6 +595,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the bundle of transactions created or rejects with an error.
      */
     public async sendTransactions(bundle: Bundle, depth: number, minWeightMagnitude: number, reference?: Hash): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::sendTransactions", bundle, depth, minWeightMagnitude, reference);
+
         const attachedTransactionsBundle = await this.attachToTangle(bundle, depth, minWeightMagnitude, reference);
 
         const storeTransactionsRequest: IStoreTransactionsRequest = {
@@ -565,6 +611,7 @@ export class TransactionClient implements ITransactionClient {
 
         await this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
 
+        this._logger.info("<=== TransactionClient::sendTransactions", attachedTransactionsBundle);
         return attachedTransactionsBundle;
     }
 
@@ -583,9 +630,13 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     public async sendTransfer(seed: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], transferOptions?: TransferOptions, reference?: Hash): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::sendTransfer", seed, depth, minWeightMagnitude, transfers, transferOptions, reference);
+
         const transferTrytes = await this.prepareTransfers(seed, transfers, transferOptions);
 
-        return this.sendTransactions(transferTrytes, depth, minWeightMagnitude, reference);
+        const sentBundle = await this.sendTransactions(transferTrytes, depth, minWeightMagnitude, reference);
+        this._logger.info("<=== TransactionClient::sendTransfer", sentBundle);
+        return sentBundle;
     }
 
     /**
@@ -594,6 +645,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to true if the transaction is promotable rejects with an error.
      */
     public async isPromotable(transactionTail: Hash): Promise<boolean> {
+        this._logger.info("===> TransactionClient::isPromotable", transactionTail);
+
         if (!ObjectHelper.isType(transactionTail, Hash)) {
             throw new BusinessError("The transactionTail must be an object of type Hash");
         }
@@ -603,7 +656,7 @@ export class TransactionClient implements ITransactionClient {
         };
 
         const checkConsistencyResponse = await this._apiClient.checkConsistency(checkConsistencyRequest);
-
+        this._logger.info("<=== TransactionClient::isPromotable", checkConsistencyResponse.state);
         return checkConsistencyResponse.state;
     }
 
@@ -613,6 +666,7 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to true if the addresses are reattachable or rejects with an error.
      */
     public async isReattachable(addresses: Address[]): Promise<boolean[]> {
+        this._logger.info("===> TransactionClient::isReattachable", addresses);
         if (!ArrayHelper.isTyped(addresses, Address)) {
             throw new BusinessError("The addresses must be an object of type Address");
         }
@@ -664,6 +718,7 @@ export class TransactionClient implements ITransactionClient {
             }
         }
 
+        this._logger.info("<=== TransactionClient::isReattachable", results);
         return results;
     }
 
@@ -682,6 +737,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     public async promoteTransaction(transactionTail: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], promoteOptions?: PromoteOptions): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::promoteTransaction", transactionTail, depth, minWeightMagnitude, transfers, promoteOptions);
+
         if (!ObjectHelper.isType(transactionTail, Hash)) {
             throw new BusinessError("The transactionTail must be an object of type Hash");
         }
@@ -714,12 +771,14 @@ export class TransactionClient implements ITransactionClient {
                         async () => this.promoteTransaction(transactionTail, depth, minWeightMagnitude, transfers, localPromoteOptions),
                         localPromoteOptions.delay);
                 } else {
+                    this._logger.info("<=== TransactionClient::promoteTransaction", sendTransferResponse);
                     return sendTransferResponse;
                 }
             } else {
                 throw new BusinessError("Transaction is not promotable");
             }
         } else {
+            this._logger.info("<=== TransactionClient::promoteTransaction", undefined);
             return undefined;
         }
     }
@@ -731,6 +790,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the bundle transactions or rejects with an error.
      */
     public async getBundle(transactionHash: Hash): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::getBundle", transactionHash);
+
         if (!ObjectHelper.isType(transactionHash, Hash)) {
             throw new BusinessError("The transactionHash must be an object of type Hash");
         }
@@ -746,6 +807,7 @@ export class TransactionClient implements ITransactionClient {
             throw new BusinessError("Invalid bundle provided");
         }
 
+        this._logger.info("<=== TransactionClient::getBundle", bundle);
         return bundle;
     }
 
@@ -757,6 +819,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the bundle transactions or rejects with an error.
      */
     public async traverseBundle(trunkTransaction: Hash, bundleHash?: Hash): Promise<Transaction[]> {
+        this._logger.info("===> TransactionClient::traverseBundle", trunkTransaction, bundleHash);
+
         if (!ObjectHelper.isType(trunkTransaction, Hash)) {
             throw new BusinessError("The trunkTransaction must be an object of type Hash");
         }
@@ -806,6 +870,7 @@ export class TransactionClient implements ITransactionClient {
             }
         } while (newTrunkTransaction !== undefined);
 
+        this._logger.info("<=== TransactionClient::traverseBundle", allBundleTransactions);
         return allBundleTransactions;
     }
 
@@ -817,11 +882,15 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     public async reattachBundle(transactionHash: Hash, depth: number, minWeightMagnitude: number): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::reattachBundle", transactionHash, depth, minWeightMagnitude);
+
         const bundle = await this.getBundle(transactionHash);
 
         bundle.transactions = bundle.transactions.reverse();
 
-        return this.sendTransactions(bundle, depth, minWeightMagnitude);
+        const sendTransactionsResponse = await this.sendTransactions(bundle, depth, minWeightMagnitude);
+        this._logger.info("<=== TransactionClient::reattachBundle", sendTransactionsResponse);
+        return sendTransactionsResponse;
     }
 
     /**
@@ -830,6 +899,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves or rejects with an error.
      */
     public async rebroadcastBundle(transactionHash: Hash): Promise<Bundle> {
+        this._logger.info("===> TransactionClient::rebroadcastBundle", transactionHash);
+
         const bundle = await this.getBundle(transactionHash);
 
         const broadcastTransactionsRequest: IBroadcastTransactionsRequest = {
@@ -837,6 +908,8 @@ export class TransactionClient implements ITransactionClient {
         };
 
         await this._apiClient.broadcastTransactions(broadcastTransactionsRequest);
+
+        this._logger.info("<=== TransactionClient::rebroadcastBundle", bundle);
 
         return bundle;
     }
@@ -851,10 +924,15 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the list of transactions or rejects with an error.
      */
     public async findTransactionObjects(bundles?: Hash[], addresses?: Address[], tags?: Tag[], approvees?: Hash[]): Promise<Transaction[]> {
+        this._logger.info("===> TransactionClient::findTransactionObjects", bundles, addresses, tags, approvees);
+
         const transactions = await this.findTransactions(bundles, addresses, tags, approvees);
         if (transactions.length > 0) {
-            return this.getTransactionsObjects(transactions);
+            const resp = await this.getTransactionsObjects(transactions);
+            this._logger.info("<=== TransactionClient::findTransactionObjects", resp);
+            return resp;
         } else {
+            this._logger.info("<=== TransactionClient::findTransactionObjects", []);
             return [];
         }
     }
@@ -871,6 +949,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the requested bundles or rejects with an error.
      */
     public async getTransfers(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity, inclusionStates?: boolean): Promise<Bundle[]> {
+        this._logger.info("===> TransactionClient::getTransfers", seed, startIndex, endIndex, security, inclusionStates);
+
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -881,7 +961,9 @@ export class TransactionClient implements ITransactionClient {
 
         const addresses = await this.getNewAddress(seed, localStartIndex, endIndex, false, security);
 
-        return this.bundlesFromAddresses(addresses, inclusionStates);
+        const bundles = await this.bundlesFromAddresses(addresses, inclusionStates);
+        this._logger.info("<=== TransactionClient::getTransfers", bundles);
+        return bundles;
     }
 
     /**
@@ -893,6 +975,8 @@ export class TransactionClient implements ITransactionClient {
      * @returns Promise which resolves to the account data or rejects with an error.
      */
     public async getAccountData(seed: Hash, startIndex?: number, endIndex?: number, security?: AddressSecurity): Promise<AccountData> {
+        this._logger.info("===> TransactionClient::getAccountData", seed, startIndex, endIndex, security);
+
         if (!ObjectHelper.isType(seed, Hash)) {
             throw new BusinessError("The seed must be of type Hash");
         }
@@ -928,6 +1012,7 @@ export class TransactionClient implements ITransactionClient {
             }
         }
 
+        this._logger.info("<=== TransactionClient::getAccountData", accountData);
         return accountData;
     }
 
@@ -989,13 +1074,13 @@ export class TransactionClient implements ITransactionClient {
 
     /* @internal */
     private generateAddress(seed: Hash, index: number, security: AddressSecurity, includeChecksum: boolean): Address {
-        const key = Signing.key(seed, index, security);
-        const digests = Signing.digests(key);
-        const addressTrits = Signing.address(digests);
+        const key = ISS.key(seed, index, security);
+        const digests = ISS.digests(key);
+        const addressTrits = ISS.address(digests);
         let addressTrytesString = Trits.fromArray(addressTrits).toTrytes().toString();
 
         if (includeChecksum) {
-            addressTrytesString += Signing.createChecksum(addressTrits, 9);
+            addressTrytesString += AddressHelper.createChecksum(addressTrits, 9);
         }
 
         return Address.fromTrytes(Trytes.fromString(addressTrytesString));
@@ -1098,5 +1183,4 @@ export class TransactionClient implements ITransactionClient {
         // reverse the order so that it's ascending from currentIndex
         return Promise.resolve(finalTransactions.reverse());
     }
-
 }

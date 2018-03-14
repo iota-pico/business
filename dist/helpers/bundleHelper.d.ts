@@ -9,6 +9,7 @@ import { Transfer } from "@iota-pico/data/dist/data/transfer";
  * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export declare class BundleHelper {
+    static readonly NUMBER_OF_FRAGMENT_CHUNKS: number;
     /**
      * Is the bundle valid.
      * @param bundle The bundle to check for validity.

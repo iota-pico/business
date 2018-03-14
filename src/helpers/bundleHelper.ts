@@ -2,6 +2,7 @@ import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
 import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
+import { ISS } from "@iota-pico/crypto/dist/hash/iss";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
@@ -15,7 +16,6 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { TryteNumber } from "../../../iota-pico-data/dist/data/tryteNumber";
 import { HmacCurl } from "../sign/hmacCurl";
-import { Signing } from "../sign/signing";
 import { TransferOptions } from "../types/transferOptions";
 
 /**
@@ -23,6 +23,8 @@ import { TransferOptions } from "../types/transferOptions";
  * Converted https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
  */
 export class BundleHelper {
+    public static readonly NUMBER_OF_FRAGMENT_CHUNKS: number = 27;
+
     /**
      * Is the bundle valid.
      * @param bundle The bundle to check for validity.
@@ -84,7 +86,7 @@ export class BundleHelper {
                 isValid = false;
             } else {
                 // get the bundle hash from the bundle transactions
-                const bundleFromTxs = new Int8Array(kerl.getConstants().HASH_LENGTH);
+                const bundleFromTxs = new Int8Array(kerl.getConstant("HASH_LENGTH"));
                 kerl.squeeze(bundleFromTxs, 0, bundleFromTxs.length);
 
                 const bundleFromTxsTrytes = Trits.fromArray(bundleFromTxs).toTrytes().toString();
@@ -101,9 +103,9 @@ export class BundleHelper {
                     } else {
                         // Validate the signatures
                         for (let i = 0; i < signaturesToValidate.length && isValid; i++) {
-                            const isValidSignature = Signing.validateSignatures(signaturesToValidate[i].address,
-                                                                                signaturesToValidate[i].signatureMessageFragments,
-                                                                                bundleHash);
+                            const isValidSignature = ISS.validateSignatures(signaturesToValidate[i].address,
+                                                                            signaturesToValidate[i].signatureMessageFragments,
+                                                                            bundleHash);
 
                             if (!isValidSignature) {
                                 isValid = false;
@@ -148,7 +150,7 @@ export class BundleHelper {
             }
 
             if (bundleHash) {
-                isValid = Signing.validateSignatures(inputAddress, signatureFragments, bundleHash);
+                isValid = ISS.validateSignatures(inputAddress, signatureFragments, bundleHash);
             }
         }
 
@@ -249,7 +251,7 @@ export class BundleHelper {
                 }
 
                 // Get corresponding private key of address
-                const key = Signing.key(seed, keyIndex, keySecurity);
+                const key = ISS.key(seed, keyIndex, keySecurity);
 
                 BundleHelper.signTransactions(bundle, i, 0, key, addressTrytes, keySecurity);
             }
@@ -266,7 +268,7 @@ export class BundleHelper {
         const bundleHash = bundle.transactions[index].bundle;
 
         //  Get the normalized bundle hash
-        const normalizedBundleHash = BundleHelper.normalizedHash(bundleHash);
+        const normalizedBundleHash = ISS.normalizedBundle(bundleHash);
         const normalizedBundleFragments: Int8Array[] = [];
 
         // Split hash into 3 fragments
@@ -335,7 +337,7 @@ export class BundleHelper {
                     kerl.absorb(bundleEssence, 0, bundleEssence.length);
                 }
 
-                const hashTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
+                const hashTrits = new Int8Array(kerl.getConstant("HASH_LENGTH"));
                 kerl.squeeze(hashTrits, 0, hashTrits.length);
 
                 const hash = Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
@@ -343,7 +345,7 @@ export class BundleHelper {
                     bundle.transactions[i].bundle = hash;
                 }
 
-                const normalizedHash = this.normalizedHash(hash);
+                const normalizedHash = ISS.normalizedBundle(hash);
                 if (normalizedHash.indexOf(13 /* = M */) !== -1) {
                     // Insecure bundle. Increment Tag and recompute bundle hash.
                     const increasedTag = Trits.add(Trits.fromTrytes(bundle.transactions[0].obsoleteTag.toTrytes()), Trits.fromNumberArray([1]));
@@ -356,82 +358,6 @@ export class BundleHelper {
     }
 
     /* @internal */
-    public static normalizedHash(bundleHash: Hash): Int8Array {
-        const normalizedBundle = new Int8Array(4 * 27);
-        const hashString = bundleHash.toTrytes().toString();
-
-        for (let i = 0; i < 3; i++) {
-            let sum = 0;
-            for (let j = 0; j < 27; j++) {
-                const hashChar = hashString.charAt(i * 27 + j);
-                const val = Trits.fromTrytes(Trytes.fromString(hashChar)).toNumber();
-                normalizedBundle[i * 27 + j] = val;
-                sum += val;
-            }
-
-            if (sum >= 0) {
-                while (sum-- > 0) {
-                    for (let j = 0; j < 27; j++) {
-                        if (normalizedBundle[i * 27 + j] > -13) {
-                            normalizedBundle[i * 27 + j]--;
-                            break;
-                        }
-                    }
-                }
-            } else {
-                while (sum++ < 0) {
-                    for (let j = 0; j < 27; j++) {
-                        if (normalizedBundle[i * 27 + j] < 13) {
-                            normalizedBundle[i * 27 + j]++;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        return normalizedBundle;
-    }
-
-    /* @internal */
-    public static digest(normalizedBundleFragment: Int8Array, signatureMessageFragmentTrits: Int8Array): Int8Array {
-        let buffer: Int8Array;
-
-        const kerl = SpongeFactory.instance().create("kerl");
-        kerl.initialize();
-
-        for (let i = 0; i < 27; i++) {
-            buffer = new Int8Array(signatureMessageFragmentTrits.slice(i * 243, (i + 1) * 243));
-
-            for (let j = normalizedBundleFragment[i] + 13; j-- > 0;) {
-                const jKerl = SpongeFactory.instance().create("kerl");
-
-                jKerl.initialize();
-                jKerl.absorb(buffer, 0, buffer.length);
-                jKerl.squeeze(buffer, 0, jKerl.getConstants().HASH_LENGTH);
-            }
-
-            kerl.absorb(buffer, 0, buffer.length);
-        }
-
-        kerl.squeeze(buffer, 0, kerl.getConstants().HASH_LENGTH);
-        return buffer;
-    }
-
-    /* @internal */
-    public static address(digests: Int8Array): Int8Array {
-        const kerl = SpongeFactory.instance().create("kerl");
-
-        kerl.initialize();
-        kerl.absorb(digests, 0, digests.length);
-
-        const addressTrits = new Int8Array(kerl.getConstants().HASH_LENGTH);
-        kerl.squeeze(addressTrits, 0, addressTrits.length);
-
-        return addressTrits;
-    }
-
-    /* @internal */
     public static transactionHash(transaction: Transaction): Hash {
         const curl = SpongeFactory.instance().create("curl");
         const transactionTrits = Trits.fromTrytes(transaction.toTrytes()).toArray();
@@ -439,7 +365,7 @@ export class BundleHelper {
         curl.initialize();
         curl.absorb(transactionTrits, 0, transactionTrits.length);
 
-        const hashTrits = new Int8Array(curl.getConstants().HASH_LENGTH);
+        const hashTrits = new Int8Array(curl.getConstant("HASH_LENGTH"));
         curl.squeeze(hashTrits, 0, hashTrits.length);
 
         return Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
@@ -451,7 +377,7 @@ export class BundleHelper {
         let hash: Int8Array;
 
         const kerl = SpongeFactory.instance().create("kerl");
-        const hashLength = kerl.getConstants().HASH_LENGTH;
+        const hashLength = kerl.getConstant("HASH_LENGTH");
 
         for (let i = 0; i < 27; i++) {
             hash = signatureMessageFragment.slice(i * hashLength, (i + 1) * hashLength);

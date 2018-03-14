@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/types/accountData.ts</title>
+    <title>Code coverage report for src/helpers/addressHelper.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\index.html">All files</a> / <a href="index.html">src/types</a> accountData.ts
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/helpers</a> addressHelper.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>9/9</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>9/9</span>
       </div>
     </div>
   </div>
@@ -57,7 +57,28 @@
 12
 13
 14
-15</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -65,26 +86,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Address } from "@iota-pico/data/dist/data/address";
-import { Bundle } from "@iota-pico/data/dist/data/bundle";
-import { Input } from "@iota-pico/data/dist/data/input";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
+import { Trits } from "@iota-pico/data/dist/data/trits";
 &nbsp;
 /**
- * Account data information returned from getAccountData.
+ * Helper class for address signing.
+ * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
+ * @internal
  */
-export type AccountData = {
-    latestAddress: Address;
-    addresses: Address[];
-    transfers: Bundle[];
-    inputs: Input[];
-    balance: number;
-};
+export class AddressHelper {
+    /**
+     * Create a checksum for the trits.
+     * @param trits The trits to create the checksum for.
+     * @param checksumLength The length of the checksum.
+     * @returns the checksum as trytes.
+     */
+    public static createChecksum(trits: Int8Array, checksumLength: number): string {
+        const kerl = SpongeFactory.instance().create("kerl");
+        kerl.initialize();
+&nbsp;
+        kerl.absorb(trits, 0, trits.length);
+&nbsp;
+        const checksumTrits = new Int8Array(kerl.getConstant("HASH_LENGTH"));
+        kerl.squeeze(checksumTrits, 0, checksumTrits.length);
+&nbsp;
+        return Trits.fromArray(checksumTrits).toTrytes().toString().substring(81 - checksumLength, 81);
+    }
+}
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

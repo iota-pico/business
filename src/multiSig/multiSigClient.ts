@@ -5,6 +5,7 @@ import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
 import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { TimeService } from "@iota-pico/core/dist/services/timeService";
+import { ISS } from "@iota-pico/crypto/dist/hash/iss";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
 import { Bundle } from "@iota-pico/data/dist/data/bundle";
@@ -17,7 +18,6 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
 import { BundleHelper } from "../helpers/bundleHelper";
-import { Signing } from "../sign/signing";
 import { MultiSigAddress } from "./multiSigAddress";
 
 /**
@@ -58,7 +58,7 @@ export class MultiSigClient {
             throw new BusinessError("The security must be between 1 and 3", { security });
         }
 
-        return Trits.fromArray(Signing.key(seed, index, security)).toTrytes();
+        return Trits.fromArray(ISS.key(seed, index, security)).toTrytes();
     }
 
     /**
@@ -79,9 +79,9 @@ export class MultiSigClient {
             throw new BusinessError("The security must be between 1 and 3", { security });
         }
 
-        const key = Signing.key(seed, index, security);
+        const key = ISS.key(seed, index, security);
 
-        return Trits.fromArray(Signing.digests(key)).toTrytes();
+        return Trits.fromArray(ISS.digests(key)).toTrytes();
     }
 
     /**

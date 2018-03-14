@@ -9,13 +9,15 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 ## Index
 
+### Properties
+
+* [NUMBER_OF_FRAGMENT_CHUNKS](bundlehelper.md#number_of_fragment_chunks)
+
+
 ### Methods
 
-* [address](bundlehelper.md#address)
-* [digest](bundlehelper.md#digest)
 * [finalizeBundle](bundlehelper.md#finalizebundle)
 * [isValid](bundlehelper.md#isvalid)
-* [normalizedHash](bundlehelper.md#normalizedhash)
 * [prepareBundle](bundlehelper.md#preparebundle)
 * [signInputs](bundlehelper.md#signinputs)
 * [signTransactions](bundlehelper.md#signtransactions)
@@ -26,68 +28,23 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 
 ---
+## Properties
+<a id="number_of_fragment_chunks"></a>
+
+### «Static» NUMBER_OF_FRAGMENT_CHUNKS
+
+**●  NUMBER_OF_FRAGMENT_CHUNKS**:  *`number`*  = 27
+
+*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L26)*
+
+
+
+
+
+___
+
+
 ## Methods
-<a id="address"></a>
-
-### «Static» address
-
-► **address**(digests: *`Int8Array`*): `Int8Array`
-
-
-
-*Defined in [helpers/bundleHelper.ts:422](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L422)*
-
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| digests | `Int8Array`   |  - |
-
-
-
-
-
-**Returns:** `Int8Array`
-
-
-
-
-
-___
-
-<a id="digest"></a>
-
-### «Static» digest
-
-► **digest**(normalizedBundleFragment: *`Int8Array`*, signatureMessageFragmentTrits: *`Int8Array`*): `Int8Array`
-
-
-
-*Defined in [helpers/bundleHelper.ts:397](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L397)*
-
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| normalizedBundleFragment | `Int8Array`   |  - |
-| signatureMessageFragmentTrits | `Int8Array`   |  - |
-
-
-
-
-
-**Returns:** `Int8Array`
-
-
-
-
-
-___
-
 <a id="finalizebundle"></a>
 
 ### «Static» finalizeBundle
@@ -96,7 +53,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:314](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L314)*
+*Defined in [helpers/bundleHelper.ts:316](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L316)*
 
 
 
@@ -126,7 +83,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:31](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L31)*
+*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L33)*
 
 
 
@@ -153,36 +110,6 @@ True if the bundle is valid.
 
 ___
 
-<a id="normalizedhash"></a>
-
-### «Static» normalizedHash
-
-► **normalizedHash**(bundleHash: *`Hash`*): `Int8Array`
-
-
-
-*Defined in [helpers/bundleHelper.ts:359](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L359)*
-
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| bundleHash | `Hash`   |  - |
-
-
-
-
-
-**Returns:** `Int8Array`
-
-
-
-
-
-___
-
 <a id="preparebundle"></a>
 
 ### «Static» prepareBundle
@@ -191,7 +118,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:158](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L158)*
+*Defined in [helpers/bundleHelper.ts:160](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L160)*
 
 
 
@@ -222,7 +149,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:222](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L222)*
+*Defined in [helpers/bundleHelper.ts:224](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L224)*
 
 
 
@@ -257,7 +184,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:265](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L265)*
+*Defined in [helpers/bundleHelper.ts:267](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L267)*
 
 
 
@@ -292,7 +219,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:449](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L449)*
+*Defined in [helpers/bundleHelper.ts:375](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L375)*
 
 
 
@@ -323,7 +250,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:435](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L435)*
+*Defined in [helpers/bundleHelper.ts:361](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L361)*
 
 
 
@@ -353,7 +280,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:127](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/helpers/bundleHelper.ts#L127)*
+*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/helpers/bundleHelper.ts#L129)*
 
 
 

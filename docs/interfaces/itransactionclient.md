@@ -23,7 +23,7 @@ Represents a client for performing transactions using the api if required.
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:112](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L112)*
+*Defined in [interfaces/ITransactionClient.ts:112](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L112)*
 
 
 
@@ -61,7 +61,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:212](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L212)*
+*Defined in [interfaces/ITransactionClient.ts:212](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L212)*
 
 
 
@@ -99,7 +99,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:34](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L34)*
+*Defined in [interfaces/ITransactionClient.ts:34](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L34)*
 
 
 
@@ -137,7 +137,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:235](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L235)*
+*Defined in [interfaces/ITransactionClient.ts:235](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L235)*
 
 
 
@@ -175,7 +175,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:68](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L68)*
+*Defined in [interfaces/ITransactionClient.ts:68](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L68)*
 
 
 
@@ -214,7 +214,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:78](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L78)*
+*Defined in [interfaces/ITransactionClient.ts:78](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L78)*
 
 
 
@@ -252,7 +252,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:176](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L176)*
+*Defined in [interfaces/ITransactionClient.ts:176](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L176)*
 
 
 
@@ -287,7 +287,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:89](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L89)*
+*Defined in [interfaces/ITransactionClient.ts:89](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L89)*
 
 
 
@@ -326,7 +326,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:46](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L46)*
+*Defined in [interfaces/ITransactionClient.ts:46](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L46)*
 
 
 
@@ -361,7 +361,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:57](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L57)*
+*Defined in [interfaces/ITransactionClient.ts:57](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L57)*
 
 
 
@@ -400,7 +400,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:22](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L22)*
+*Defined in [interfaces/ITransactionClient.ts:22](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L22)*
 
 
 
@@ -427,7 +427,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:40](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L40)*
+*Defined in [interfaces/ITransactionClient.ts:40](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L40)*
 
 
 
@@ -462,7 +462,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:225](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L225)*
+*Defined in [interfaces/ITransactionClient.ts:225](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L225)*
 
 
 
@@ -501,7 +501,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:145](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L145)*
+*Defined in [interfaces/ITransactionClient.ts:145](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L145)*
 
 
 
@@ -536,7 +536,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:152](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L152)*
+*Defined in [interfaces/ITransactionClient.ts:152](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L152)*
 
 
 
@@ -571,7 +571,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:102](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L102)*
+*Defined in [interfaces/ITransactionClient.ts:102](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L102)*
 
 
 
@@ -608,7 +608,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L168)*
+*Defined in [interfaces/ITransactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L168)*
 
 
 
@@ -647,7 +647,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:194](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L194)*
+*Defined in [interfaces/ITransactionClient.ts:194](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L194)*
 
 
 
@@ -684,7 +684,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:201](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L201)*
+*Defined in [interfaces/ITransactionClient.ts:201](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L201)*
 
 
 
@@ -719,7 +719,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:122](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L122)*
+*Defined in [interfaces/ITransactionClient.ts:122](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L122)*
 
 
 
@@ -757,7 +757,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:138](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L138)*
+*Defined in [interfaces/ITransactionClient.ts:138](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L138)*
 
 
 
@@ -797,7 +797,7 @@ ___
 
 
 
-*Defined in [interfaces/ITransactionClient.ts:185](https://github.com/iotaeco/iota-pico-business/blob/77d04c8/src/interfaces/ITransactionClient.ts#L185)*
+*Defined in [interfaces/ITransactionClient.ts:185](https://github.com/iotaeco/iota-pico-business/blob/8515434/src/interfaces/ITransactionClient.ts#L185)*
 
 
 

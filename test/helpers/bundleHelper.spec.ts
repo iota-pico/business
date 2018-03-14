@@ -13,7 +13,7 @@ import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import * as chai from "chai";
 import { BundleHelper } from "../../src/helpers/bundleHelper";
-import { TransferOptions } from "../../src/interfaces/transferOptions";
+import { TransferOptions } from "../../src/types/transferOptions";
 
 describe("BundleHelper", () => {
     it("can be created", () => {

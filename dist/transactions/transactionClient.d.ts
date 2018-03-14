@@ -1,5 +1,6 @@
 import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
 import { IBackgroundTaskService } from "@iota-pico/core/dist/interfaces/IBackgroundTaskService";
+import { ILogger } from "@iota-pico/core/dist/interfaces/ILogger";
 import { ITimeService } from "@iota-pico/core/dist/interfaces/ITimeService";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
@@ -24,8 +25,9 @@ export declare class TransactionClient implements ITransactionClient {
      * @param proofOfWork Proof of work module to use, if undefined will use remote.
      * @param timeService A class which can provide the time.
      * @param backgroundTaskService A class which can provide background tasks.
+     * @param logger Logger to send transaction info to.
      */
-    constructor(apiClient: IApiClient, proofOfWork?: IProofOfWork, timeService?: ITimeService, backgroundTaskService?: IBackgroundTaskService);
+    constructor(apiClient: IApiClient, proofOfWork?: IProofOfWork, timeService?: ITimeService, backgroundTaskService?: IBackgroundTaskService, logger?: ILogger);
     /**
      * Returns the list of transaction in progress.
      * @returns Promise which resolves to a list of hashes or rejects with error.
