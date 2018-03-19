@@ -54,7 +54,7 @@ A business implementation of an error.
 
 *Overrides CoreError.__constructor*
 
-*Defined in [error/businessError.ts:6](https://github.com/iotaeco/iota-pico-business/blob/aaad57a/src/error/businessError.ts#L6)*
+*Defined in [error/businessError.ts:6](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/error/businessError.ts#L6)*
 
 
 

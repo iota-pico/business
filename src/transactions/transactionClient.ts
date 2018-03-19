@@ -463,7 +463,7 @@ export class TransactionClient implements ITransactionClient {
         const signatureMessageFragments = prepared.signatureMessageFragments;
 
         // Get inputs if we are sending tokens
-        if (totalValue) {
+        if (totalValue > 0) {
             //  Case 1: user provided inputs
             //  Validate the inputs by calling getBalances
             if (localTransferOptions.inputs) {
