@@ -32,7 +32,7 @@ Multiple signatures. Converted [https://github.com/iotaledger/iota.lib.js/blob/m
 ### ⊕ **new MultiSigClient**(apiClient: *`IApiClient`*, timeService?: *`ITimeService`*): [MultiSigClient](multisigclient.md)
 
 
-*Defined in [multiSig/multiSigClient.ts:31](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L31)*
+*Defined in [multiSig/multiSigClient.ts:31](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L31)*
 
 
 
@@ -64,7 +64,7 @@ Create a new instance of the MultiSigClient.
 
 
 
-*Defined in [multiSig/multiSigClient.ts:163](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L163)*
+*Defined in [multiSig/multiSigClient.ts:163](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L163)*
 
 
 
@@ -101,7 +101,7 @@ ___
 
 
 
-*Defined in [multiSig/multiSigClient.ts:111](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L111)*
+*Defined in [multiSig/multiSigClient.ts:111](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L111)*
 
 
 
@@ -136,7 +136,7 @@ ___
 
 
 
-*Defined in [multiSig/multiSigClient.ts:71](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L71)*
+*Defined in [multiSig/multiSigClient.ts:71](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L71)*
 
 
 
@@ -173,7 +173,7 @@ ___
 
 
 
-*Defined in [multiSig/multiSigClient.ts:50](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L50)*
+*Defined in [multiSig/multiSigClient.ts:50](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L50)*
 
 
 
@@ -210,7 +210,7 @@ ___
 
 
 
-*Defined in [multiSig/multiSigClient.ts:93](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigClient.ts#L93)*
+*Defined in [multiSig/multiSigClient.ts:93](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/multiSig/multiSigClient.ts#L93)*
 
 
 
