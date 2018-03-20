@@ -33,7 +33,7 @@ ProofOfWork implementation using API.
 ### ⊕ **new ProofOfWorkApi**(apiClient: *`IApiClient`*): [ProofOfWorkApi](proofofworkapi.md)
 
 
-*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/transactions/proofOfWorkApi.ts#L17)*
+*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/transactions/proofOfWorkApi.ts#L17)*
 
 
 
@@ -64,7 +64,7 @@ Create an instance of ProofOfWork.
 
 
 
-*Defined in [transactions/proofOfWorkApi.ts:34](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/transactions/proofOfWorkApi.ts#L34)*
+*Defined in [transactions/proofOfWorkApi.ts:34](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/transactions/proofOfWorkApi.ts#L34)*
 
 
 
@@ -89,7 +89,7 @@ ___
 
 
 
-*Defined in [transactions/proofOfWorkApi.ts:46](https://github.com/iotaeco/iota-pico-business/blob/21a04de/src/transactions/proofOfWorkApi.ts#L46)*
+*Defined in [transactions/proofOfWorkApi.ts:46](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/transactions/proofOfWorkApi.ts#L46)*
 
 
 
