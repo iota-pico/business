@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/multiSig/multiSigAddress.ts</title>
+    <title>Code coverage report for src/transactions/proofOfWorkApi.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="..\..\prettify.css" />
     <link rel="stylesheet" href="..\..\base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="..\..\index.html">All files</a> / <a href="index.html">src/multiSig</a> multiSigAddress.ts
+      <a href="..\..\index.html">All files</a> / <a href="index.html">src/transactions</a> proofOfWorkApi.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>21/21</span>
+        <span class='fraction'>27/27</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/4</span>
+        <span class='fraction'>16/16</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>21/21</span>
+        <span class='fraction'>26/26</span>
       </div>
     </div>
     <p class="quiet">
@@ -105,15 +105,33 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,25 +144,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">116x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">115x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,75 +155,120 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
+import { IAttachToTangleRequest } from "@iota-pico/api/dist/models/IAttachToTangleRequest";
+import { ArrayHelper } from "@iota-pico/core/dist/helpers/arrayHelper";
+import { NumberHelper } from "@iota-pico/core/dist/helpers/numberHelper";
 import { ObjectHelper } from "@iota-pico/core/dist/helpers/objectHelper";
-import { SpongeFactory } from "@iota-pico/crypto/dist/factories/spongeFactory";
-import { ISponge } from "@iota-pico/crypto/dist/interfaces/ISponge";
-import { Address } from "@iota-pico/data/dist/data/address";
-import { Trits } from "@iota-pico/data/dist/data/trits";
+import { CryptoError } from "@iota-pico/crypto/dist/error/cryptoError";
+import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
+import { Hash } from "@iota-pico/data/dist/data/hash";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
 &nbsp;
 /**
- * Address using multiple signatures.
+ * ProofOfWork implementation using API.
  */
-export class MultiSigAddress {
+export class ProofOfWorkApi implements IProofOfWork {
     /* @internal */
-    private readonly _kerl: ISponge;
-&nbsp;
-    /* @internal */
-    private readonly _hashLength: number;
+    private readonly _apiClient: IApiClient;
 &nbsp;
     /**
-     * Create a new instance of the MultiSigAddress.
+     * Create an instance of ProofOfWork.
+     * @param apiClient The API client to send the request through.
      */
-    constructor() {
-        this._kerl = SpongeFactory.instance().create("kerl");
-        this._hashLength = this._kerl.getConstant("HASH_LENGTH");
-        this._kerl.initialize();
+    constructor(apiClient: IApiClient) {
+        if (ObjectHelper.isEmpty(apiClient)) {
+            throw new BusinessError("The apiClient must not be empty");
+        }
+        this._apiClient = apiClient;
     }
 &nbsp;
     /**
-     * Absorb key digests.
-     * @param digests The digests hashes to absorb.
+     * Allow the proof of work to perform any initialization.
+     * Will throw an exception if the implementation is not supported.
      */
-    public absorb(digests: Trytes[]): void {
-        if (!ArrayHelper.isTyped(digests, Trytes)) {
-            throw new BusinessError("The digests should be an array of type Trytes");
-        }
-        for (let i = 0; i &lt; digests.length; i++) {
-            const digestTrits = Trits.fromTrytes(digests[i]).toArray();
-&nbsp;
-            this._kerl.absorb(digestTrits, 0, digestTrits.length);
-        }
+    public async initialize(): Promise&lt;void&gt; {
+        return Promise.resolve();
     }
 &nbsp;
     /**
-     * Finalizes and returns the multisig address in trytes.
-     * @param digests The final digests hashes to absorb.
-     * @returns The multi signature address.
+     * Perform a proof of work on the data.
+     * @param trunkTransaction The trunkTransaction to use for the pow.
+     * @param branchTransaction The branchTransaction to use for the pow.
+     * @param trytes The trytes to perform the pow on.
+     * @param minWeightMagnitude The minimum weight magnitude.
+     * @returns The trytes produced by the proof of work.
      */
-    public finalize(digests?: Trytes[]): Address {
-        if (!ObjectHelper.isEmpty(digests)) {
-            this.absorb(digests);
+    public async pow(trunkTransaction: Hash, branchTransaction: Hash, trytes: Trytes[], minWeightMagnitude: number): Promise&lt;Trytes[]&gt; {
+        if (!ObjectHelper.isType(trunkTransaction, Hash)) {
+            throw new CryptoError("The trunkTransaction must be an object of type Hash");
+        }
+        if (!ObjectHelper.isType(branchTransaction, Hash)) {
+            throw new CryptoError("The branchTransaction must be an object of type Hash");
+        }
+        if (!ArrayHelper.isTyped(trytes, Trytes)) {
+            throw new CryptoError("The trytes must be an array of type Trytes");
+        }
+        if (!NumberHelper.isInteger(minWeightMagnitude) || minWeightMagnitude &lt;= 0) {
+            throw new CryptoError("The minWeightMagnitude must be &gt; 0");
         }
 &nbsp;
-        const addressTrits = new Int8Array(this._hashLength);
-        this._kerl.squeeze(addressTrits, 0, addressTrits.length);
+        const attachToTangleRequest: IAttachToTangleRequest = {
+            trunkTransaction: trunkTransaction.toString(),
+            branchTransaction: branchTransaction.toString(),
+            minWeightMagnitude: minWeightMagnitude,
+            trytes: trytes.map(t =&gt; t.toString())
+        };
 &nbsp;
-        return Address.fromTrytes(Trits.fromArray(addressTrits).toTrytes());
+        const attachToTangleResponse = await this._apiClient.attachToTangle(attachToTangleRequest);
+&nbsp;
+        if (ObjectHelper.isEmpty(attachToTangleResponse) || ArrayHelper.isEmpty(attachToTangleResponse.trytes)) {
+            throw new CryptoError("The attachToTangleRequest did not return any trytes");
+        } else {
+            return attachToTangleResponse.trytes.map(returnTrytes =&gt; Trytes.fromString(returnTrytes));
+        }
     }
 }
 &nbsp;</pre></td></tr>

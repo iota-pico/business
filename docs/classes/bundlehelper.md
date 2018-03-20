@@ -22,7 +22,6 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 * [signInputs](bundlehelper.md#signinputs)
 * [signTransactions](bundlehelper.md#signtransactions)
 * [signatureMessageFragment](bundlehelper.md#signaturemessagefragment)
-* [transactionHash](bundlehelper.md#transactionhash)
 * [validateSignatures](bundlehelper.md#validatesignatures)
 
 
@@ -35,7 +34,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 **●  NUMBER_OF_FRAGMENT_CHUNKS**:  *`number`*  = 27
 
-*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L26)*
+*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L26)*
 
 
 
@@ -53,7 +52,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:316](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L316)*
+*Defined in [helpers/bundleHelper.ts:316](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L316)*
 
 
 
@@ -83,7 +82,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L33)*
+*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L33)*
 
 
 
@@ -118,7 +117,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:160](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L160)*
+*Defined in [helpers/bundleHelper.ts:160](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L160)*
 
 
 
@@ -149,7 +148,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:224](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L224)*
+*Defined in [helpers/bundleHelper.ts:224](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L224)*
 
 
 
@@ -184,7 +183,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:267](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L267)*
+*Defined in [helpers/bundleHelper.ts:267](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L267)*
 
 
 
@@ -219,7 +218,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:375](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L375)*
+*Defined in [helpers/bundleHelper.ts:361](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L361)*
 
 
 
@@ -242,36 +241,6 @@ ___
 
 ___
 
-<a id="transactionhash"></a>
-
-### «Static» transactionHash
-
-► **transactionHash**(transaction: *`Transaction`*): `Hash`
-
-
-
-*Defined in [helpers/bundleHelper.ts:361](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L361)*
-
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| transaction | `Transaction`   |  - |
-
-
-
-
-
-**Returns:** `Hash`
-
-
-
-
-
-___
-
 <a id="validatesignatures"></a>
 
 ### «Static» validateSignatures
@@ -280,7 +249,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/helpers/bundleHelper.ts#L129)*
+*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/helpers/bundleHelper.ts#L129)*
 
 
 

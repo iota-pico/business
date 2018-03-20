@@ -13,6 +13,7 @@
 * [HmacCurl](classes/hmaccurl.md)
 * [MultiSigAddress](classes/multisigaddress.md)
 * [MultiSigClient](classes/multisigclient.md)
+* [ProofOfWorkApi](classes/proofofworkapi.md)
 * [TransactionClient](classes/transactionclient.md)
 
 
@@ -37,7 +38,7 @@
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/types/accountData.ts#L8)*
+*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/types/accountData.ts#L8)*
 
 
 
@@ -92,7 +93,7 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/types/promoteOptions.ts#L4)*
+*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/types/promoteOptions.ts#L4)*
 
 
 
@@ -126,7 +127,7 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/types/transferOptions.ts#L9)*
+*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/types/transferOptions.ts#L9)*
 
 
 

@@ -1,5 +1,4 @@
 import { IApiClient } from "@iota-pico/api/dist/interfaces/IApiClient";
-import { IAttachToTangleRequest } from "@iota-pico/api/dist/models/IAttachToTangleRequest";
 import { IBroadcastTransactionsRequest } from "@iota-pico/api/dist/models/IBroadcastTransactionsRequest";
 import { ICheckConsistencyRequest } from "@iota-pico/api/dist/models/ICheckConsistencyRequest";
 import { IFindTransactionsRequest } from "@iota-pico/api/dist/models/IFindTransactionsRequest";
@@ -19,6 +18,7 @@ import { NullLogger } from "@iota-pico/core/dist/loggers/nullLogger";
 import { BackgroundTaskService } from "@iota-pico/core/dist/services/backgroundTaskService";
 import { TimeService } from "@iota-pico/core/dist/services/timeService";
 import { ISS } from "@iota-pico/crypto/dist/hash/iss";
+import { TransactionHelper } from "@iota-pico/crypto/dist/helpers/transactionHelper";
 import { IProofOfWork } from "@iota-pico/crypto/dist/interfaces/IProofOfWork";
 import { Address } from "@iota-pico/data/dist/data/address";
 import { AddressSecurity } from "@iota-pico/data/dist/data/addressSecurity";
@@ -30,7 +30,6 @@ import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trits } from "@iota-pico/data/dist/data/trits";
-import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import { BusinessError } from "../error/businessError";
 import { AddressHelper } from "../helpers/addressHelper";
@@ -39,6 +38,7 @@ import { ITransactionClient } from "../interfaces/ITransactionClient";
 import { AccountData } from "../types/accountData";
 import { PromoteOptions } from "../types/promoteOptions";
 import { TransferOptions } from "../types/transferOptions";
+import { ProofOfWorkApi } from "./proofOfWorkApi";
 
 /**
  * Default implementation of the ITransactionClient.
@@ -46,9 +46,6 @@ import { TransferOptions } from "../types/transferOptions";
 export class TransactionClient implements ITransactionClient {
     /* @internal */
     private static readonly NULL_HASH_TRYTES: string = "9".repeat(243);
-
-    /* @internal */
-    private static readonly MAX_TIMESTAMP_VALUE: number = (Math.pow(3, 27) - 1) / 2;
 
     /* @internal */
     private static readonly MAX_INPUTS: number = 500;
@@ -81,8 +78,11 @@ export class TransactionClient implements ITransactionClient {
                 timeService?: ITimeService,
                 backgroundTaskService?: IBackgroundTaskService,
                 logger?: ILogger) {
+        if (ObjectHelper.isEmpty(apiClient)) {
+            throw new BusinessError("The apiClient must not be empty");
+        }
         this._apiClient = apiClient;
-        this._proofOfWork = proofOfWork;
+        this._proofOfWork = proofOfWork || new ProofOfWorkApi(apiClient);
         this._timeService = timeService || new TimeService();
         this._backgroundTaskService = backgroundTaskService || new BackgroundTaskService();
         this._logger = logger || new NullLogger();
@@ -552,33 +552,12 @@ export class TransactionClient implements ITransactionClient {
 
         const transactionsToApprove = await this._apiClient.getTransactionsToApprove(transactionsToApproveRequest);
 
-        let powTransactions: Transaction[];
-        if (this._proofOfWork) {
-            if (this._proofOfWork.performsSingle()) {
-                powTransactions = await this.proofOfWorkIterate(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
-                                                                Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
-                                                                bundle.transactions,
-                                                                minWeightMagnitude);
-            } else {
-                const allTrytes = await this._proofOfWork.pow(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
-                                                              Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
-                                                              bundle.transactions.map(t => t.toTrytes()),
-                                                              minWeightMagnitude);
+        const allTrytes = await this._proofOfWork.pow(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
+                                                      Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
+                                                      bundle.transactions.map(t => t.toTrytes()),
+                                                      minWeightMagnitude);
 
-                powTransactions = allTrytes.map(returnTrytes => Transaction.fromTrytes(returnTrytes));
-            }
-        } else {
-            const attachToTangleRequest: IAttachToTangleRequest = {
-                trunkTransaction: transactionsToApprove.trunkTransaction,
-                branchTransaction: transactionsToApprove.branchTransaction,
-                minWeightMagnitude: minWeightMagnitude,
-                trytes: bundle.transactions.map(t => t.toTrytes().toString())
-            };
-
-            const attachToTangleResponse = await this._apiClient.attachToTangle(attachToTangleRequest);
-
-            powTransactions = attachToTangleResponse.trytes.map(returnTrytes => Transaction.fromTrytes(Trytes.fromString(returnTrytes)));
-        }
+        const powTransactions = allTrytes.map(returnTrytes => Transaction.fromTrytes(returnTrytes));
 
         const newBundle = new Bundle();
         newBundle.transactions = powTransactions;
@@ -684,7 +663,7 @@ export class TransactionClient implements ITransactionClient {
         transactions.forEach((transaction) => {
             if (transaction.value.toNumber() < 0) {
                 const txAddress = transaction.address;
-                const txHash = BundleHelper.transactionHash(transaction);
+                const txHash = TransactionHelper.hash(transaction);
 
                 addrsTxsMap[txAddress.toTrytes().toString()].push(txHash);
 
@@ -1027,7 +1006,7 @@ export class TransactionClient implements ITransactionClient {
         transactionObjects.forEach((transaction) => {
             // Sort tail and nonTails
             if (transaction.currentIndex.toNumber() === 0) {
-                tailTransactions.add(BundleHelper.transactionHash(transaction).toTrytes().toString());
+                tailTransactions.add(TransactionHelper.hash(transaction).toTrytes().toString());
             } else {
                 nonTailBundleHashes.add(transaction.bundle.toTrytes().toString());
             }
@@ -1038,7 +1017,7 @@ export class TransactionClient implements ITransactionClient {
 
             nonTailBundleTransactions.forEach((transaction) => {
                 if (transaction.currentIndex.toNumber() === 0) {
-                    tailTransactions.add(BundleHelper.transactionHash(transaction).toTrytes().toString());
+                    tailTransactions.add(TransactionHelper.hash(transaction).toTrytes().toString());
                 }
             });
         }
@@ -1136,51 +1115,5 @@ export class TransactionClient implements ITransactionClient {
                 totalTransferValue -= inputs[i].balance;
             }
         }
-    }
-
-    /* @internal */
-    private async proofOfWorkIterate(trunkTransaction: Hash, branchTransaction: Hash, transactions: Transaction[], minWeightMagnitude: number): Promise<Transaction[]> {
-        const finalTransactions = [];
-
-        let previousTransactionHash: Hash;
-        for (let i = 0; i < transactions.length; i++) {
-            // Start with last index transaction
-            // Assign it the trunk / branch which the user has supplied
-            // If there is a bundle, chain the bundle transactions via
-            // trunkTransaction together
-            transactions[i].attachmentTimestamp = TryteNumber.fromNumber(this._timeService.msSinceEpoch());
-            transactions[i].attachmentTimestampLowerBound = TryteNumber.fromNumber(0);
-            transactions[i].attachmentTimestampUpperBound = TryteNumber.fromNumber(TransactionClient.MAX_TIMESTAMP_VALUE);
-
-            // If this is the first transaction, to be processed
-            // Make sure that it's the last in the bundle and then
-            // assign it the supplied trunk and branch transactions
-
-            if (ObjectHelper.isEmpty(previousTransactionHash)) {
-                // Check if last transaction in the bundle
-                if (transactions[i].lastIndex.toNumber() !== transactions[i].currentIndex.toNumber()) {
-                    throw new BusinessError("Wrong bundle order. The bundle should be ordered in descending order from currentIndex");
-                }
-                transactions[i].trunkTransaction = trunkTransaction;
-                transactions[i].branchTransaction = branchTransaction;
-            } else {
-                transactions[i].trunkTransaction = previousTransactionHash;
-                transactions[i].branchTransaction = trunkTransaction;
-            }
-
-            const newTrytes = transactions[i].toTrytes();
-
-            const returnedTrytes = await this._proofOfWork.pow(trunkTransaction, branchTransaction, [ newTrytes ], minWeightMagnitude);
-
-            transactions[i].nonce = Tag.fromTrytes(returnedTrytes[0].sub(Transaction.LENGTH - Tag.LENGTH, Tag.LENGTH));
-
-            // Calculate the hash of the new transaction with nonce and use that as the previous hash for next entry
-            const returnTransaction = Transaction.fromTrytes(returnedTrytes[0]);
-            previousTransactionHash = BundleHelper.transactionHash(returnTransaction);
-
-            finalTransactions.push(returnTransaction);
-        }
-        // reverse the order so that it's ascending from currentIndex
-        return Promise.resolve(finalTransactions.reverse());
     }
 }

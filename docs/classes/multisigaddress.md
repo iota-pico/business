@@ -29,7 +29,7 @@ Address using multiple signatures.
 ### ⊕ **new MultiSigAddress**(): [MultiSigAddress](multisigaddress.md)
 
 
-*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/multiSig/multiSigAddress.ts#L18)*
+*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigAddress.ts#L18)*
 
 
 
@@ -52,7 +52,7 @@ Create a new instance of the MultiSigAddress.
 
 
 
-*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/multiSig/multiSigAddress.ts#L33)*
+*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigAddress.ts#L33)*
 
 
 
@@ -85,7 +85,7 @@ ___
 
 
 
-*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iotaeco/iota-pico-business/blob/d67547c/src/multiSig/multiSigAddress.ts#L49)*
+*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iotaeco/iota-pico-business/blob/e076f56/src/multiSig/multiSigAddress.ts#L49)*
 
 
 

@@ -358,20 +358,6 @@ export class BundleHelper {
     }
 
     /* @internal */
-    public static transactionHash(transaction: Transaction): Hash {
-        const curl = SpongeFactory.instance().create("curl");
-        const transactionTrits = Trits.fromTrytes(transaction.toTrytes()).toArray();
-
-        curl.initialize();
-        curl.absorb(transactionTrits, 0, transactionTrits.length);
-
-        const hashTrits = new Int8Array(curl.getConstant("HASH_LENGTH"));
-        curl.squeeze(hashTrits, 0, hashTrits.length);
-
-        return Hash.fromTrytes(Trits.fromArray(hashTrits).toTrytes());
-    }
-
-    /* @internal */
     public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
         const signatureMessageFragment = keyFragment.slice();
         let hash: Int8Array;
