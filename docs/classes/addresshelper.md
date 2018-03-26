@@ -27,7 +27,7 @@ Helper class for address signing. Original [https://github.com/iotaledger/iota.l
 
 
 
-*Defined in [helpers/addressHelper.ts:16](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/addressHelper.ts#L16)*
+*Defined in [helpers/addressHelper.ts:16](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/addressHelper.ts#L16)*
 
 
 

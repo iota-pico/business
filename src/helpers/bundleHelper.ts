@@ -13,8 +13,8 @@ import { Tag } from "@iota-pico/data/dist/data/tag";
 import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trits } from "@iota-pico/data/dist/data/trits";
+import { TryteNumber } from "@iota-pico/data/dist/data/tryteNumber";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
-import { TryteNumber } from "../../../iota-pico-data/dist/data/tryteNumber";
 import { HmacCurl } from "../sign/hmacCurl";
 import { TransferOptions } from "../types/transferOptions";
 
@@ -157,6 +157,11 @@ export class BundleHelper {
         return isValid;
     }
 
+    /**
+     * Prepare a bundle.
+     * @param timeService To use for stamping the transactions.
+     * @param transfers The transfers to add to the bundle.
+     */
     public static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
         bundle: Bundle; totalValue: number; signatureMessageFragments: SignatureMessageFragment[]; lastTag: Tag; } {
         const bundle = new Bundle();
@@ -220,7 +225,15 @@ export class BundleHelper {
         return { bundle, totalValue, lastTag, signatureMessageFragments };
     }
 
-    /* @internal */
+    /**
+     * Sign the input of the bundle.
+     * @param seed The seed to use for signing.
+     * @param bundle The bundle to sign.
+     * @param transferOptions Additional transfer options.
+     * @param signatureMessageFragments The signature message fragemtns.
+     * @param inputs The input for use.
+     * @param addedHMAC Has an HMAC been added.
+     */
     public static signInputs(seed: Hash,
                              bundle: Bundle,
                              transferOptions: TransferOptions,
@@ -263,7 +276,15 @@ export class BundleHelper {
         }
     }
 
-    /* @internal */
+    /**
+     * Sign the trsnactions
+     * @param bundle The bundle of transactions to sign.
+     * @param index The index to start.
+     * @param firstUnsignedIndex The first unsigned index.
+     * @param keyTrits The key trits.
+     * @param addressTrytes The address trytes.
+     * @param security The security level.
+     */
     public static signTransactions(bundle: Bundle, index: number, firstUnsignedIndex: number, keyTrits: Int8Array, addressTrytes: string, security: AddressSecurity): void {
         const bundleHash = bundle.transactions[index].bundle;
 
@@ -283,7 +304,7 @@ export class BundleHelper {
         const firstBundleFragment = normalizedBundleFragments[firstUnsignedIndex];
 
         //  Calculate the new signatureMessageFragment with the first bundle fragment
-        const firstSignedFragment = BundleHelper.signatureMessageFragment(firstBundleFragment, firstFragment);
+        const firstSignedFragment = ISS.signatureMessageFragment(firstBundleFragment, firstFragment);
 
         //  Convert signature to trytes and assign the new signatureMessageFragment
         bundle.transactions[index].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(firstSignedFragment).toTrytes());
@@ -304,7 +325,7 @@ export class BundleHelper {
                 const nextBundleFragment = normalizedBundleFragments[j];
 
                 //  Calculate the new signature
-                const nextSignedFragment = BundleHelper.signatureMessageFragment(nextBundleFragment, nextFragment);
+                const nextSignedFragment = ISS.signatureMessageFragment(nextBundleFragment, nextFragment);
 
                 //  Convert signature to trytes and assign it again to this bundle entry
                 bundle.transactions[index + j].signatureMessageFragment = SignatureMessageFragment.fromTrytes(Trits.fromArray(nextSignedFragment).toTrytes());
@@ -312,7 +333,10 @@ export class BundleHelper {
         }
     }
 
-    /* @internal */
+    /**
+     * Finalize a bundle.
+     * @param bundle The bundle to finalize.
+     */
     public static finalizeBundle(bundle: Bundle): void {
         if (bundle.transactions.length > 0) {
             let validBundle = false;
@@ -355,31 +379,5 @@ export class BundleHelper {
                 }
             }
         }
-    }
-
-    /* @internal */
-    public static signatureMessageFragment(normalizedBundleFragment: Int8Array, keyFragment: Int8Array): Int8Array {
-        const signatureMessageFragment = keyFragment.slice();
-        let hash: Int8Array;
-
-        const kerl = SpongeFactory.instance().create("kerl");
-        const hashLength = kerl.getConstant("HASH_LENGTH");
-
-        for (let i = 0; i < 27; i++) {
-            hash = signatureMessageFragment.slice(i * hashLength, (i + 1) * hashLength);
-
-            for (let j = 0; j < 13 - normalizedBundleFragment[i]; j++) {
-                kerl.initialize();
-                kerl.reset();
-                kerl.absorb(hash, 0, hashLength);
-                kerl.squeeze(hash, 0, hashLength);
-            }
-
-            for (let j = 0; j < hashLength; j++) {
-                signatureMessageFragment[i * hashLength + j] = hash[j];
-            }
-        }
-
-        return signatureMessageFragment;
     }
 }

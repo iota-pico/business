@@ -21,7 +21,6 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 * [prepareBundle](bundlehelper.md#preparebundle)
 * [signInputs](bundlehelper.md#signinputs)
 * [signTransactions](bundlehelper.md#signtransactions)
-* [signatureMessageFragment](bundlehelper.md#signaturemessagefragment)
 * [validateSignatures](bundlehelper.md#validatesignatures)
 
 
@@ -34,7 +33,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 **●  NUMBER_OF_FRAGMENT_CHUNKS**:  *`number`*  = 27
 
-*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L26)*
+*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L26)*
 
 
 
@@ -52,15 +51,18 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:316](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L316)*
+*Defined in [helpers/bundleHelper.ts:340](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L340)*
 
+
+
+Finalize a bundle.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| bundle | `Bundle`   |  - |
+| bundle | `Bundle`   |  The bundle to finalize. |
 
 
 
@@ -82,7 +84,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L33)*
+*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L33)*
 
 
 
@@ -117,16 +119,19 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:160](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L160)*
+*Defined in [helpers/bundleHelper.ts:165](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L165)*
 
+
+
+Prepare a bundle.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| timeService | `ITimeService`   |  - |
-| transfers | `Transfer`[]   |  - |
+| timeService | `ITimeService`   |  To use for stamping the transactions. |
+| transfers | `Transfer`[]   |  The transfers to add to the bundle. |
 
 
 
@@ -148,20 +153,23 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:224](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L224)*
+*Defined in [helpers/bundleHelper.ts:237](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L237)*
 
+
+
+Sign the input of the bundle.
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| seed | `Hash`   |  - |
-| bundle | `Bundle`   |  - |
-| transferOptions | [TransferOptions](../#transferoptions)   |  - |
-| signatureMessageFragments | `SignatureMessageFragment`[]   |  - |
-| inputs | `Input`[]   |  - |
-| addedHMAC | `boolean`   |  - |
+| seed | `Hash`   |  The seed to use for signing. |
+| bundle | `Bundle`   |  The bundle to sign. |
+| transferOptions | [TransferOptions](../#transferoptions)   |  Additional transfer options. |
+| signatureMessageFragments | `SignatureMessageFragment`[]   |  The signature message fragemtns. |
+| inputs | `Input`[]   |  The input for use. |
+| addedHMAC | `boolean`   |  Has an HMAC been added. |
 
 
 
@@ -183,57 +191,29 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:267](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L267)*
+*Defined in [helpers/bundleHelper.ts:288](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L288)*
 
+
+
+Sign the trsnactions
 
 
 **Parameters:**
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| bundle | `Bundle`   |  - |
-| index | `number`   |  - |
-| firstUnsignedIndex | `number`   |  - |
-| keyTrits | `Int8Array`   |  - |
-| addressTrytes | `string`   |  - |
-| security | `AddressSecurity`   |  - |
+| bundle | `Bundle`   |  The bundle of transactions to sign. |
+| index | `number`   |  The index to start. |
+| firstUnsignedIndex | `number`   |  The first unsigned index. |
+| keyTrits | `Int8Array`   |  The key trits. |
+| addressTrytes | `string`   |  The address trytes. |
+| security | `AddressSecurity`   |  The security level. |
 
 
 
 
 
 **Returns:** `void`
-
-
-
-
-
-___
-
-<a id="signaturemessagefragment"></a>
-
-### «Static» signatureMessageFragment
-
-► **signatureMessageFragment**(normalizedBundleFragment: *`Int8Array`*, keyFragment: *`Int8Array`*): `Int8Array`
-
-
-
-*Defined in [helpers/bundleHelper.ts:361](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L361)*
-
-
-
-**Parameters:**
-
-| Param | Type | Description |
-| ------ | ------ | ------ |
-| normalizedBundleFragment | `Int8Array`   |  - |
-| keyFragment | `Int8Array`   |  - |
-
-
-
-
-
-**Returns:** `Int8Array`
 
 
 
@@ -249,7 +229,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/ab10af2/src/helpers/bundleHelper.ts#L129)*
+*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/helpers/bundleHelper.ts#L129)*
 
 
 

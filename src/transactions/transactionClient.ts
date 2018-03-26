@@ -895,7 +895,6 @@ export class TransactionClient implements ITransactionClient {
 
     /**
      * Get transaction objects by fist performing a findTransactions call.
-     * @param addresses The addresses to get the transaction objects for.
      * @param bundles Bundles to lookup transactions for.
      * @param addresses Addresses to lookup transactions for.
      * @param tags Tags to lookup transactions for.
