@@ -53,7 +53,7 @@ Default implementation of the ITransactionClient.
 ### ⊕ **new TransactionClient**(apiClient: *`IApiClient`*, proofOfWork?: *`IProofOfWork`*, timeService?: *`ITimeService`*, backgroundTaskService?: *`IBackgroundTaskService`*, logger?: *`ILogger`*): [TransactionClient](transactionclient.md)
 
 
-*Defined in [transactions/transactionClient.ts:66](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L66)*
+*Defined in [transactions/transactionClient.ts:66](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L66)*
 
 
 
@@ -90,7 +90,7 @@ Create a new instance of the TransactionClient.
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[attachToTangle](../interfaces/itransactionclient.md#attachtotangle)*
 
-*Defined in [transactions/transactionClient.ts:529](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L529)*
+*Defined in [transactions/transactionClient.ts:533](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L533)*
 
 
 
@@ -130,7 +130,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactionObjects](../interfaces/itransactionclient.md#findtransactionobjects)*
 
-*Defined in [transactions/transactionClient.ts:904](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L904)*
+*Defined in [transactions/transactionClient.ts:908](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L908)*
 
 
 
@@ -170,7 +170,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactions](../interfaces/itransactionclient.md#findtransactions)*
 
-*Defined in [transactions/transactionClient.ts:118](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L118)*
+*Defined in [transactions/transactionClient.ts:118](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L118)*
 
 
 
@@ -210,7 +210,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAccountData](../interfaces/itransactionclient.md#getaccountdata)*
 
-*Defined in [transactions/transactionClient.ts:955](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L955)*
+*Defined in [transactions/transactionClient.ts:959](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L959)*
 
 
 
@@ -250,7 +250,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesByIndex](../interfaces/itransactionclient.md#getaddressesbyindex)*
 
-*Defined in [transactions/transactionClient.ts:271](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L271)*
+*Defined in [transactions/transactionClient.ts:275](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L275)*
 
 
 
@@ -291,7 +291,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesToUnused](../interfaces/itransactionclient.md#getaddressestounused)*
 
-*Defined in [transactions/transactionClient.ts:309](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L309)*
+*Defined in [transactions/transactionClient.ts:313](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L313)*
 
 
 
@@ -331,7 +331,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getBundle](../interfaces/itransactionclient.md#getbundle)*
 
-*Defined in [transactions/transactionClient.ts:771](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L771)*
+*Defined in [transactions/transactionClient.ts:775](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L775)*
 
 
 
@@ -368,7 +368,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getInputs](../interfaces/itransactionclient.md#getinputs)*
 
-*Defined in [transactions/transactionClient.ts:364](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L364)*
+*Defined in [transactions/transactionClient.ts:368](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L368)*
 
 
 
@@ -409,7 +409,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getLatestInclusion](../interfaces/itransactionclient.md#getlatestinclusion)*
 
-*Defined in [transactions/transactionClient.ts:193](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L193)*
+*Defined in [transactions/transactionClient.ts:193](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L193)*
 
 
 
@@ -446,7 +446,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getNewAddress](../interfaces/itransactionclient.md#getnewaddress)*
 
-*Defined in [transactions/transactionClient.ts:227](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L227)*
+*Defined in [transactions/transactionClient.ts:227](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L227)*
 
 
 
@@ -487,7 +487,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
 
-*Defined in [transactions/transactionClient.ts:95](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L95)*
+*Defined in [transactions/transactionClient.ts:95](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L95)*
 
 
 
@@ -516,7 +516,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsObjects](../interfaces/itransactionclient.md#gettransactionsobjects)*
 
-*Defined in [transactions/transactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L168)*
+*Defined in [transactions/transactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L168)*
 
 
 
@@ -553,7 +553,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransfers](../interfaces/itransactionclient.md#gettransfers)*
 
-*Defined in [transactions/transactionClient.ts:929](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L929)*
+*Defined in [transactions/transactionClient.ts:933](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L933)*
 
 
 
@@ -594,7 +594,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isPromotable](../interfaces/itransactionclient.md#ispromotable)*
 
-*Defined in [transactions/transactionClient.ts:626](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L626)*
+*Defined in [transactions/transactionClient.ts:630](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L630)*
 
 
 
@@ -631,7 +631,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isReattachable](../interfaces/itransactionclient.md#isreattachable)*
 
-*Defined in [transactions/transactionClient.ts:647](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L647)*
+*Defined in [transactions/transactionClient.ts:651](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L651)*
 
 
 
@@ -668,7 +668,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[prepareTransfers](../interfaces/itransactionclient.md#preparetransfers)*
 
-*Defined in [transactions/transactionClient.ts:428](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L428)*
+*Defined in [transactions/transactionClient.ts:432](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L432)*
 
 
 
@@ -707,7 +707,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[promoteTransaction](../interfaces/itransactionclient.md#promotetransaction)*
 
-*Defined in [transactions/transactionClient.ts:718](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L718)*
+*Defined in [transactions/transactionClient.ts:722](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L722)*
 
 
 
@@ -748,7 +748,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[reattachBundle](../interfaces/itransactionclient.md#reattachbundle)*
 
-*Defined in [transactions/transactionClient.ts:863](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L863)*
+*Defined in [transactions/transactionClient.ts:867](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L867)*
 
 
 
@@ -787,7 +787,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[rebroadcastBundle](../interfaces/itransactionclient.md#rebroadcastbundle)*
 
-*Defined in [transactions/transactionClient.ts:880](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L880)*
+*Defined in [transactions/transactionClient.ts:884](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L884)*
 
 
 
@@ -824,7 +824,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransactions](../interfaces/itransactionclient.md#sendtransactions)*
 
-*Defined in [transactions/transactionClient.ts:576](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L576)*
+*Defined in [transactions/transactionClient.ts:580](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L580)*
 
 
 
@@ -864,7 +864,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransfer](../interfaces/itransactionclient.md#sendtransfer)*
 
-*Defined in [transactions/transactionClient.ts:611](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L611)*
+*Defined in [transactions/transactionClient.ts:615](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L615)*
 
 
 
@@ -906,7 +906,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[traverseBundle](../interfaces/itransactionclient.md#traversebundle)*
 
-*Defined in [transactions/transactionClient.ts:800](https://github.com/iotaeco/iota-pico-business/blob/b7e7332/src/transactions/transactionClient.ts#L800)*
+*Defined in [transactions/transactionClient.ts:804](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/transactions/transactionClient.ts#L804)*
 
 
 

@@ -1,5 +1,7 @@
 # Changelog
 
+* Fixed getAddressesByIndex now allows endIndex of 0
+
 ## v0.9.3
 
 * Fixed incorrect include in BundleHelper

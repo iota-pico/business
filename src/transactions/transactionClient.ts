@@ -245,6 +245,10 @@ export class TransactionClient implements ITransactionClient {
 
         let addresses;
         if (hasEndIndex) {
+            if (!NumberHelper.isInteger(endIndex) || endIndex < 0) {
+                throw new BusinessError("The endIndex must be a number >= 0", { endIndex });
+            }
+
             const total = endIndex - startIndex + 1;
             if (total <= 0 || total > TransactionClient.MAX_INPUTS) {
                 throw new BusinessError(`The total must be > 0 and <= ${TransactionClient.MAX_INPUTS}`, { total });
@@ -277,8 +281,8 @@ export class TransactionClient implements ITransactionClient {
         if (!NumberHelper.isInteger(startIndex) || startIndex < 0) {
             throw new BusinessError("The startIndex must be a number >= 0", { startIndex });
         }
-        if (!NumberHelper.isInteger(endIndex) || endIndex <= 0) {
-            throw new BusinessError("The endIndex must be a number > 0", { endIndex });
+        if (!NumberHelper.isInteger(endIndex) || endIndex < 0) {
+            throw new BusinessError("The endIndex must be a number >= 0", { endIndex });
         }
         const total = endIndex - startIndex + 1;
         if (total <= 0 || total > TransactionClient.MAX_INPUTS) {

@@ -314,12 +314,12 @@ describe("TransactionClient", () => {
             }
         });
 
-        it("can fail with invalid endIndex <= 0", async () => {
+        it("can fail with invalid endIndex < 0", async () => {
             const obj = new TransactionClient(apiClientStub);
             try {
-                await obj.getNewAddress(Hash.fromTrytes(Trytes.fromString("A".repeat(81))), 1, 0);
+                await obj.getNewAddress(Hash.fromTrytes(Trytes.fromString("A".repeat(81))), 1, -1);
             } catch (err) {
-                chai.expect(err.message).to.contain("> 0");
+                chai.expect(err.message).to.contain(">= 0");
             }
         });
 
@@ -367,10 +367,10 @@ describe("TransactionClient", () => {
             }
         });
 
-        it("can fail with invalid endIndex <= 0", async () => {
+        it("can fail with invalid endIndex < 0", async () => {
             const obj = new TransactionClient(apiClientStub);
             try {
-                await obj.getAddressesByIndex(Hash.fromTrytes(Trytes.fromString("A".repeat(81))), 1, 0, false, undefined);
+                await obj.getAddressesByIndex(Hash.fromTrytes(Trytes.fromString("A".repeat(81))), 1, -1, false, undefined);
             } catch (err) {
                 chai.expect(err.message).to.contain("The endIndex");
             }
