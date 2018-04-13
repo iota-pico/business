@@ -33,7 +33,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 **●  NUMBER_OF_FRAGMENT_CHUNKS**:  *`number`*  = 27
 
-*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L26)*
+*Defined in [helpers/bundleHelper.ts:26](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L26)*
 
 
 
@@ -51,7 +51,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:340](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L340)*
+*Defined in [helpers/bundleHelper.ts:340](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L340)*
 
 
 
@@ -84,7 +84,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L33)*
+*Defined in [helpers/bundleHelper.ts:33](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L33)*
 
 
 
@@ -119,7 +119,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:165](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L165)*
+*Defined in [helpers/bundleHelper.ts:165](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L165)*
 
 
 
@@ -153,7 +153,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:237](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L237)*
+*Defined in [helpers/bundleHelper.ts:237](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L237)*
 
 
 
@@ -191,7 +191,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:288](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L288)*
+*Defined in [helpers/bundleHelper.ts:288](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L288)*
 
 
 
@@ -229,7 +229,7 @@ ___
 
 
 
-*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/ff56da2/src/helpers/bundleHelper.ts#L129)*
+*Defined in [helpers/bundleHelper.ts:129](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/bundleHelper.ts#L129)*
 
 
 
