@@ -1,11 +1,12 @@
 [@iota-pico/business](../README.md) > [TransactionClient](../classes/transactionclient.md)
 
-
-
 # Class: TransactionClient
 
-
 Default implementation of the ITransactionClient.
+
+## Hierarchy
+
+**TransactionClient**
 
 ## Implements
 
@@ -16,7 +17,6 @@ Default implementation of the ITransactionClient.
 ### Constructors
 
 * [constructor](transactionclient.md#constructor)
-
 
 ### Methods
 
@@ -43,22 +43,17 @@ Default implementation of the ITransactionClient.
 * [sendTransfer](transactionclient.md#sendtransfer)
 * [traverseBundle](transactionclient.md#traversebundle)
 
-
-
 ---
-## Constructors
-<a id="constructor"></a>
 
+## Constructors
+
+<a id="constructor"></a>
 
 ### ⊕ **new TransactionClient**(apiClient: *`IApiClient`*, proofOfWork?: *`IProofOfWork`*, timeService?: *`ITimeService`*, backgroundTaskService?: *`IBackgroundTaskService`*, logger?: *`ILogger`*): [TransactionClient](transactionclient.md)
 
-
-*Defined in [transactions/transactionClient.ts:66](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L66)*
-
-
+*Defined in [transactions/transactionClient.ts:66](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L66)*
 
 Create a new instance of the TransactionClient.
-
 
 **Parameters:**
 
@@ -70,32 +65,23 @@ Create a new instance of the TransactionClient.
 | backgroundTaskService | `IBackgroundTaskService`   |  A class which can provide background tasks. |
 | logger | `ILogger`   |  Logger to send transaction info to. |
 
-
-
-
-
 **Returns:** [TransactionClient](transactionclient.md)
 
 ---
 
-
 ## Methods
+
 <a id="attachtotangle"></a>
 
 ###  attachToTangle
 
-► **attachToTangle**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
-
-
+▸ **attachToTangle**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[attachToTangle](../interfaces/itransactionclient.md#attachtotangle)*
 
-*Defined in [transactions/transactionClient.ts:533](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L533)*
-
-
+*Defined in [transactions/transactionClient.ts:533](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L533)*
 
 Attach the transactions to the tangle by doing proof of work.
-
 
 **Parameters:**
 
@@ -106,17 +92,8 @@ Attach the transactions to the tangle by doing proof of work.
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 | reference | `Hash`   |  The reference to send with the transactions. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the bundle of transactions created or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -124,18 +101,13 @@ ___
 
 ###  findTransactionObjects
 
-► **findTransactionObjects**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`.<`Transaction`[]>
-
-
+▸ **findTransactionObjects**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`.<`Transaction`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactionObjects](../interfaces/itransactionclient.md#findtransactionobjects)*
 
-*Defined in [transactions/transactionClient.ts:908](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L908)*
-
-
+*Defined in [transactions/transactionClient.ts:908](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L908)*
 
 Get transaction objects by fist performing a findTransactions call.
-
 
 **Parameters:**
 
@@ -146,17 +118,8 @@ Get transaction objects by fist performing a findTransactions call.
 | tags | `Tag`[]   |  Tags to lookup transactions for. |
 | approvees | `Hash`[]   |  Approvees to lookup transactions for. |
 
-
-
-
-
 **Returns:** `Promise`.<`Transaction`[]>
 Promise which resolves to the list of transactions or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -164,18 +127,13 @@ ___
 
 ###  findTransactions
 
-► **findTransactions**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`.<`Hash`[]>
-
-
+▸ **findTransactions**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`.<`Hash`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactions](../interfaces/itransactionclient.md#findtransactions)*
 
-*Defined in [transactions/transactionClient.ts:118](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L118)*
-
-
+*Defined in [transactions/transactionClient.ts:118](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L118)*
 
 Find the transactions which match the specified input and return. All input values are lists, for which a list of return values (transaction hashes), in the same order, is returned for all individual elements. Using multiple of these input fields returns the intersection of the values.
-
 
 **Parameters:**
 
@@ -186,17 +144,8 @@ Find the transactions which match the specified input and return. All input valu
 | tags | `Tag`[]   |  Tags to lookup transaction hashes for. |
 | approvees | `Hash`[]   |  Approvees to lookup transaction hashes for. |
 
-
-
-
-
 **Returns:** `Promise`.<`Hash`[]>
 Promise which resolves with a list of hashes or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -204,18 +153,13 @@ ___
 
 ###  getAccountData
 
-► **getAccountData**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*): `Promise`.<[AccountData](../#accountdata)>
-
-
+▸ **getAccountData**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*): `Promise`.<[AccountData](../#accountdata)>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAccountData](../interfaces/itransactionclient.md#getaccountdata)*
 
-*Defined in [transactions/transactionClient.ts:959](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L959)*
-
-
+*Defined in [transactions/transactionClient.ts:959](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L959)*
 
 Similar to getTransfers, just that it returns additional account data.
-
 
 **Parameters:**
 
@@ -226,17 +170,8 @@ Similar to getTransfers, just that it returns additional account data.
 | endIndex | `number`   |  The end index to get the transfers for. |
 | security | `AddressSecurity`   |  The security level for the transfers. |
 
-
-
-
-
 **Returns:** `Promise`.<[AccountData](../#accountdata)>
 Promise which resolves to the account data or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -244,18 +179,13 @@ ___
 
 ###  getAddressesByIndex
 
-► **getAddressesByIndex**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
-
-
+▸ **getAddressesByIndex**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesByIndex](../interfaces/itransactionclient.md#getaddressesbyindex)*
 
-*Defined in [transactions/transactionClient.ts:275](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L275)*
-
-
+*Defined in [transactions/transactionClient.ts:275](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L275)*
 
 Generates new addresses index-based.
-
 
 **Parameters:**
 
@@ -267,17 +197,8 @@ Generates new addresses index-based.
 | includeChecksum | `boolean`   |  Includes the checksum on addresses. |
 | security | `AddressSecurity`   |  The security level at which to create the addresses. |
 
-
-
-
-
 **Returns:** `Promise`.<`Address`[]>
 Promise which resolves to the list of addresses or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -285,18 +206,13 @@ ___
 
 ###  getAddressesToUnused
 
-► **getAddressesToUnused**(seed: *`Hash`*, startIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
-
-
+▸ **getAddressesToUnused**(seed: *`Hash`*, startIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`.<`Address`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesToUnused](../interfaces/itransactionclient.md#getaddressestounused)*
 
-*Defined in [transactions/transactionClient.ts:313](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L313)*
-
-
+*Defined in [transactions/transactionClient.ts:313](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L313)*
 
 Generates new address which havent been used using apis.
-
 
 **Parameters:**
 
@@ -307,17 +223,8 @@ Generates new address which havent been used using apis.
 | includeChecksum | `boolean`   |  Includes the checksum on addresses. |
 | security | `AddressSecurity`   |  The security level at which to create the addresses. |
 
-
-
-
-
 **Returns:** `Promise`.<`Address`[]>
 Promise which resolves to an addresses list, the first unused address is the last in the list or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -325,18 +232,13 @@ ___
 
 ###  getBundle
 
-► **getBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
-
-
+▸ **getBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getBundle](../interfaces/itransactionclient.md#getbundle)*
 
-*Defined in [transactions/transactionClient.ts:775](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L775)*
-
-
+*Defined in [transactions/transactionClient.ts:775](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L775)*
 
 Gets the associated bundle transactions of a single transaction. Does validation of signatures, total sum as well as bundle order.
-
 
 **Parameters:**
 
@@ -344,17 +246,8 @@ Gets the associated bundle transactions of a single transaction. Does validation
 | ------ | ------ | ------ |
 | transactionHash | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the bundle transactions or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -362,18 +255,13 @@ ___
 
 ###  getInputs
 
-► **getInputs**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, security: *`AddressSecurity`*, totalRequired: *`number`*): `Promise`.<`object`>
-
-
+▸ **getInputs**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, security: *`AddressSecurity`*, totalRequired: *`number`*): `Promise`.<`object`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getInputs](../interfaces/itransactionclient.md#getinputs)*
 
-*Defined in [transactions/transactionClient.ts:368](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L368)*
-
-
+*Defined in [transactions/transactionClient.ts:368](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L368)*
 
 Get the input data for a range of addresses.
-
 
 **Parameters:**
 
@@ -385,17 +273,8 @@ Get the input data for a range of addresses.
 | security | `AddressSecurity`   |  The security level used to create the addresses. |
 | totalRequired | `number`   |  The threshold at which total balance to stop gathering addresses. |
 
-
-
-
-
 **Returns:** `Promise`.<`object`>
 Promise which resolves to the inputs for each address or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -403,18 +282,13 @@ ___
 
 ###  getLatestInclusion
 
-► **getLatestInclusion**(transactionHashes: *`Hash`[]*): `Promise`.<`boolean`[]>
-
-
+▸ **getLatestInclusion**(transactionHashes: *`Hash`[]*): `Promise`.<`boolean`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getLatestInclusion](../interfaces/itransactionclient.md#getlatestinclusion)*
 
-*Defined in [transactions/transactionClient.ts:193](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L193)*
-
-
+*Defined in [transactions/transactionClient.ts:193](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L193)*
 
 Get the inclusion states of a list of transaction hashes.
-
 
 **Parameters:**
 
@@ -422,17 +296,8 @@ Get the inclusion states of a list of transaction hashes.
 | ------ | ------ | ------ |
 | transactionHashes | `Hash`[]   |  - |
 
-
-
-
-
 **Returns:** `Promise`.<`boolean`[]>
 Promise which resolves to the list of inclusion states or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -440,18 +305,13 @@ ___
 
 ###  getNewAddress
 
-► **getNewAddress**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, includeChecksum?: *`boolean`*, security?: *`AddressSecurity`*): `Promise`.<`Address`[]>
-
-
+▸ **getNewAddress**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, includeChecksum?: *`boolean`*, security?: *`AddressSecurity`*): `Promise`.<`Address`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getNewAddress](../interfaces/itransactionclient.md#getnewaddress)*
 
-*Defined in [transactions/transactionClient.ts:227](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L227)*
-
-
+*Defined in [transactions/transactionClient.ts:227](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L227)*
 
 Generates addresses with index-based or using apis.
-
 
 **Parameters:**
 
@@ -463,17 +323,8 @@ Generates addresses with index-based or using apis.
 | includeChecksum | `boolean`   |  Includes the checksum on addresses. |
 | security | `AddressSecurity`   |  The security level at which to create the addresses. |
 
-
-
-
-
 **Returns:** `Promise`.<`Address`[]>
 Promise which resolves to the list of addresses or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -481,28 +332,16 @@ ___
 
 ###  getTransactionsInProgress
 
-► **getTransactionsInProgress**(): `Promise`.<`Hash`[]>
-
-
+▸ **getTransactionsInProgress**(): `Promise`.<`Hash`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
 
-*Defined in [transactions/transactionClient.ts:95](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L95)*
-
-
+*Defined in [transactions/transactionClient.ts:95](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L95)*
 
 Returns the list of transaction in progress.
 
-
-
-
 **Returns:** `Promise`.<`Hash`[]>
 Promise which resolves to a list of hashes or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -510,18 +349,13 @@ ___
 
 ###  getTransactionsObjects
 
-► **getTransactionsObjects**(transactionHashes: *`Hash`[]*): `Promise`.<`Transaction`[]>
-
-
+▸ **getTransactionsObjects**(transactionHashes: *`Hash`[]*): `Promise`.<`Transaction`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsObjects](../interfaces/itransactionclient.md#gettransactionsobjects)*
 
-*Defined in [transactions/transactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L168)*
-
-
+*Defined in [transactions/transactionClient.ts:168](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L168)*
 
 Get the transaction details of specific transactions.
-
 
 **Parameters:**
 
@@ -529,17 +363,8 @@ Get the transaction details of specific transactions.
 | ------ | ------ | ------ |
 | transactionHashes | `Hash`[]   |  - |
 
-
-
-
-
 **Returns:** `Promise`.<`Transaction`[]>
 Promise which resolves to the list of transactions or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -547,18 +372,13 @@ ___
 
 ###  getTransfers
 
-► **getTransfers**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*, inclusionStates?: *`boolean`*): `Promise`.<`Bundle`[]>
-
-
+▸ **getTransfers**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*, inclusionStates?: *`boolean`*): `Promise`.<`Bundle`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransfers](../interfaces/itransactionclient.md#gettransfers)*
 
-*Defined in [transactions/transactionClient.ts:933](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L933)*
-
-
+*Defined in [transactions/transactionClient.ts:933](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L933)*
 
 The transfers which are associated with a seed. The transfers are determined by either calculating deterministically which addresses were already used, or by providing a list of indexes to get the addresses and the associated transfers from. The transfers are sorted by their timestamp.
-
 
 **Parameters:**
 
@@ -570,17 +390,8 @@ The transfers which are associated with a seed. The transfers are determined by 
 | security | `AddressSecurity`   |  The security level for the transfers. |
 | inclusionStates | `boolean`   |  Do you want inclusion states in the bundles. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`[]>
 Promise which resolves to the requested bundles or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -588,18 +399,13 @@ ___
 
 ###  isPromotable
 
-► **isPromotable**(transactionTail: *`Hash`*): `Promise`.<`boolean`>
-
-
+▸ **isPromotable**(transactionTail: *`Hash`*): `Promise`.<`boolean`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isPromotable](../interfaces/itransactionclient.md#ispromotable)*
 
-*Defined in [transactions/transactionClient.ts:630](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L630)*
-
-
+*Defined in [transactions/transactionClient.ts:630](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L630)*
 
 Find out if a transaction is promotable.
-
 
 **Parameters:**
 
@@ -607,17 +413,8 @@ Find out if a transaction is promotable.
 | ------ | ------ | ------ |
 | transactionTail | `Hash`   |  The hash of the transaction to be promoted. |
 
-
-
-
-
 **Returns:** `Promise`.<`boolean`>
 Promise which resolves to true if the transaction is promotable rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -625,18 +422,13 @@ ___
 
 ###  isReattachable
 
-► **isReattachable**(addresses: *`Address`[]*): `Promise`.<`boolean`[]>
-
-
+▸ **isReattachable**(addresses: *`Address`[]*): `Promise`.<`boolean`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isReattachable](../interfaces/itransactionclient.md#isreattachable)*
 
-*Defined in [transactions/transactionClient.ts:651](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L651)*
-
-
+*Defined in [transactions/transactionClient.ts:651](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L651)*
 
 Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
-
 
 **Parameters:**
 
@@ -644,17 +436,8 @@ Determines whether you should replay a transaction or make a new one (either wit
 | ------ | ------ | ------ |
 | addresses | `Address`[]   |  Input address you want to have tested. |
 
-
-
-
-
 **Returns:** `Promise`.<`boolean`[]>
 Promise which resolves to true if the addresses are reattachable or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -662,18 +445,13 @@ ___
 
 ###  prepareTransfers
 
-► **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Bundle`>
-
-
+▸ **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[prepareTransfers](../interfaces/itransactionclient.md#preparetransfers)*
 
-*Defined in [transactions/transactionClient.ts:432](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L432)*
-
-
+*Defined in [transactions/transactionClient.ts:432](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L432)*
 
 Prepares transfer by generating bundle, finding and signing inputs.
-
 
 **Parameters:**
 
@@ -681,19 +459,14 @@ Prepares transfer by generating bundle, finding and signing inputs.
 | ------ | ------ | ------ |
 | seed | `Hash`   |  The seed to prepare the transfer for. |
 | transfers | `Transfer`[]   |  The transfers to prepare. |
-| transferOptions | [TransferOptions](../#transferoptions)   |       @property inputs List of inputs used for funding the transfer.     @property security Security level to be used for the private key / addresses.     @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.     @property hmacKey Hmac key to sign the bundle.     @property reference The transaction to reference. |
-
-
-
-
+| transferOptions | [TransferOptions](../#transferoptions)   |       @property inputs List of inputs used for funding the transfer.
+     @property security Security level to be used for the private key / addresses.
+     @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
+     @property hmacKey Hmac key to sign the bundle.
+     @property reference The transaction to reference. |
 
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the array of Trytes for the transfer or rejects with error.
-
-
-
-
-
 
 ___
 
@@ -701,18 +474,13 @@ ___
 
 ###  promoteTransaction
 
-► **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`.<`Bundle`>
-
-
+▸ **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[promoteTransaction](../interfaces/itransactionclient.md#promotetransaction)*
 
-*Defined in [transactions/transactionClient.ts:722](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L722)*
-
-
+*Defined in [transactions/transactionClient.ts:722](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L722)*
 
 Promotes a transaction by adding spam on top of it, as long as it is promotable. Will promote by adding transfers on top of the current one with delay interval. Use promoteOptions.interrupt to terminate the promotion. If promoteOptions.delay is set to 0 only one promotion transfer will be sent.
-
 
 **Parameters:**
 
@@ -724,17 +492,8 @@ Promotes a transaction by adding spam on top of it, as long as it is promotable.
 | transfers | `Transfer`[]   |  The transfers to send. |
 | promoteOptions | [PromoteOptions](../#promoteoptions)   |  Additional options for the promote. @property delay Delay between promotion transfers @property interrupt Flag or method to terminate promotion. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -742,18 +501,13 @@ ___
 
 ###  reattachBundle
 
-► **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Bundle`>
-
-
+▸ **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[reattachBundle](../interfaces/itransactionclient.md#reattachbundle)*
 
-*Defined in [transactions/transactionClient.ts:867](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L867)*
-
-
+*Defined in [transactions/transactionClient.ts:867](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L867)*
 
 Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
-
 
 **Parameters:**
 
@@ -763,17 +517,8 @@ Wrapper which gets a bundle and then replays a transfer by doing Proof of Work a
 | depth | `number`   |  Value that determines how far to go for tip selection. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -781,18 +526,13 @@ ___
 
 ###  rebroadcastBundle
 
-► **rebroadcastBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
-
-
+▸ **rebroadcastBundle**(transactionHash: *`Hash`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[rebroadcastBundle](../interfaces/itransactionclient.md#rebroadcastbundle)*
 
-*Defined in [transactions/transactionClient.ts:884](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L884)*
-
-
+*Defined in [transactions/transactionClient.ts:884](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L884)*
 
 Wrapper which gets a bundle and then broadcasts it.
-
 
 **Parameters:**
 
@@ -800,17 +540,8 @@ Wrapper which gets a bundle and then broadcasts it.
 | ------ | ------ | ------ |
 | transactionHash | `Hash`   |  The hash of the transaction to be re-broadcast. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -818,18 +549,13 @@ ___
 
 ###  sendTransactions
 
-► **sendTransactions**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
-
-
+▸ **sendTransactions**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransactions](../interfaces/itransactionclient.md#sendtransactions)*
 
-*Defined in [transactions/transactionClient.ts:580](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L580)*
-
-
+*Defined in [transactions/transactionClient.ts:580](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L580)*
 
 Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
-
 
 **Parameters:**
 
@@ -840,17 +566,8 @@ Wrapper function that does attachToTangle and then stores and broadcasts the tra
 | minWeightMagnitude | `number`   |  The minimum weight magnitude for the proof of work. |
 | reference | `Hash`   |  The reference to send with the transactions. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the bundle of transactions created or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -858,18 +575,13 @@ ___
 
 ###  sendTransfer
 
-► **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`.<`Bundle`>
-
-
+▸ **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`.<`Bundle`>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransfer](../interfaces/itransactionclient.md#sendtransfer)*
 
-*Defined in [transactions/transactionClient.ts:615](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L615)*
-
-
+*Defined in [transactions/transactionClient.ts:615](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L615)*
 
 Wrapper function that does prepareTransfers and then sendTransactions.
-
 
 **Parameters:**
 
@@ -882,17 +594,8 @@ Wrapper function that does prepareTransfers and then sendTransactions.
 | transferOptions | [TransferOptions](../#transferoptions)   |  Additional options for the transfer. @property inputs List of inputs used for funding the transfer. @property security Security level to be used for the private key / addresses. @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to. @property hmacKey Hmac key to sign the bundle. |
 | reference | `Hash`   |  The reference to send with the transactions. |
 
-
-
-
-
 **Returns:** `Promise`.<`Bundle`>
 Promise which resolves to the list of transactions created or rejects with an error.
-
-
-
-
-
 
 ___
 
@@ -900,18 +603,13 @@ ___
 
 ###  traverseBundle
 
-► **traverseBundle**(trunkTransaction: *`Hash`*, bundleHash?: *`Hash`*): `Promise`.<`Transaction`[]>
-
-
+▸ **traverseBundle**(trunkTransaction: *`Hash`*, bundleHash?: *`Hash`*): `Promise`.<`Transaction`[]>
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[traverseBundle](../interfaces/itransactionclient.md#traversebundle)*
 
-*Defined in [transactions/transactionClient.ts:804](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/transactionClient.ts#L804)*
-
-
+*Defined in [transactions/transactionClient.ts:804](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/transactionClient.ts#L804)*
 
 Traverse the Bundle by going down the trunkTransactions until the bundle hash of the transaction is no longer the same.
-
 
 **Parameters:**
 
@@ -920,18 +618,8 @@ Traverse the Bundle by going down the trunkTransactions until the bundle hash of
 | trunkTransaction | `Hash`   |  Hash of a trunk or a tail transaction of a bundle. |
 | bundleHash | `Hash`   |  The bundle hash to match. |
 
-
-
-
-
 **Returns:** `Promise`.<`Transaction`[]>
 Promise which resolves to the bundle transactions or rejects with an error.
 
-
-
-
-
-
 ___
-
 

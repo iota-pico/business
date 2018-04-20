@@ -1,11 +1,12 @@
 [@iota-pico/business](../README.md) > [ProofOfWorkApi](../classes/proofofworkapi.md)
 
-
-
 # Class: ProofOfWorkApi
 
-
 ProofOfWork implementation using API.
+
+## Hierarchy
+
+**ProofOfWorkApi**
 
 ## Implements
 
@@ -17,28 +18,22 @@ ProofOfWork implementation using API.
 
 * [constructor](proofofworkapi.md#constructor)
 
-
 ### Methods
 
 * [initialize](proofofworkapi.md#initialize)
 * [pow](proofofworkapi.md#pow)
 
-
-
 ---
-## Constructors
-<a id="constructor"></a>
 
+## Constructors
+
+<a id="constructor"></a>
 
 ### ⊕ **new ProofOfWorkApi**(apiClient: *`IApiClient`*): [ProofOfWorkApi](proofofworkapi.md)
 
-
-*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/proofOfWorkApi.ts#L17)*
-
-
+*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/proofOfWorkApi.ts#L17)*
 
 Create an instance of ProofOfWork.
-
 
 **Parameters:**
 
@@ -46,38 +41,23 @@ Create an instance of ProofOfWork.
 | ------ | ------ | ------ |
 | apiClient | `IApiClient`   |  The API client to send the request through. |
 
-
-
-
-
 **Returns:** [ProofOfWorkApi](proofofworkapi.md)
 
 ---
 
-
 ## Methods
+
 <a id="initialize"></a>
 
 ###  initialize
 
-► **initialize**(): `Promise`.<`void`>
+▸ **initialize**(): `Promise`.<`void`>
 
-
-
-*Defined in [transactions/proofOfWorkApi.ts:34](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/proofOfWorkApi.ts#L34)*
-
-
+*Defined in [transactions/proofOfWorkApi.ts:34](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/proofOfWorkApi.ts#L34)*
 
 Allow the proof of work to perform any initialization. Will throw an exception if the implementation is not supported.
 
-
-
-
 **Returns:** `Promise`.<`void`>
-
-
-
-
 
 ___
 
@@ -85,16 +65,11 @@ ___
 
 ###  pow
 
-► **pow**(trunkTransaction: *`Hash`*, branchTransaction: *`Hash`*, trytes: *`Trytes`[]*, minWeightMagnitude: *`number`*): `Promise`.<`Trytes`[]>
+▸ **pow**(trunkTransaction: *`Hash`*, branchTransaction: *`Hash`*, trytes: *`Trytes`[]*, minWeightMagnitude: *`number`*): `Promise`.<`Trytes`[]>
 
-
-
-*Defined in [transactions/proofOfWorkApi.ts:46](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/transactions/proofOfWorkApi.ts#L46)*
-
-
+*Defined in [transactions/proofOfWorkApi.ts:46](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/transactions/proofOfWorkApi.ts#L46)*
 
 Perform a proof of work on the data.
-
 
 **Parameters:**
 
@@ -105,18 +80,8 @@ Perform a proof of work on the data.
 | trytes | `Trytes`[]   |  The trytes to perform the pow on. |
 | minWeightMagnitude | `number`   |  The minimum weight magnitude. |
 
-
-
-
-
 **Returns:** `Promise`.<`Trytes`[]>
 The trytes produced by the proof of work.
 
-
-
-
-
-
 ___
-
 

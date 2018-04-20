@@ -1,6 +1,4 @@
 
-
-
 #  @iota-pico/business
 
 ## Index
@@ -16,11 +14,9 @@
 * [ProofOfWorkApi](classes/proofofworkapi.md)
 * [TransactionClient](classes/transactionclient.md)
 
-
 ### Interfaces
 
 * [ITransactionClient](interfaces/itransactionclient.md)
-
 
 ### Type aliases
 
@@ -28,62 +24,31 @@
 * [PromoteOptions](#promoteoptions)
 * [TransferOptions](#transferoptions)
 
-
-
 ---
-# Type aliases
+
+## Type aliases
+
 <a id="accountdata"></a>
 
 ###  AccountData
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/types/accountData.ts#L8)*
-
-
+*Defined in [types/accountData.ts:8](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/types/accountData.ts#L8)*
 
 Account data information returned from getAccountData.
 
 #### Type declaration
 
-
-
-
  addresses: `Address`[]
-
-
-
-
-
 
  balance: `number`
 
-
-
-
-
-
  inputs: `Input`[]
-
-
-
-
-
 
  latestAddress: `Address`
 
-
-
-
-
-
  transfers: `Bundle`[]
-
-
-
-
-
-
 
 ___
 
@@ -93,31 +58,15 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/types/promoteOptions.ts#L4)*
-
-
+*Defined in [types/promoteOptions.ts:4](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/types/promoteOptions.ts#L4)*
 
 Options used during promote process in promoteTransaction.
 
 #### Type declaration
 
+`Optional`  delay: `number`
 
-
-
-«Optional»  delay: `number`
-
-
-
-
-
-
-«Optional»  interrupt: `boolean`⎮`function`
-
-
-
-
-
-
+`Optional`  interrupt: `boolean`⎮`function`
 
 ___
 
@@ -127,46 +76,19 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/types/transferOptions.ts#L9)*
-
-
+*Defined in [types/transferOptions.ts:9](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/types/transferOptions.ts#L9)*
 
 Options used during prepare transfer process prepareTransfers and sendTransfer.
 
 #### Type declaration
 
+`Optional`  hmacKey: `Trytes`
 
+`Optional`  inputs: `Input`[]
 
+`Optional`  remainderAddress: `Address`
 
-«Optional»  hmacKey: `Trytes`
-
-
-
-
-
-
-«Optional»  inputs: `Input`[]
-
-
-
-
-
-
-«Optional»  remainderAddress: `Address`
-
-
-
-
-
-
-«Optional»  security: `AddressSecurity`
-
-
-
-
-
-
+`Optional`  security: `AddressSecurity`
 
 ___
-
 

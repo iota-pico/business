@@ -1,13 +1,13 @@
 [@iota-pico/business](../README.md) > [AddressHelper](../classes/addresshelper.md)
 
-
-
 # Class: AddressHelper
-
 
 Helper class for address signing. Original [https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js](https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js)
 *__internal__*: 
 
+## Hierarchy
+
+**AddressHelper**
 
 ## Index
 
@@ -15,24 +15,19 @@ Helper class for address signing. Original [https://github.com/iotaledger/iota.l
 
 * [createChecksum](addresshelper.md#createchecksum)
 
-
-
 ---
+
 ## Methods
+
 <a id="createchecksum"></a>
 
-### «Static» createChecksum
+### `<Static>` createChecksum
 
-► **createChecksum**(trits: *`Int8Array`*, checksumLength: *`number`*): `string`
+▸ **createChecksum**(trits: *`Int8Array`*, checksumLength: *`number`*): `string`
 
-
-
-*Defined in [helpers/addressHelper.ts:16](https://github.com/iotaeco/iota-pico-business/blob/be1d62c/src/helpers/addressHelper.ts#L16)*
-
-
+*Defined in [helpers/addressHelper.ts:16](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/helpers/addressHelper.ts#L16)*
 
 Create a checksum for the trits.
-
 
 **Parameters:**
 
@@ -41,18 +36,8 @@ Create a checksum for the trits.
 | trits | `Int8Array`   |  The trits to create the checksum for. |
 | checksumLength | `number`   |  The length of the checksum. |
 
-
-
-
-
 **Returns:** `string`
 the checksum as trytes.
 
-
-
-
-
-
 ___
-
 
