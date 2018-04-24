@@ -30,7 +30,7 @@ Multiple signatures. Converted [https://github.com/iotaledger/iota.lib.js/blob/m
 
 ### ⊕ **new MultiSigClient**(apiClient: *`IApiClient`*, timeService?: *`ITimeService`*): [MultiSigClient](multisigclient.md)
 
-*Defined in [multiSig/multiSigClient.ts:31](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L31)*
+*Defined in [multiSig/multiSigClient.ts:31](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L31)*
 
 Create a new instance of the MultiSigClient.
 
@@ -53,7 +53,7 @@ Create a new instance of the MultiSigClient.
 
 ▸ **prepareTransfer**(address: *`Address`*, securitySum: *`number`*, balance: *`number`*, transfers: *`Transfer`[]*, remainderAddress?: *`Address`*): `Promise`.<`Bundle`>
 
-*Defined in [multiSig/multiSigClient.ts:163](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L163)*
+*Defined in [multiSig/multiSigClient.ts:163](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L163)*
 
 Initiates the creation of a new transfer by generating an empty bundle with the correct number of bundle entries to be later used for the signing process.
 
@@ -77,7 +77,7 @@ ___
 
 ▸ **addSignature**(bundle: *`Bundle`*, address: *`Address`*, key: *`Trytes`*): `void`
 
-*Defined in [multiSig/multiSigClient.ts:111](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L111)*
+*Defined in [multiSig/multiSigClient.ts:111](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L111)*
 
 Adds the cosigner signatures to the corresponding bundle transactions.
 
@@ -99,7 +99,7 @@ ___
 
 ▸ **getDigest**(seed: *`Hash`*, index: *`number`*, security: *`AddressSecurity`*): `Trytes`
 
-*Defined in [multiSig/multiSigClient.ts:71](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L71)*
+*Defined in [multiSig/multiSigClient.ts:71](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L71)*
 
 Get the digest value of a seed.
 
@@ -122,7 +122,7 @@ ___
 
 ▸ **getKey**(seed: *`Hash`*, index: *`number`*, security: *`AddressSecurity`*): `Trytes`
 
-*Defined in [multiSig/multiSigClient.ts:50](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L50)*
+*Defined in [multiSig/multiSigClient.ts:50](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L50)*
 
 Get the key value of a seed.
 
@@ -145,7 +145,7 @@ ___
 
 ▸ **validateAddress**(address: *`Address`*, digests: *`Trytes`[]*): `boolean`
 
-*Defined in [multiSig/multiSigClient.ts:93](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/multiSig/multiSigClient.ts#L93)*
+*Defined in [multiSig/multiSigClient.ts:93](https://github.com/iota-pico/business/blob/9418612/src/multiSig/multiSigClient.ts#L93)*
 
 Validate address.
 

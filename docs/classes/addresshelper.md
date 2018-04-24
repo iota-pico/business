@@ -25,7 +25,7 @@ Helper class for address signing. Original [https://github.com/iotaledger/iota.l
 
 ▸ **createChecksum**(trits: *`Int8Array`*, checksumLength: *`number`*): `string`
 
-*Defined in [helpers/addressHelper.ts:16](https://github.com/iotaeco/iota-pico-business/blob/57083a1/src/helpers/addressHelper.ts#L16)*
+*Defined in [helpers/addressHelper.ts:16](https://github.com/iota-pico/business/blob/9418612/src/helpers/addressHelper.ts#L16)*
 
 Create a checksum for the trits.
 

@@ -1,5 +1,5 @@
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\index.ts
+SF:D:\Workarea\iota-pico\business\src\index.ts
 FNF:0
 FNH:0
 LF:0
@@ -8,7 +8,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\error\businessError.ts
+SF:D:\Workarea\iota-pico\business\src\error\businessError.ts
 FN:13,(anonymous_0)
 FNF:1
 FNH:1
@@ -23,7 +23,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\helpers\addressHelper.ts
+SF:D:\Workarea\iota-pico\business\src\helpers\addressHelper.ts
 FN:16,(anonymous_0)
 FNF:1
 FNH:1
@@ -43,7 +43,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\helpers\bundleHelper.ts
+SF:D:\Workarea\iota-pico\business\src\helpers\bundleHelper.ts
 FN:33,(anonymous_0)
 FN:129,(anonymous_1)
 FN:165,(anonymous_2)
@@ -261,7 +261,7 @@ BRF:55
 BRH:55
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\interfaces\ITransactionClient.ts
+SF:D:\Workarea\iota-pico\business\src\interfaces\ITransactionClient.ts
 FNF:0
 FNH:0
 LF:0
@@ -270,7 +270,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\multiSig\multiSigAddress.ts
+SF:D:\Workarea\iota-pico\business\src\multiSig\multiSigAddress.ts
 FN:23,(anonymous_0)
 FN:33,(anonymous_1)
 FN:49,(anonymous_2)
@@ -310,7 +310,7 @@ BRF:4
 BRH:4
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\multiSig\multiSigClient.ts
+SF:D:\Workarea\iota-pico\business\src\multiSig\multiSigClient.ts
 FN:38,(anonymous_0)
 FN:50,(anonymous_1)
 FN:71,(anonymous_2)
@@ -493,7 +493,7 @@ BRF:69
 BRH:69
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\sign\hmacCurl.ts
+SF:D:\Workarea\iota-pico\business\src\sign\hmacCurl.ts
 FN:20,(anonymous_0)
 FN:27,(anonymous_1)
 FNF:2
@@ -529,7 +529,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\transactions\proofOfWorkApi.ts
+SF:D:\Workarea\iota-pico\business\src\transactions\proofOfWorkApi.ts
 FN:23,(anonymous_0)
 FN:34,(anonymous_1)
 FN:46,(anonymous_2)
@@ -590,7 +590,7 @@ BRF:16
 BRH:16
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\transactions\transactionClient.ts
+SF:D:\Workarea\iota-pico\business\src\transactions\transactionClient.ts
 FN:76,(anonymous_0)
 FN:95,(anonymous_1)
 FN:99,(anonymous_2)
@@ -1466,7 +1466,7 @@ BRF:306
 BRH:306
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\types\accountData.ts
+SF:D:\Workarea\iota-pico\business\src\types\accountData.ts
 FNF:0
 FNH:0
 LF:0
@@ -1475,7 +1475,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\types\promoteOptions.ts
+SF:D:\Workarea\iota-pico\business\src\types\promoteOptions.ts
 FNF:0
 FNH:0
 LF:0
@@ -1484,7 +1484,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:D:\Workarea\iotaeco\iota-pico-business\src\types\transferOptions.ts
+SF:D:\Workarea\iota-pico\business\src\types\transferOptions.ts
 FNF:0
 FNH:0
 LF:0

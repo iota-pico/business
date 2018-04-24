@@ -21,7 +21,7 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/iotaeco/iota-pico-business.git"
+        "url": "https://github.com/iota-pico/business.git"
     },
     "engines": {
         "node": ">=8"
