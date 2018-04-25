@@ -4,6 +4,8 @@
 
 * Fixed getAddressesByIndex now allows endIndex of 0
 * Fixed incorrect include in BundleHelper
+* Repo rename
+* Updated webpack major ver
 
 ## v0.9.2
 

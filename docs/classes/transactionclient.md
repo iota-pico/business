@@ -51,7 +51,7 @@ Default implementation of the ITransactionClient.
 
 ### ⊕ **new TransactionClient**(apiClient: *`IApiClient`*, proofOfWork?: *`IProofOfWork`*, timeService?: *`ITimeService`*, backgroundTaskService?: *`IBackgroundTaskService`*, logger?: *`ILogger`*): [TransactionClient](transactionclient.md)
 
-*Defined in [transactions/transactionClient.ts:66](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L66)*
+*Defined in [transactions/transactionClient.ts:66](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L66)*
 
 Create a new instance of the TransactionClient.
 
@@ -79,7 +79,7 @@ Create a new instance of the TransactionClient.
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[attachToTangle](../interfaces/itransactionclient.md#attachtotangle)*
 
-*Defined in [transactions/transactionClient.ts:533](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L533)*
+*Defined in [transactions/transactionClient.ts:533](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L533)*
 
 Attach the transactions to the tangle by doing proof of work.
 
@@ -105,7 +105,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactionObjects](../interfaces/itransactionclient.md#findtransactionobjects)*
 
-*Defined in [transactions/transactionClient.ts:908](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L908)*
+*Defined in [transactions/transactionClient.ts:908](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L908)*
 
 Get transaction objects by fist performing a findTransactions call.
 
@@ -131,7 +131,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[findTransactions](../interfaces/itransactionclient.md#findtransactions)*
 
-*Defined in [transactions/transactionClient.ts:118](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L118)*
+*Defined in [transactions/transactionClient.ts:118](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L118)*
 
 Find the transactions which match the specified input and return. All input values are lists, for which a list of return values (transaction hashes), in the same order, is returned for all individual elements. Using multiple of these input fields returns the intersection of the values.
 
@@ -157,7 +157,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAccountData](../interfaces/itransactionclient.md#getaccountdata)*
 
-*Defined in [transactions/transactionClient.ts:959](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L959)*
+*Defined in [transactions/transactionClient.ts:959](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L959)*
 
 Similar to getTransfers, just that it returns additional account data.
 
@@ -183,7 +183,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesByIndex](../interfaces/itransactionclient.md#getaddressesbyindex)*
 
-*Defined in [transactions/transactionClient.ts:275](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L275)*
+*Defined in [transactions/transactionClient.ts:275](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L275)*
 
 Generates new addresses index-based.
 
@@ -210,7 +210,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getAddressesToUnused](../interfaces/itransactionclient.md#getaddressestounused)*
 
-*Defined in [transactions/transactionClient.ts:313](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L313)*
+*Defined in [transactions/transactionClient.ts:313](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L313)*
 
 Generates new address which havent been used using apis.
 
@@ -236,7 +236,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getBundle](../interfaces/itransactionclient.md#getbundle)*
 
-*Defined in [transactions/transactionClient.ts:775](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L775)*
+*Defined in [transactions/transactionClient.ts:775](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L775)*
 
 Gets the associated bundle transactions of a single transaction. Does validation of signatures, total sum as well as bundle order.
 
@@ -259,7 +259,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getInputs](../interfaces/itransactionclient.md#getinputs)*
 
-*Defined in [transactions/transactionClient.ts:368](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L368)*
+*Defined in [transactions/transactionClient.ts:368](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L368)*
 
 Get the input data for a range of addresses.
 
@@ -286,7 +286,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getLatestInclusion](../interfaces/itransactionclient.md#getlatestinclusion)*
 
-*Defined in [transactions/transactionClient.ts:193](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L193)*
+*Defined in [transactions/transactionClient.ts:193](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L193)*
 
 Get the inclusion states of a list of transaction hashes.
 
@@ -309,7 +309,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getNewAddress](../interfaces/itransactionclient.md#getnewaddress)*
 
-*Defined in [transactions/transactionClient.ts:227](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L227)*
+*Defined in [transactions/transactionClient.ts:227](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L227)*
 
 Generates addresses with index-based or using apis.
 
@@ -336,7 +336,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsInProgress](../interfaces/itransactionclient.md#gettransactionsinprogress)*
 
-*Defined in [transactions/transactionClient.ts:95](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L95)*
+*Defined in [transactions/transactionClient.ts:95](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L95)*
 
 Returns the list of transaction in progress.
 
@@ -353,7 +353,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransactionsObjects](../interfaces/itransactionclient.md#gettransactionsobjects)*
 
-*Defined in [transactions/transactionClient.ts:168](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L168)*
+*Defined in [transactions/transactionClient.ts:168](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L168)*
 
 Get the transaction details of specific transactions.
 
@@ -376,7 +376,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[getTransfers](../interfaces/itransactionclient.md#gettransfers)*
 
-*Defined in [transactions/transactionClient.ts:933](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L933)*
+*Defined in [transactions/transactionClient.ts:933](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L933)*
 
 The transfers which are associated with a seed. The transfers are determined by either calculating deterministically which addresses were already used, or by providing a list of indexes to get the addresses and the associated transfers from. The transfers are sorted by their timestamp.
 
@@ -403,7 +403,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isPromotable](../interfaces/itransactionclient.md#ispromotable)*
 
-*Defined in [transactions/transactionClient.ts:630](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L630)*
+*Defined in [transactions/transactionClient.ts:630](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L630)*
 
 Find out if a transaction is promotable.
 
@@ -426,7 +426,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[isReattachable](../interfaces/itransactionclient.md#isreattachable)*
 
-*Defined in [transactions/transactionClient.ts:651](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L651)*
+*Defined in [transactions/transactionClient.ts:651](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L651)*
 
 Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
 
@@ -449,7 +449,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[prepareTransfers](../interfaces/itransactionclient.md#preparetransfers)*
 
-*Defined in [transactions/transactionClient.ts:432](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L432)*
+*Defined in [transactions/transactionClient.ts:432](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L432)*
 
 Prepares transfer by generating bundle, finding and signing inputs.
 
@@ -478,7 +478,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[promoteTransaction](../interfaces/itransactionclient.md#promotetransaction)*
 
-*Defined in [transactions/transactionClient.ts:722](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L722)*
+*Defined in [transactions/transactionClient.ts:722](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L722)*
 
 Promotes a transaction by adding spam on top of it, as long as it is promotable. Will promote by adding transfers on top of the current one with delay interval. Use promoteOptions.interrupt to terminate the promotion. If promoteOptions.delay is set to 0 only one promotion transfer will be sent.
 
@@ -505,7 +505,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[reattachBundle](../interfaces/itransactionclient.md#reattachbundle)*
 
-*Defined in [transactions/transactionClient.ts:867](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L867)*
+*Defined in [transactions/transactionClient.ts:867](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L867)*
 
 Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
 
@@ -530,7 +530,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[rebroadcastBundle](../interfaces/itransactionclient.md#rebroadcastbundle)*
 
-*Defined in [transactions/transactionClient.ts:884](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L884)*
+*Defined in [transactions/transactionClient.ts:884](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L884)*
 
 Wrapper which gets a bundle and then broadcasts it.
 
@@ -553,7 +553,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransactions](../interfaces/itransactionclient.md#sendtransactions)*
 
-*Defined in [transactions/transactionClient.ts:580](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L580)*
+*Defined in [transactions/transactionClient.ts:580](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L580)*
 
 Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
 
@@ -579,7 +579,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[sendTransfer](../interfaces/itransactionclient.md#sendtransfer)*
 
-*Defined in [transactions/transactionClient.ts:615](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L615)*
+*Defined in [transactions/transactionClient.ts:615](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L615)*
 
 Wrapper function that does prepareTransfers and then sendTransactions.
 
@@ -607,7 +607,7 @@ ___
 
 *Implementation of [ITransactionClient](../interfaces/itransactionclient.md).[traverseBundle](../interfaces/itransactionclient.md#traversebundle)*
 
-*Defined in [transactions/transactionClient.ts:804](https://github.com/iota-pico/business/blob/9418612/src/transactions/transactionClient.ts#L804)*
+*Defined in [transactions/transactionClient.ts:804](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/transactionClient.ts#L804)*
 
 Traverse the Bundle by going down the trunkTransactions until the bundle hash of the transaction is no longer the same.
 

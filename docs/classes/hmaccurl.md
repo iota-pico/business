@@ -26,7 +26,7 @@ Hashed Message Authentication Code using Curl.
 
 ### ⊕ **new HmacCurl**(key: *`Trytes`*): [HmacCurl](hmaccurl.md)
 
-*Defined in [sign/hmacCurl.ts:14](https://github.com/iota-pico/business/blob/9418612/src/sign/hmacCurl.ts#L14)*
+*Defined in [sign/hmacCurl.ts:14](https://github.com/iota-pico/business/blob/1a1476b/src/sign/hmacCurl.ts#L14)*
 
 Create a new instance of the HmacCurl.
 
@@ -48,7 +48,7 @@ Create a new instance of the HmacCurl.
 
 ▸ **addHMAC**(bundle: *`Bundle`*): `void`
 
-*Defined in [sign/hmacCurl.ts:27](https://github.com/iota-pico/business/blob/9418612/src/sign/hmacCurl.ts#L27)*
+*Defined in [sign/hmacCurl.ts:27](https://github.com/iota-pico/business/blob/1a1476b/src/sign/hmacCurl.ts#L27)*
 
 Add bundle to the HMAC.
 
