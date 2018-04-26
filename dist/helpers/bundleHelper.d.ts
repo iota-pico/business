@@ -32,6 +32,7 @@ export declare class BundleHelper {
      * Prepare a bundle.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
+     * @returns Bundle information.
      */
     static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
         bundle: Bundle;

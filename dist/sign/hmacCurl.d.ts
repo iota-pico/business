@@ -11,6 +11,7 @@ export declare class HmacCurl {
     constructor(key: Trytes);
     /**
      * Add bundle to the HMAC.
+     * @param bundle The bundle to add the HMAC to.
      */
     addHMAC(bundle: Bundle): void;
 }

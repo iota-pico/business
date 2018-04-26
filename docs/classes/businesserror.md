@@ -40,7 +40,7 @@ A business implementation of an error.
 
 *Overrides CoreError.__constructor*
 
-*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/1a1476b/src/error/businessError.ts#L6)*
+*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/09264f6/src/error/businessError.ts#L6)*
 
 Create an instance of BusinessError.
 
@@ -150,11 +150,12 @@ ___
 
 *Inherited from CoreError.format*
 
-*Defined in D:/Workarea/iota-pico/business/node_modules/@iota-pico/core/dist/error/coreError.d.ts:37*
+*Defined in D:/Workarea/iota-pico/business/node_modules/@iota-pico/core/dist/error/coreError.d.ts:38*
 
 Format the error to a readable version.
 
 **Returns:** `string`
+Formatted version of the error.
 
 ___
 

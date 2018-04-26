@@ -14,6 +14,7 @@ export declare class ProofOfWorkApi implements IProofOfWork {
     /**
      * Allow the proof of work to perform any initialization.
      * Will throw an exception if the implementation is not supported.
+     * @returns Promise.
      */
     initialize(): Promise<void>;
     /**

@@ -55,6 +55,7 @@ export declare class MultiSigClient {
      * @param balance The balance available for the transfer, if 0 will call getBalances to lookup available.
      * @param transfers The transfers to perform.
      * @param remainderAddress If there is a remainder after the transfer then send the amount to this address.
+     * @returns Bundle of the prepared transfer.
      */
     prepareTransfer(address: Address, securitySum: number, balance: number, transfers: Transfer[], remainderAddress?: Address): Promise<Bundle>;
 }

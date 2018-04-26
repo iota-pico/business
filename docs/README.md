@@ -34,7 +34,7 @@
 
 **Τ AccountData**:  *`object`* 
 
-*Defined in [types/accountData.ts:8](https://github.com/iota-pico/business/blob/1a1476b/src/types/accountData.ts#L8)*
+*Defined in [types/accountData.ts:8](https://github.com/iota-pico/business/blob/09264f6/src/types/accountData.ts#L8)*
 
 Account data information returned from getAccountData.
 
@@ -58,7 +58,7 @@ ___
 
 **Τ PromoteOptions**:  *`object`* 
 
-*Defined in [types/promoteOptions.ts:4](https://github.com/iota-pico/business/blob/1a1476b/src/types/promoteOptions.ts#L4)*
+*Defined in [types/promoteOptions.ts:4](https://github.com/iota-pico/business/blob/09264f6/src/types/promoteOptions.ts#L4)*
 
 Options used during promote process in promoteTransaction.
 
@@ -66,7 +66,11 @@ Options used during promote process in promoteTransaction.
 
 `Optional`  delay: `number`
 
+Delay between promotion transfers.
+
 `Optional`  interrupt: `boolean`⎮`function`
+
+Flag or method to terminate promotion.
 
 ___
 
@@ -76,7 +80,7 @@ ___
 
 **Τ TransferOptions**:  *`object`* 
 
-*Defined in [types/transferOptions.ts:9](https://github.com/iota-pico/business/blob/1a1476b/src/types/transferOptions.ts#L9)*
+*Defined in [types/transferOptions.ts:9](https://github.com/iota-pico/business/blob/09264f6/src/types/transferOptions.ts#L9)*
 
 Options used during prepare transfer process prepareTransfers and sendTransfer.
 
@@ -84,11 +88,19 @@ Options used during prepare transfer process prepareTransfers and sendTransfer.
 
 `Optional`  hmacKey: `Trytes`
 
+Hmac key to sign the bundle.
+
 `Optional`  inputs: `Input`[]
+
+List of inputs used for funding the transfer.
 
 `Optional`  remainderAddress: `Address`
 
+If defined, this address will be used for sending the remainder value (of the inputs) to.
+
 `Optional`  security: `AddressSecurity`
+
+Security level to be used for the private key / addresses.
 
 ___
 

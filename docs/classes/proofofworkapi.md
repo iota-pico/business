@@ -31,7 +31,7 @@ ProofOfWork implementation using API.
 
 ### ⊕ **new ProofOfWorkApi**(apiClient: *`IApiClient`*): [ProofOfWorkApi](proofofworkapi.md)
 
-*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/proofOfWorkApi.ts#L17)*
+*Defined in [transactions/proofOfWorkApi.ts:17](https://github.com/iota-pico/business/blob/09264f6/src/transactions/proofOfWorkApi.ts#L17)*
 
 Create an instance of ProofOfWork.
 
@@ -53,11 +53,12 @@ Create an instance of ProofOfWork.
 
 ▸ **initialize**(): `Promise`.<`void`>
 
-*Defined in [transactions/proofOfWorkApi.ts:34](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/proofOfWorkApi.ts#L34)*
+*Defined in [transactions/proofOfWorkApi.ts:35](https://github.com/iota-pico/business/blob/09264f6/src/transactions/proofOfWorkApi.ts#L35)*
 
 Allow the proof of work to perform any initialization. Will throw an exception if the implementation is not supported.
 
 **Returns:** `Promise`.<`void`>
+Promise.
 
 ___
 
@@ -67,7 +68,7 @@ ___
 
 ▸ **pow**(trunkTransaction: *`Hash`*, branchTransaction: *`Hash`*, trytes: *`Trytes`[]*, minWeightMagnitude: *`number`*): `Promise`.<`Trytes`[]>
 
-*Defined in [transactions/proofOfWorkApi.ts:46](https://github.com/iota-pico/business/blob/1a1476b/src/transactions/proofOfWorkApi.ts#L46)*
+*Defined in [transactions/proofOfWorkApi.ts:47](https://github.com/iota-pico/business/blob/09264f6/src/transactions/proofOfWorkApi.ts#L47)*
 
 Perform a proof of work on the data.
 

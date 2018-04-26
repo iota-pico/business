@@ -163,6 +163,7 @@ export class TransactionClient implements ITransactionClient {
 
     /**
      * Get the transaction details of specific transactions.
+     * @param transactionHashes The hashes to get the transactions for.
      * @returns Promise which resolves to the list of transactions or rejects with error.
      */
     public async getTransactionsObjects(transactionHashes: Hash[]): Promise<Transaction[]> {
@@ -188,6 +189,7 @@ export class TransactionClient implements ITransactionClient {
 
     /**
      * Get the inclusion states of a list of transaction hashes.
+     * @param transactionHashes The hashes to get the inclusion states for.
      * @returns Promise which resolves to the list of inclusion states or rejects with error.
      */
     public async getLatestInclusion(transactionHashes: Hash[]): Promise<boolean[]> {
@@ -421,12 +423,7 @@ export class TransactionClient implements ITransactionClient {
      * Prepares transfer by generating bundle, finding and signing inputs.
      * @param seed The seed to prepare the transfer for.
      * @param transfers The transfers to prepare.
-     * @param transferOptions
-     *      @property inputs List of inputs used for funding the transfer.
-     *      @property security Security level to be used for the private key / addresses.
-     *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
-     *      @property hmacKey Hmac key to sign the bundle.
-     *      @property reference The transaction to reference.
+     * @param transferOptions Additional options for the transfer.
      * @returns Promise which resolves to the array of Trytes for the transfer or rejects with error.
      */
     public async prepareTransfers(seed: Hash, transfers: Transfer[], transferOptions?: TransferOptions): Promise<Bundle> {
@@ -453,6 +450,7 @@ export class TransactionClient implements ITransactionClient {
             transfer.tag = transfer.tag || Tag.EMPTY;
 
             if (addHMAC && transfer.value > 0) {
+                // tslint:disable:restrict-plus-operands false positive
                 transfer.message = Trytes.fromString(TransactionClient.NULL_HASH_TRYTES + transfer.message.toString());
                 addedHMAC = true;
             }
@@ -605,10 +603,6 @@ export class TransactionClient implements ITransactionClient {
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @param transfers The transfers to send.
      * @param transferOptions Additional options for the transfer.
-     *      @property inputs List of inputs used for funding the transfer.
-     *      @property security Security level to be used for the private key / addresses.
-     *      @property remainderAddress If defined, this address will be used for sending the remainder value (of the inputs) to.
-     *      @property hmacKey Hmac key to sign the bundle.
      * @param reference The reference to send with the transactions.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
@@ -715,8 +709,6 @@ export class TransactionClient implements ITransactionClient {
      * @param minWeightMagnitude The minimum weight magnitude for the proof of work.
      * @param transfers The transfers to send.
      * @param promoteOptions Additional options for the promote.
-     *      @property delay Delay between promotion transfers
-     *      @property interrupt Flag or method to terminate promotion.
      * @returns Promise which resolves to the list of transactions created or rejects with an error.
      */
     public async promoteTransaction(transactionTail: Hash, depth: number, minWeightMagnitude: number, transfers: Transfer[], promoteOptions?: PromoteOptions): Promise<Bundle> {

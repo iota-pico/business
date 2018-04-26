@@ -161,6 +161,7 @@ export class BundleHelper {
      * Prepare a bundle.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
+     * @returns Bundle information.
      */
     public static prepareBundle(timeService: ITimeService, transfers: Transfer[]): {
         bundle: Bundle; totalValue: number; signatureMessageFragments: SignatureMessageFragment[]; lastTag: Tag; } {
@@ -350,9 +351,11 @@ export class BundleHelper {
                     bundle.transactions[i].currentIndex = TryteNumber.fromNumber(i);
                     bundle.transactions[i].lastIndex = TryteNumber.fromNumber(bundle.transactions.length - 1);
 
+                    // tslint:disable:restrict-plus-operands false positive
                     const bundleEssence = Trits.fromTrytes(Trytes.fromString(
                         bundle.transactions[i].address.toTrytes().toString()
-                        + bundle.transactions[i].value.toTrytes().toString() + Transaction.CHECK_VALUE
+                        + bundle.transactions[i].value.toTrytes().toString()
+                        + Transaction.CHECK_VALUE
                         + bundle.transactions[i].obsoleteTag.toTrytes().toString()
                         + bundle.transactions[i].timestamp.toTrytes().toString()
                         + bundle.transactions[i].currentIndex.toTrytes().toString()

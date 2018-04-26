@@ -23,6 +23,7 @@ export class HmacCurl {
 
     /**
      * Add bundle to the HMAC.
+     * @param bundle The bundle to add the HMAC to.
      */
     public addHMAC(bundle: Bundle): void {
         const curl = SpongeFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);
@@ -38,6 +39,7 @@ export class HmacCurl {
                 curl.squeeze(hmac, 0, hmac.length);
                 const hmacTrytes = Trits.fromArray(hmac).toTrytes().toString();
                 const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureMessageFragment.LENGTH);
+                // tslint:disable:restrict-plus-operands false positive
                 bundle.transactions[i].signatureMessageFragment =
                     SignatureMessageFragment.fromTrytes(Trytes.fromString(hmacTrytes + rest));
             }
