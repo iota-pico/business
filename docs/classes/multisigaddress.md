@@ -25,15 +25,17 @@ Address using multiple signatures.
 
 <a id="constructor"></a>
 
-### ⊕ **new MultiSigAddress**(): [MultiSigAddress](multisigaddress.md)
+###  constructor
 
-*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iota-pico/business/blob/09264f6/src/multiSig/multiSigAddress.ts#L18)*
+⊕ **new MultiSigAddress**(): [MultiSigAddress](multisigaddress.md)
+
+*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iota-pico/business/blob/4bff4b5/src/multiSig/multiSigAddress.ts#L18)*
 
 Create a new instance of the MultiSigAddress.
 
 **Returns:** [MultiSigAddress](multisigaddress.md)
 
----
+___
 
 ## Methods
 
@@ -43,7 +45,7 @@ Create a new instance of the MultiSigAddress.
 
 ▸ **absorb**(digests: *`Trytes`[]*): `void`
 
-*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iota-pico/business/blob/09264f6/src/multiSig/multiSigAddress.ts#L33)*
+*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iota-pico/business/blob/4bff4b5/src/multiSig/multiSigAddress.ts#L33)*
 
 Absorb key digests.
 
@@ -51,19 +53,18 @@ Absorb key digests.
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| digests | `Trytes`[]   |  The digests hashes to absorb. |
+| digests | `Trytes`[] |  The digests hashes to absorb. |
 
 **Returns:** `void`
 
 ___
-
 <a id="finalize"></a>
 
 ###  finalize
 
 ▸ **finalize**(digests?: *`Trytes`[]*): `Address`
 
-*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iota-pico/business/blob/09264f6/src/multiSig/multiSigAddress.ts#L49)*
+*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iota-pico/business/blob/4bff4b5/src/multiSig/multiSigAddress.ts#L49)*
 
 Finalizes and returns the multisig address in trytes.
 
@@ -71,7 +72,7 @@ Finalizes and returns the multisig address in trytes.
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| digests | `Trytes`[]   |  The final digests hashes to absorb. |
+| `Optional` digests | `Trytes`[] |  The final digests hashes to absorb. |
 
 **Returns:** `Address`
 The multi signature address.

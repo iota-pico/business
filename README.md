@@ -1,5 +1,5 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/https://github.com/iota-pico/business/master/LICENSE) [![Build Status](https://travis-ci.org/https://github.com/iota-pico/business.svg?branch=master)](https://travis-ci.org/https://github.com/iota-pico/business) [![NSP Status](https://nodesecurity.io/orgs/https://github.com/iota-pico/projects/cfd72d3c-b3ed-45f3-808a-9b3f7d0d821c)](https://nodesecurity.io/orgs/https://github.com/iota-pico/projects/cfd72d3c-b3ed-45f3-808a-9b3f7d0d821c)
-[![Coveralls](https://img.shields.io/coveralls/https://github.com/iota-pico/business.svg)](https://coveralls.io/github/https://github.com/iota-pico/business)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/iota-pico/business/master/LICENSE) [![Build Status](https://travis-ci.org/iota-pico/business.svg?branch=master)](https://travis-ci.org/iota-pico/business) [![NSP Status](https://nodesecurity.io/orgs/iota-pico/projects/cfd72d3c-b3ed-45f3-808a-9b3f7d0d821c)](https://nodesecurity.io/orgs/iota-pico/projects/cfd72d3c-b3ed-45f3-808a-9b3f7d0d821c)
+[![Coveralls](https://img.shields.io/coveralls/iota-pico/business.svg)](https://coveralls.io/github/iota-pico/business)
 
 # IOTA Pico Framework Business
 

@@ -32,9 +32,9 @@
 
 ###  AccountData
 
-**Τ AccountData**:  *`object`* 
+**ΤAccountData**: *`object`*
 
-*Defined in [types/accountData.ts:8](https://github.com/iota-pico/business/blob/09264f6/src/types/accountData.ts#L8)*
+*Defined in [types/accountData.ts:8](https://github.com/iota-pico/business/blob/4bff4b5/src/types/accountData.ts#L8)*
 
 Account data information returned from getAccountData.
 
@@ -51,14 +51,13 @@ Account data information returned from getAccountData.
  transfers: `Bundle`[]
 
 ___
-
 <a id="promoteoptions"></a>
 
 ###  PromoteOptions
 
-**Τ PromoteOptions**:  *`object`* 
+**ΤPromoteOptions**: *`object`*
 
-*Defined in [types/promoteOptions.ts:4](https://github.com/iota-pico/business/blob/09264f6/src/types/promoteOptions.ts#L4)*
+*Defined in [types/promoteOptions.ts:4](https://github.com/iota-pico/business/blob/4bff4b5/src/types/promoteOptions.ts#L4)*
 
 Options used during promote process in promoteTransaction.
 
@@ -68,19 +67,19 @@ Options used during promote process in promoteTransaction.
 
 Delay between promotion transfers.
 
-`Optional`  interrupt: `boolean`⎮`function`
+`Optional`  interrupt: `boolean` |
+`function`
 
 Flag or method to terminate promotion.
 
 ___
-
 <a id="transferoptions"></a>
 
 ###  TransferOptions
 
-**Τ TransferOptions**:  *`object`* 
+**ΤTransferOptions**: *`object`*
 
-*Defined in [types/transferOptions.ts:9](https://github.com/iota-pico/business/blob/09264f6/src/types/transferOptions.ts#L9)*
+*Defined in [types/transferOptions.ts:9](https://github.com/iota-pico/business/blob/4bff4b5/src/types/transferOptions.ts#L9)*
 
 Options used during prepare transfer process prepareTransfers and sendTransfer.
 

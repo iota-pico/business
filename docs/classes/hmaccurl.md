@@ -24,9 +24,11 @@ Hashed Message Authentication Code using Curl.
 
 <a id="constructor"></a>
 
-### ⊕ **new HmacCurl**(key: *`Trytes`*): [HmacCurl](hmaccurl.md)
+###  constructor
 
-*Defined in [sign/hmacCurl.ts:14](https://github.com/iota-pico/business/blob/09264f6/src/sign/hmacCurl.ts#L14)*
+⊕ **new HmacCurl**(key: *`Trytes`*): [HmacCurl](hmaccurl.md)
+
+*Defined in [sign/hmacCurl.ts:14](https://github.com/iota-pico/business/blob/4bff4b5/src/sign/hmacCurl.ts#L14)*
 
 Create a new instance of the HmacCurl.
 
@@ -34,11 +36,11 @@ Create a new instance of the HmacCurl.
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| key | `Trytes`   |  The key to seed with. |
+| key | `Trytes` |  The key to seed with. |
 
 **Returns:** [HmacCurl](hmaccurl.md)
 
----
+___
 
 ## Methods
 
@@ -48,7 +50,7 @@ Create a new instance of the HmacCurl.
 
 ▸ **addHMAC**(bundle: *`Bundle`*): `void`
 
-*Defined in [sign/hmacCurl.ts:28](https://github.com/iota-pico/business/blob/09264f6/src/sign/hmacCurl.ts#L28)*
+*Defined in [sign/hmacCurl.ts:28](https://github.com/iota-pico/business/blob/4bff4b5/src/sign/hmacCurl.ts#L28)*
 
 Add bundle to the HMAC.
 
@@ -56,7 +58,7 @@ Add bundle to the HMAC.
 
 | Param | Type | Description |
 | ------ | ------ | ------ |
-| bundle | `Bundle`   |  The bundle to add the HMAC to. |
+| bundle | `Bundle` |  The bundle to add the HMAC to. |
 
 **Returns:** `void`
 
