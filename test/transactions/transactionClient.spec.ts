@@ -24,7 +24,7 @@ describe("TransactionClient", () => {
     let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = createSandbox();
         apiClientStub = <IApiClient>{};
     });
 

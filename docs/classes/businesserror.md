@@ -42,7 +42,7 @@ A business implementation of an error.
 
 *Overrides CoreError.__constructor*
 
-*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/4bff4b5/src/error/businessError.ts#L6)*
+*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/983951e/src/error/businessError.ts#L6)*
 
 Create an instance of BusinessError.
 

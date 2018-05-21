@@ -24,7 +24,7 @@ describe("MultiSigClient", () => {
     let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+        sandbox = sinon.createSandbox();
         apiClientStub = <IApiClient>{};
         timeServiceStub = <ITimeService>{};
         timeServiceStub.msSinceEpoch = sandbox.stub().returns(1518782585);
