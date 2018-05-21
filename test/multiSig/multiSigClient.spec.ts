@@ -13,7 +13,6 @@ import { Transaction } from "@iota-pico/data/dist/data/transaction";
 import { Transfer } from "@iota-pico/data/dist/data/transfer";
 import { Trytes } from "@iota-pico/data/dist/data/trytes";
 import * as chai from "chai";
-import * as sinon from "sinon";
 import { BundleHelper } from "../../src/helpers/bundleHelper";
 import { MultiSigAddress } from "../../src/multiSig/multiSigAddress";
 import { MultiSigClient } from "../../src/multiSig/multiSigClient";
@@ -21,17 +20,11 @@ import { MultiSigClient } from "../../src/multiSig/multiSigClient";
 describe("MultiSigClient", () => {
     let apiClientStub: IApiClient;
     let timeServiceStub: ITimeService;
-    let sandbox: sinon.SinonSandbox;
 
     beforeEach(() => {
-        sandbox = sinon.createSandbox();
         apiClientStub = <IApiClient>{};
         timeServiceStub = <ITimeService>{};
-        timeServiceStub.msSinceEpoch = sandbox.stub().returns(1518782585);
-    });
-
-    afterEach(() => {
-        sandbox.restore();
+        timeServiceStub.msSinceEpoch =  () => 1518782585;
     });
 
     it("can be created", () => {
@@ -440,7 +433,7 @@ describe("MultiSigClient", () => {
             const multiSigAddress = new MultiSigAddress();
             const address = multiSigAddress.finalize([digest1, digest2]);
 
-            apiClientStub.getBalances = sandbox.stub().resolves({ balances: ["999"] });
+            apiClientStub.getBalances = () => Promise.resolve({ balances: ["999"], milestone: "0", milestoneIndex: 0, duration: 0 });
 
             const obj = new MultiSigClient(apiClientStub, timeServiceStub);
             const transfers = [Transfer.fromParams(
