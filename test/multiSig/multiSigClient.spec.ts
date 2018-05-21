@@ -433,7 +433,7 @@ describe("MultiSigClient", () => {
             const multiSigAddress = new MultiSigAddress();
             const address = multiSigAddress.finalize([digest1, digest2]);
 
-            apiClientStub.getBalances = () => Promise.resolve({ balances: ["999"], milestone: "0", milestoneIndex: 0, duration: 0 });
+            apiClientStub.getBalances = async () => Promise.resolve({ balances: ["999"], milestone: "0", milestoneIndex: 0, duration: 0 });
 
             const obj = new MultiSigClient(apiClientStub, timeServiceStub);
             const transfers = [Transfer.fromParams(
