@@ -33,7 +33,7 @@ Helper class for signing bundles. Converted [https://github.com/iotaledger/iota.
 
 **● NUMBER_OF_FRAGMENT_CHUNKS**: *`number`* = 27
 
-*Defined in [helpers/bundleHelper.ts:26](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L26)*
+*Defined in [helpers/bundleHelper.ts:26](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L26)*
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 ▸ **finalizeBundle**(bundle: *`Bundle`*): `void`
 
-*Defined in [helpers/bundleHelper.ts:341](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L341)*
+*Defined in [helpers/bundleHelper.ts:341](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L341)*
 
 Finalize a bundle.
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **isValid**(bundle: *`Bundle`*): `boolean`
 
-*Defined in [helpers/bundleHelper.ts:33](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L33)*
+*Defined in [helpers/bundleHelper.ts:33](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L33)*
 
 Is the bundle valid.
 
@@ -84,7 +84,7 @@ ___
 
 ▸ **prepareBundle**(timeService: *`ITimeService`*, transfers: *`Transfer`[]*): `object`
 
-*Defined in [helpers/bundleHelper.ts:166](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L166)*
+*Defined in [helpers/bundleHelper.ts:166](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L166)*
 
 Prepare a bundle.
 
@@ -105,7 +105,7 @@ ___
 
 ▸ **signInputs**(seed: *`Hash`*, bundle: *`Bundle`*, transferOptions: *[TransferOptions](../#transferoptions)*, signatureMessageFragments: *`SignatureMessageFragment`[]*, inputs: *`Input`[]*, addedHMAC: *`boolean`*): `void`
 
-*Defined in [helpers/bundleHelper.ts:238](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L238)*
+*Defined in [helpers/bundleHelper.ts:238](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L238)*
 
 Sign the input of the bundle.
 
@@ -129,7 +129,7 @@ ___
 
 ▸ **signTransactions**(bundle: *`Bundle`*, index: *`number`*, firstUnsignedIndex: *`number`*, keyTrits: *`Int8Array`*, addressTrytes: *`string`*, security: *`AddressSecurity`*): `void`
 
-*Defined in [helpers/bundleHelper.ts:289](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L289)*
+*Defined in [helpers/bundleHelper.ts:289](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L289)*
 
 Sign the trsnactions
 
@@ -153,7 +153,7 @@ ___
 
 ▸ **validateSignatures**(signedBundle: *`Bundle`*, inputAddress: *`Address`*): `boolean`
 
-*Defined in [helpers/bundleHelper.ts:129](https://github.com/iota-pico/business/blob/983951e/src/helpers/bundleHelper.ts#L129)*
+*Defined in [helpers/bundleHelper.ts:129](https://github.com/iota-pico/business/blob/c818c87/src/helpers/bundleHelper.ts#L129)*
 
 Validate signatures for each of the co-signers in the multi-signature to independently verify that a generated transaction with the corresponding signatures of the co-signers is valid.
 

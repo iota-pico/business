@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/21</span>
+        <span class='fraction'>21/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">33.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/21</span>
+        <span class='fraction'>21/21</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,29 +114,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,22 +169,22 @@ export class HmacCurl {
      * Add bundle to the HMAC.
      * @param bundle The bundle to add the HMAC to.
      */
-    public <span class="fstat-no" title="function not covered" >addHMAC</span>(bundle: Bundle): void {
-        const curl = <span class="cstat-no" title="statement not covered" >SpongeFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);</span>
-        const hashLength = <span class="cstat-no" title="statement not covered" >curl.getConstant("HASH_LENGTH");</span>
-        const key = <span class="cstat-no" title="statement not covered" >this._keyTrits;</span>
-<span class="cstat-no" title="statement not covered" >        for (let i = 0; i &lt; bundle.transactions.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >            if (bundle.transactions[i].value.toNumber() &gt; 0) {</span>
-                const bundleHashTrits = <span class="cstat-no" title="statement not covered" >Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();</span>
-                const hmac = <span class="cstat-no" title="statement not covered" >new Int8Array(hashLength);</span>
-<span class="cstat-no" title="statement not covered" >                curl.initialize();</span>
-<span class="cstat-no" title="statement not covered" >                curl.absorb(key, 0, key.length);</span>
-<span class="cstat-no" title="statement not covered" >                curl.absorb(bundleHashTrits, 0, bundleHashTrits.length);</span>
-<span class="cstat-no" title="statement not covered" >                curl.squeeze(hmac, 0, hmac.length);</span>
-                const hmacTrytes = <span class="cstat-no" title="statement not covered" >Trits.fromArray(hmac).toTrytes().toString();</span>
-                const rest = <span class="cstat-no" title="statement not covered" >bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureMessageFragment.LENGTH);</span>
+    public addHMAC(bundle: Bundle): void {
+        const curl = SpongeFactory.instance().create("curl", HmacCurl.HMAC_ROUNDS);
+        const hashLength = curl.getConstant("HASH_LENGTH");
+        const key = this._keyTrits;
+        for (let i = 0; i &lt; bundle.transactions.length; i++) {
+            if (bundle.transactions[i].value.toNumber() &gt; 0) {
+                const bundleHashTrits = Trits.fromTrytes(bundle.transactions[i].bundle.toTrytes()).toArray();
+                const hmac = new Int8Array(hashLength);
+                curl.initialize();
+                curl.absorb(key, 0, key.length);
+                curl.absorb(bundleHashTrits, 0, bundleHashTrits.length);
+                curl.squeeze(hmac, 0, hmac.length);
+                const hmacTrytes = Trits.fromArray(hmac).toTrytes().toString();
+                const rest = bundle.transactions[i].signatureMessageFragment.toTrytes().toString().substring(81, SignatureMessageFragment.LENGTH);
                 // tslint:disable:restrict-plus-operands false positive
-<span class="cstat-no" title="statement not covered" >                bundle.transactions[i].signatureMessageFragment =</span>
+                bundle.transactions[i].signatureMessageFragment =
                     SignatureMessageFragment.fromTrytes(Trytes.fromString(hmacTrytes + rest));
             }
         }
@@ -196,7 +196,7 @@ export class HmacCurl {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon May 21 2018 11:51:26 GMT+0300 (E. Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jun 19 2018 09:26:57 GMT+0300 (E. Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>

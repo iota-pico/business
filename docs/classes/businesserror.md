@@ -42,7 +42,7 @@ A business implementation of an error.
 
 *Overrides CoreError.__constructor*
 
-*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/983951e/src/error/businessError.ts#L6)*
+*Defined in [error/businessError.ts:6](https://github.com/iota-pico/business/blob/c818c87/src/error/businessError.ts#L6)*
 
 Create an instance of BusinessError.
 
@@ -111,7 +111,7 @@ ___
 
 *Inherited from Error.message*
 
-*Defined in D:/Workarea/iota-pico/business/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:886*
+*Defined in D:/Workarea/iota-pico/business/node_modules/.registry.npmjs.org/typescript/2.7.2/node_modules/typescript/lib/lib.es5.d.ts:886*
 
 ___
 <a id="name"></a>
@@ -122,7 +122,7 @@ ___
 
 *Inherited from Error.name*
 
-*Defined in D:/Workarea/iota-pico/business/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:885*
+*Defined in D:/Workarea/iota-pico/business/node_modules/.registry.npmjs.org/typescript/2.7.2/node_modules/typescript/lib/lib.es5.d.ts:885*
 
 ___
 <a id="stack"></a>
@@ -133,7 +133,7 @@ ___
 
 *Inherited from Error.stack*
 
-*Defined in D:/Workarea/iota-pico/business/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:887*
+*Defined in D:/Workarea/iota-pico/business/node_modules/.registry.npmjs.org/typescript/2.7.2/node_modules/typescript/lib/lib.es5.d.ts:887*
 
 ___
 

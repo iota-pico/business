@@ -29,7 +29,7 @@ Address using multiple signatures.
 
 ⊕ **new MultiSigAddress**(): [MultiSigAddress](multisigaddress.md)
 
-*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iota-pico/business/blob/983951e/src/multiSig/multiSigAddress.ts#L18)*
+*Defined in [multiSig/multiSigAddress.ts:18](https://github.com/iota-pico/business/blob/c818c87/src/multiSig/multiSigAddress.ts#L18)*
 
 Create a new instance of the MultiSigAddress.
 
@@ -45,7 +45,7 @@ ___
 
 ▸ **absorb**(digests: *`Trytes`[]*): `void`
 
-*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iota-pico/business/blob/983951e/src/multiSig/multiSigAddress.ts#L33)*
+*Defined in [multiSig/multiSigAddress.ts:33](https://github.com/iota-pico/business/blob/c818c87/src/multiSig/multiSigAddress.ts#L33)*
 
 Absorb key digests.
 
@@ -64,7 +64,7 @@ ___
 
 ▸ **finalize**(digests?: *`Trytes`[]*): `Address`
 
-*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iota-pico/business/blob/983951e/src/multiSig/multiSigAddress.ts#L49)*
+*Defined in [multiSig/multiSigAddress.ts:49](https://github.com/iota-pico/business/blob/c818c87/src/multiSig/multiSigAddress.ts#L49)*
 
 Finalizes and returns the multisig address in trytes.
 
