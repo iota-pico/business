@@ -50,7 +50,7 @@ Represents a client for performing transactions using the api if required.
 
 ▸ **attachToTangle**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:112](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L112)*
+*Defined in [interfaces/ITransactionClient.ts:112](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L112*
 
 Attach the transactions to the tangle by doing proof of work.
 
@@ -73,7 +73,7 @@ ___
 
 ▸ **findTransactionObjects**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`<`Transaction`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:212](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L212)*
+*Defined in [interfaces/ITransactionClient.ts:212](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L212*
 
 Get transaction objects by fist performing a findTransactions call.
 
@@ -96,7 +96,7 @@ ___
 
 ▸ **findTransactions**(bundles?: *`Hash`[]*, addresses?: *`Address`[]*, tags?: *`Tag`[]*, approvees?: *`Hash`[]*): `Promise`<`Hash`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:34](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L34)*
+*Defined in [interfaces/ITransactionClient.ts:34](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L34*
 
 Find the transactions which match the specified input and return. All input values are lists, for which a list of return values (transaction hashes), in the same order, is returned for all individual elements. Using multiple of these input fields returns the intersection of the values.
 
@@ -119,7 +119,7 @@ ___
 
 ▸ **getAccountData**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*): `Promise`<[AccountData](../#accountdata)>
 
-*Defined in [interfaces/ITransactionClient.ts:235](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L235)*
+*Defined in [interfaces/ITransactionClient.ts:235](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L235*
 
 Similar to getTransfers, just that it returns additional account data.
 
@@ -142,7 +142,7 @@ ___
 
 ▸ **getAddressesByIndex**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`<`Address`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:68](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L68)*
+*Defined in [interfaces/ITransactionClient.ts:68](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L68*
 
 Generates addresses index-based.
 
@@ -166,7 +166,7 @@ ___
 
 ▸ **getAddressesToUnused**(seed: *`Hash`*, startIndex: *`number`*, includeChecksum: *`boolean`*, security: *`AddressSecurity`*): `Promise`<`Address`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:78](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L78)*
+*Defined in [interfaces/ITransactionClient.ts:78](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L78*
 
 Generates address which havent been used using apis.
 
@@ -189,7 +189,7 @@ ___
 
 ▸ **getBundle**(transactionHash: *`Hash`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:176](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L176)*
+*Defined in [interfaces/ITransactionClient.ts:176](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L176*
 
 Gets the associated bundle transactions of a single transaction. Does validation of signatures, total sum as well as bundle order.
 
@@ -209,7 +209,7 @@ ___
 
 ▸ **getInputs**(seed: *`Hash`*, startIndex: *`number`*, endIndex: *`number`*, security: *`AddressSecurity`*, totalRequired: *`number`*): `Promise`<`object`>
 
-*Defined in [interfaces/ITransactionClient.ts:89](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L89)*
+*Defined in [interfaces/ITransactionClient.ts:89](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L89*
 
 Get the input data for a range of addresses.
 
@@ -233,7 +233,7 @@ ___
 
 ▸ **getLatestInclusion**(transactionHashes: *`Hash`[]*): `Promise`<`boolean`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:46](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L46)*
+*Defined in [interfaces/ITransactionClient.ts:46](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L46*
 
 Get the inclusion states of a list of transaction hashes.
 
@@ -253,7 +253,7 @@ ___
 
 ▸ **getNewAddress**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, includeChecksum?: *`boolean`*, security?: *`AddressSecurity`*): `Promise`<`Address`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:57](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L57)*
+*Defined in [interfaces/ITransactionClient.ts:57](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L57*
 
 Generates addresses with index-based or using apis.
 
@@ -277,7 +277,7 @@ ___
 
 ▸ **getTransactionsInProgress**(): `Promise`<`Hash`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:22](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L22)*
+*Defined in [interfaces/ITransactionClient.ts:22](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L22*
 
 Returns the list of transaction in progress.
 
@@ -291,7 +291,7 @@ ___
 
 ▸ **getTransactionsObjects**(transactionHashes: *`Hash`[]*): `Promise`<`Transaction`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:40](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L40)*
+*Defined in [interfaces/ITransactionClient.ts:40](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L40*
 
 Get the transaction details of specific transactions.
 
@@ -311,7 +311,7 @@ ___
 
 ▸ **getTransfers**(seed: *`Hash`*, startIndex?: *`number`*, endIndex?: *`number`*, security?: *`AddressSecurity`*, inclusionStates?: *`boolean`*): `Promise`<`Bundle`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:225](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L225)*
+*Defined in [interfaces/ITransactionClient.ts:225](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L225*
 
 The transfers which are associated with a seed. The transfers are determined by either calculating deterministically which addresses were already used, or by providing a list of indexes to get the addresses and the associated transfers from. The transfers are sorted by their timestamp.
 
@@ -335,7 +335,7 @@ ___
 
 ▸ **isPromotable**(transactionTail: *`Hash`*): `Promise`<`boolean`>
 
-*Defined in [interfaces/ITransactionClient.ts:145](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L145)*
+*Defined in [interfaces/ITransactionClient.ts:145](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L145*
 
 Find out if a transaction is promotable.
 
@@ -355,7 +355,7 @@ ___
 
 ▸ **isReattachable**(addresses: *`Address`[]*): `Promise`<`boolean`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:152](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L152)*
+*Defined in [interfaces/ITransactionClient.ts:152](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L152*
 
 Determines whether you should replay a transaction or make a new one (either with the same input, or a different one).
 
@@ -375,7 +375,7 @@ ___
 
 ▸ **prepareTransfers**(seed: *`Hash`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:102](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L102)*
+*Defined in [interfaces/ITransactionClient.ts:102](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L102*
 
 Prepares transfer by generating bundle, finding and signing inputs.
 
@@ -397,7 +397,7 @@ ___
 
 ▸ **promoteTransaction**(transactionTail: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, promoteOptions?: *[PromoteOptions](../#promoteoptions)*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:168](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L168)*
+*Defined in [interfaces/ITransactionClient.ts:168](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L168*
 
 Promotes a transaction by adding spam on top of it, as long as it is promotable. Will promote by adding transfers on top of the current one with delay interval. Use promoteOptions.interrupt to terminate the promotion. If promoteOptions.delay is set to 0 only one promotion transfer will be sent.
 
@@ -421,7 +421,7 @@ ___
 
 ▸ **reattachBundle**(transactionHash: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:194](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L194)*
+*Defined in [interfaces/ITransactionClient.ts:194](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L194*
 
 Wrapper which gets a bundle and then replays a transfer by doing Proof of Work again.
 
@@ -443,7 +443,7 @@ ___
 
 ▸ **rebroadcastBundle**(transactionHash: *`Hash`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:201](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L201)*
+*Defined in [interfaces/ITransactionClient.ts:201](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L201*
 
 Wrapper which gets a bundle and then broadcasts it.
 
@@ -463,7 +463,7 @@ ___
 
 ▸ **sendTransactions**(bundle: *`Bundle`*, depth: *`number`*, minWeightMagnitude: *`number`*, reference?: *`Hash`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:122](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L122)*
+*Defined in [interfaces/ITransactionClient.ts:122](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L122*
 
 Wrapper function that does attachToTangle and then stores and broadcasts the transactions.
 
@@ -486,7 +486,7 @@ ___
 
 ▸ **sendTransfer**(seed: *`Hash`*, depth: *`number`*, minWeightMagnitude: *`number`*, transfers: *`Transfer`[]*, transferOptions?: *[TransferOptions](../#transferoptions)*, reference?: *`Hash`*): `Promise`<`Bundle`>
 
-*Defined in [interfaces/ITransactionClient.ts:138](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L138)*
+*Defined in [interfaces/ITransactionClient.ts:138](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L138*
 
 Wrapper function that does prepareTransfers and then sendTransactions.
 
@@ -511,7 +511,7 @@ ___
 
 ▸ **traverseBundle**(trunkTransaction: *`Hash`*, bundleHash?: *`Hash`*): `Promise`<`Transaction`[]>
 
-*Defined in [interfaces/ITransactionClient.ts:185](https://github.com/iota-pico/business/blob/d578214/src/interfaces/ITransactionClient.ts#L185)*
+*Defined in [interfaces/ITransactionClient.ts:185](https://github.com/iota-pico/business/tree/master/src/interfaces/ITransactionClient.ts#L185*
 
 Traverse the Bundle by going down the trunkTransactions until the bundle hash of the transaction is no longer the same.
 
