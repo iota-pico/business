@@ -32,7 +32,7 @@
 
 ###  AccountData
 
-**ΤAccountData**: *`object`*
+**Ƭ AccountData**: *`object`*
 
 *Defined in [types/accountData.ts:8](https://github.com/iota-pico/business/tree/master/src/types/accountData.ts#L8*
 
@@ -55,7 +55,7 @@ ___
 
 ###  PromoteOptions
 
-**ΤPromoteOptions**: *`object`*
+**Ƭ PromoteOptions**: *`object`*
 
 *Defined in [types/promoteOptions.ts:4](https://github.com/iota-pico/business/tree/master/src/types/promoteOptions.ts#L4*
 
@@ -76,7 +76,7 @@ ___
 
 ###  TransferOptions
 
-**ΤTransferOptions**: *`object`*
+**Ƭ TransferOptions**: *`object`*
 
 *Defined in [types/transferOptions.ts:9](https://github.com/iota-pico/business/tree/master/src/types/transferOptions.ts#L9*
 
