@@ -4,7 +4,6 @@ import { Trits } from "@iota-pico/data/dist/data/trits";
 /**
  * Helper class for address signing.
  * Original https://github.com/iotaledger/iota.lib.js/blob/master/lib/crypto/signing/signing.js
- * @internal
  */
 export class AddressHelper {
     /**
