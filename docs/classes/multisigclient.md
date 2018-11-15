@@ -38,7 +38,7 @@ Create a new instance of the MultiSigClient.
 
 **Parameters:**
 
-| Param | Type | Default value | Description |
+| Name | Type | Default value | Description |
 | ------ | ------ | ------ | ------ |
 | apiClient | `IApiClient` | - |  An API Client to communicate through. |
 | `Default value` timeService | `ITimeService` |  new TimeService() |  A class which can provide the time. |
@@ -61,7 +61,7 @@ Initiates the creation of a new transfer by generating an empty bundle with the 
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `Address` |  Address which has sufficient balance and is controlled by the co-signers. |
 | securitySum | `number` |  the sum of the security levels from all cosigners chosen during the private key generation (getKey / getDigest) |
@@ -85,7 +85,7 @@ Adds the cosigner signatures to the corresponding bundle transactions.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle to sign. |
 | address | `Address` |  The address to match the transactions. |
@@ -106,7 +106,7 @@ Get the digest value of a seed.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to get the digest for. |
 | index | `number` |  The address index to use. |
@@ -128,7 +128,7 @@ Get the key value of a seed.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to get the key for. |
 | index | `number` |  The address index to use. |
@@ -150,7 +150,7 @@ Validate address.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | address | `Address` |  The address to validate against the digests. |
 | digests | `Trytes`[] |  The digests to use to validate the address. |

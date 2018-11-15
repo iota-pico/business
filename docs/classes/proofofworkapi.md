@@ -39,7 +39,7 @@ Create an instance of ProofOfWork.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | apiClient | `IApiClient` |  The API client to send the request through. |
 
@@ -75,7 +75,7 @@ Perform a proof of work on the data.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | trunkTransaction | `Hash` |  The trunkTransaction to use for the pow. |
 | branchTransaction | `Hash` |  The branchTransaction to use for the pow. |

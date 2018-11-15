@@ -56,7 +56,7 @@ Attach the transactions to the tangle by doing proof of work.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle of transactions to attach. |
 | depth | `number` |  Value that determines how far to go for tip selection. |
@@ -79,7 +79,7 @@ Get transaction objects by fist performing a findTransactions call.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | `Optional` bundles | `Hash`[] |  Bundles to lookup transactions for. |
 | `Optional` addresses | `Address`[] |  Addresses to lookup transactions for. |
@@ -102,7 +102,7 @@ Find the transactions which match the specified input and return. All input valu
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | `Optional` bundles | `Hash`[] |  Bundles to lookup transaction hashes for. |
 | `Optional` addresses | `Address`[] |  Addresses to lookup transaction hashes for. |
@@ -125,7 +125,7 @@ Similar to getTransfers, just that it returns additional account data.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to get the transfers for |
 | `Optional` startIndex | `number` |  The start index to get the transfers for. |
@@ -148,7 +148,7 @@ Generates addresses index-based.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to generate the addresses from. |
 | startIndex | `number` |  The start index to generate addresses. |
@@ -172,7 +172,7 @@ Generates address which havent been used using apis.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to generate the addresses from. |
 | startIndex | `number` |  The start index to generate addresses. |
@@ -195,7 +195,7 @@ Gets the associated bundle transactions of a single transaction. Does validation
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | transactionHash | `Hash` |  Hash of a trunk or a tail transaction of a bundle. |
 
@@ -215,7 +215,7 @@ Get the input data for a range of addresses.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to get the input data for. |
 | startIndex | `number` |  The start index to get the addresses. |
@@ -239,7 +239,7 @@ Get the inclusion states of a list of transaction hashes.
 
 **Parameters:**
 
-| Param | Type |
+| Name | Type |
 | ------ | ------ |
 | transactionHashes | `Hash`[] |
 
@@ -259,7 +259,7 @@ Generates addresses with index-based or using apis.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to generate the addresses from. |
 | `Optional` startIndex | `number` |  The start index to generate addresses. |
@@ -297,7 +297,7 @@ Get the transaction details of specific transactions.
 
 **Parameters:**
 
-| Param | Type |
+| Name | Type |
 | ------ | ------ |
 | transactionHashes | `Hash`[] |
 
@@ -317,7 +317,7 @@ The transfers which are associated with a seed. The transfers are determined by 
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to get the transfers for |
 | `Optional` startIndex | `number` |  The start index to get the transfers for. |
@@ -341,7 +341,7 @@ Find out if a transaction is promotable.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | transactionTail | `Hash` |  The hash of the transaction to be promoted. |
 
@@ -361,7 +361,7 @@ Determines whether you should replay a transaction or make a new one (either wit
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | addresses | `Address`[] |  Input address you want to have tested. |
 
@@ -381,7 +381,7 @@ Prepares transfer by generating bundle, finding and signing inputs.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to prepare the transfer for. |
 | transfers | `Transfer`[] |  The transfers to prepare. |
@@ -403,7 +403,7 @@ Promotes a transaction by adding spam on top of it, as long as it is promotable.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | transactionTail | `Hash` |  The hash of the transaction to be promoted. |
 | depth | `number` |  Value that determines how far to go for tip selection. |
@@ -427,7 +427,7 @@ Wrapper which gets a bundle and then replays a transfer by doing Proof of Work a
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | transactionHash | `Hash` |  The hash of the transaction to be promoted. |
 | depth | `number` |  Value that determines how far to go for tip selection. |
@@ -449,7 +449,7 @@ Wrapper which gets a bundle and then broadcasts it.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | transactionHash | `Hash` |  The hash of the transaction to be re-broadcast. |
 
@@ -469,7 +469,7 @@ Wrapper function that does attachToTangle and then stores and broadcasts the tra
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle of transactions to send. |
 | depth | `number` |  Value that determines how far to go for tip selection. |
@@ -492,7 +492,7 @@ Wrapper function that does prepareTransfers and then sendTransactions.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to send the transfer for. |
 | depth | `number` |  Value that determines how far to go for tip selection. |
@@ -517,7 +517,7 @@ Traverse the Bundle by going down the trunkTransactions until the bundle hash of
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | trunkTransaction | `Hash` |  Hash of a trunk or a tail transaction of a bundle. |
 | `Optional` bundleHash | `Hash` |  The bundle hash to match. |

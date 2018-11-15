@@ -34,7 +34,7 @@ Create a new instance of the HmacCurl.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | key | `Trytes` |  The key to seed with. |
 
@@ -56,7 +56,7 @@ Add bundle to the HMAC.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle to add the HMAC to. |
 

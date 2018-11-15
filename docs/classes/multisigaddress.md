@@ -51,7 +51,7 @@ Absorb key digests.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | digests | `Trytes`[] |  The digests hashes to absorb. |
 
@@ -70,7 +70,7 @@ Finalizes and returns the multisig address in trytes.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | `Optional` digests | `Trytes`[] |  The final digests hashes to absorb. |
 

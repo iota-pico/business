@@ -51,7 +51,7 @@ Finalize a bundle.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle to finalize. |
 
@@ -70,7 +70,7 @@ Is the bundle valid.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle to check for validity. |
 
@@ -90,7 +90,7 @@ Prepare a bundle.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | timeService | `ITimeService` |  To use for stamping the transactions. |
 | transfers | `Transfer`[] |  The transfers to add to the bundle. |
@@ -111,7 +111,7 @@ Sign the input of the bundle.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | seed | `Hash` |  The seed to use for signing. |
 | bundle | `Bundle` |  The bundle to sign. |
@@ -135,7 +135,7 @@ Sign the trsnactions
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | bundle | `Bundle` |  The bundle of transactions to sign. |
 | index | `number` |  The index to start. |
@@ -159,7 +159,7 @@ Validate signatures for each of the co-signers in the multi-signature to indepen
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | signedBundle | `Bundle` |  The signed bundle to check the signatures. |
 | inputAddress | `Address` |  The address used to initiate the transfer. |

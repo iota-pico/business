@@ -30,7 +30,7 @@ Create a checksum for the trits.
 
 **Parameters:**
 
-| Param | Type | Description |
+| Name | Type | Description |
 | ------ | ------ | ------ |
 | trits | `Int8Array` |  The trits to create the checksum for. |
 | checksumLength | `number` |  The length of the checksum. |
