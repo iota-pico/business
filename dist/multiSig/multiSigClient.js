@@ -70,7 +70,7 @@ class MultiSigClient {
         return trits_1.Trits.fromArray(iss_1.ISS.digests(key)).toTrytes();
     }
     /**
-     * Validate address.
+     * Validate the address against the digests.
      * @param address The address to validate against the digests.
      * @param digests The digests to use to validate the address.
      * @returns True if the address matches the digests.

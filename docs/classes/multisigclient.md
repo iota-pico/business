@@ -146,7 +146,7 @@ ___
 
 *Defined in [multiSig/multiSigClient.ts:93](https://github.com/iota-pico/business/tree/master/src/multiSig/multiSigClient.ts#L93*
 
-Validate address.
+Validate the address against the digests.
 
 **Parameters:**
 

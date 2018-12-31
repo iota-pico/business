@@ -158,7 +158,7 @@ export class BundleHelper {
     }
 
     /**
-     * Prepare a bundle.
+     * Prepare a bundle for attaching.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
      * @returns Bundle information.
@@ -335,7 +335,7 @@ export class BundleHelper {
     }
 
     /**
-     * Finalize a bundle.
+     * Finalize a bundle ready for attaching.
      * @param bundle The bundle to finalize.
      */
     public static finalizeBundle(bundle: Bundle): void {

@@ -67,7 +67,7 @@ Options used during promote process in promoteTransaction.
 
 Delay between promotion transfers.
 
-`Optional`  interrupt:  `boolean` &#124; `function`
+`Optional`  interrupt: `boolean` | `function`
 
 Flag or method to terminate promotion.
 

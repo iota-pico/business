@@ -29,7 +29,7 @@ export declare class BundleHelper {
      */
     static validateSignatures(signedBundle: Bundle, inputAddress: Address): boolean;
     /**
-     * Prepare a bundle.
+     * Prepare a bundle for attaching.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
      * @returns Bundle information.
@@ -61,7 +61,7 @@ export declare class BundleHelper {
      */
     static signTransactions(bundle: Bundle, index: number, firstUnsignedIndex: number, keyTrits: Int8Array, addressTrytes: string, security: AddressSecurity): void;
     /**
-     * Finalize a bundle.
+     * Finalize a bundle ready for attaching.
      * @param bundle The bundle to finalize.
      */
     static finalizeBundle(bundle: Bundle): void;

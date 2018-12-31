@@ -47,7 +47,7 @@ ___
 
 *Defined in [helpers/bundleHelper.ts:341](https://github.com/iota-pico/business/tree/master/src/helpers/bundleHelper.ts#L341*
 
-Finalize a bundle.
+Finalize a bundle ready for attaching.
 
 **Parameters:**
 
@@ -86,7 +86,7 @@ ___
 
 *Defined in [helpers/bundleHelper.ts:166](https://github.com/iota-pico/business/tree/master/src/helpers/bundleHelper.ts#L166*
 
-Prepare a bundle.
+Prepare a bundle for attaching.
 
 **Parameters:**
 

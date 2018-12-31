@@ -131,7 +131,7 @@ class BundleHelper {
         return isValid;
     }
     /**
-     * Prepare a bundle.
+     * Prepare a bundle for attaching.
      * @param timeService To use for stamping the transactions.
      * @param transfers The transfers to add to the bundle.
      * @returns Bundle information.
@@ -266,7 +266,7 @@ class BundleHelper {
         }
     }
     /**
-     * Finalize a bundle.
+     * Finalize a bundle ready for attaching.
      * @param bundle The bundle to finalize.
      */
     static finalizeBundle(bundle) {

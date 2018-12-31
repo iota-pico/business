@@ -34,7 +34,7 @@ export declare class MultiSigClient {
      */
     static getDigest(seed: Hash, index: number, security: AddressSecurity): Trytes;
     /**
-     * Validate address.
+     * Validate the address against the digests.
      * @param address The address to validate against the digests.
      * @param digests The digests to use to validate the address.
      * @returns True if the address matches the digests.
