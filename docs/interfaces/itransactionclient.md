@@ -3,6 +3,7 @@
 # Interface: ITransactionClient
 
 Represents a client for performing transactions using the api if required.
+
 *__interface__*: 
 
 ## Hierarchy
