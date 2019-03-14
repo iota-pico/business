@@ -69,8 +69,7 @@ export class ProofOfWorkApi implements IProofOfWork {
 
         if (ObjectHelper.isEmpty(attachToTangleResponse) || ArrayHelper.isEmpty(attachToTangleResponse.trytes)) {
             throw new CryptoError("The attachToTangleRequest did not return any trytes");
-        } else {
-            return attachToTangleResponse.trytes.map(returnTrytes => Trytes.fromString(returnTrytes));
         }
+        return attachToTangleResponse.trytes.map(returnTrytes => Trytes.fromString(returnTrytes));
     }
 }

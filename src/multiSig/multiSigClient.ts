@@ -99,7 +99,7 @@ export class MultiSigClient {
         }
 
         return address.toTrytes().toString() ===
-                        new MultiSigAddress().finalize(digests).toTrytes().toString();
+            new MultiSigAddress().finalize(digests).toTrytes().toString();
     }
 
     /**
@@ -190,42 +190,41 @@ export class MultiSigClient {
 
         if (prepared.totalValue === 0) {
             throw new BusinessError("The total transfer value is 0, the transfer does not require a signature");
-        } else {
-            let totalBalance = balance;
-            if (totalBalance === 0) {
-                const request: IGetBalancesRequest = {
-                    addresses: [ address.toTrytes().toString() ],
-                    threshold: 100
-                };
-
-                const response = await this._apiClient.getBalances(request);
-
-                totalBalance = parseInt(response.balances[0], 10);
-            }
-
-            if (prepared.totalValue > totalBalance) {
-                throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
-            }
-
-            const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
-
-            // Add input as bundle entry
-            // Only a single entry, signatures will be added later
-            prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
-
-            // If there is a remainder value
-            // Add extra output to send remaining funds to
-            if (totalBalance > prepared.totalValue) {
-                if (ObjectHelper.isEmpty(remainderAddress)) {
-                    throw new BusinessError("Transfer has remainder but no remainder address was provided");
-                }
-
-                prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
-            }
-
-            BundleHelper.finalizeBundle(prepared.bundle);
-            prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
         }
+        let totalBalance = balance;
+        if (totalBalance === 0) {
+            const request: IGetBalancesRequest = {
+                addresses: [address.toTrytes().toString()],
+                threshold: 100
+            };
+
+            const response = await this._apiClient.getBalances(request);
+
+            totalBalance = parseInt(response.balances[0], 10);
+        }
+
+        if (prepared.totalValue > totalBalance) {
+            throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
+        }
+
+        const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
+
+        // Add input as bundle entry
+        // Only a single entry, signatures will be added later
+        prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
+
+        // If there is a remainder value
+        // Add extra output to send remaining funds to
+        if (totalBalance > prepared.totalValue) {
+            if (ObjectHelper.isEmpty(remainderAddress)) {
+                throw new BusinessError("Transfer has remainder but no remainder address was provided");
+            }
+
+            prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
+        }
+
+        BundleHelper.finalizeBundle(prepared.bundle);
+        prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
 
         return prepared.bundle;
     }

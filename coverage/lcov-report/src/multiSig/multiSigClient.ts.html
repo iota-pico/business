@@ -278,8 +278,7 @@
 <a name='L230'></a><a href='#L230'>230</a>
 <a name='L231'></a><a href='#L231'>231</a>
 <a name='L232'></a><a href='#L232'>232</a>
-<a name='L233'></a><a href='#L233'>233</a>
-<a name='L234'></a><a href='#L234'>234</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L233'></a><a href='#L233'>233</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -507,7 +506,6 @@
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -613,7 +611,7 @@ export class MultiSigClient {
         }
 &nbsp;
         return address.toTrytes().toString() ===
-                        new MultiSigAddress().finalize(digests).toTrytes().toString();
+            new MultiSigAddress().finalize(digests).toTrytes().toString();
     }
 &nbsp;
     /**
@@ -704,42 +702,41 @@ export class MultiSigClient {
 &nbsp;
         if (prepared.totalValue === 0) {
             throw new BusinessError("The total transfer value is 0, the transfer does not require a signature");
-        } else {
-            let totalBalance = balance;
-            if (totalBalance === 0) {
-                const request: IGetBalancesRequest = {
-                    addresses: [ address.toTrytes().toString() ],
-                    threshold: 100
-                };
-&nbsp;
-                const response = await this._apiClient.getBalances(request);
-&nbsp;
-                totalBalance = parseInt(response.balances[0], 10);
-            }
-&nbsp;
-            if (prepared.totalValue &gt; totalBalance) {
-                throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
-            }
-&nbsp;
-            const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
-&nbsp;
-            // Add input as bundle entry
-            // Only a single entry, signatures will be added later
-            prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
-&nbsp;
-            // If there is a remainder value
-            // Add extra output to send remaining funds to
-            if (totalBalance &gt; prepared.totalValue) {
-                if (ObjectHelper.isEmpty(remainderAddress)) {
-                    throw new BusinessError("Transfer has remainder but no remainder address was provided");
-                }
-&nbsp;
-                prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
-            }
-&nbsp;
-            BundleHelper.finalizeBundle(prepared.bundle);
-            prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
         }
+        let totalBalance = balance;
+        if (totalBalance === 0) {
+            const request: IGetBalancesRequest = {
+                addresses: [address.toTrytes().toString()],
+                threshold: 100
+            };
+&nbsp;
+            const response = await this._apiClient.getBalances(request);
+&nbsp;
+            totalBalance = parseInt(response.balances[0], 10);
+        }
+&nbsp;
+        if (prepared.totalValue &gt; totalBalance) {
+            throw new BusinessError("Not enough balance to satisfy the value", { totalValue: prepared.totalValue, totalBalance });
+        }
+&nbsp;
+        const timestamp = Math.floor(this._timeService.msSinceEpoch() / 1000);
+&nbsp;
+        // Add input as bundle entry
+        // Only a single entry, signatures will be added later
+        prepared.bundle.addTransactions(securitySum, address, -totalBalance, prepared.lastTag, timestamp);
+&nbsp;
+        // If there is a remainder value
+        // Add extra output to send remaining funds to
+        if (totalBalance &gt; prepared.totalValue) {
+            if (ObjectHelper.isEmpty(remainderAddress)) {
+                throw new BusinessError("Transfer has remainder but no remainder address was provided");
+            }
+&nbsp;
+            prepared.bundle.addTransactions(1, remainderAddress, totalBalance - prepared.totalValue, prepared.lastTag, timestamp);
+        }
+&nbsp;
+        BundleHelper.finalizeBundle(prepared.bundle);
+        prepared.bundle.addSignatureMessageFragments(prepared.signatureMessageFragments);
 &nbsp;
         return prepared.bundle;
     }

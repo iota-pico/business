@@ -73,11 +73,12 @@ export class TransactionClient implements ITransactionClient {
      * @param backgroundTaskService A class which can provide background tasks.
      * @param logger Logger to send transaction info to.
      */
-    constructor(apiClient: IApiClient,
-                proofOfWork?: IProofOfWork,
-                timeService?: ITimeService,
-                backgroundTaskService?: IBackgroundTaskService,
-                logger?: ILogger) {
+    constructor(
+        apiClient: IApiClient,
+        proofOfWork?: IProofOfWork,
+        timeService?: ITimeService,
+        backgroundTaskService?: IBackgroundTaskService,
+        logger?: ILogger) {
         if (ObjectHelper.isEmpty(apiClient)) {
             throw new BusinessError("The apiClient must not be empty");
         }
@@ -99,10 +100,9 @@ export class TransactionClient implements ITransactionClient {
             const resp = response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
             this._logger.info("<=== TransactionClient::getTransactionsInProgress", resp);
             return resp;
-        } else {
-            this._logger.info("<=== TransactionClient::getTransactionsInProgress", []);
-            return [];
         }
+        this._logger.info("<=== TransactionClient::getTransactionsInProgress", []);
+        return [];
     }
 
     /**
@@ -155,10 +155,9 @@ export class TransactionClient implements ITransactionClient {
             const resp = response.hashes.map(hash => Hash.fromTrytes(Trytes.fromString(hash)));
             this._logger.info("<=== TransactionClient::findTransactions", resp);
             return resp;
-        } else {
-            this._logger.info("<=== TransactionClient::findTransactions", []);
-            return [];
         }
+        this._logger.info("<=== TransactionClient::findTransactions", []);
+        return [];
     }
 
     /**
@@ -181,10 +180,9 @@ export class TransactionClient implements ITransactionClient {
             const resp = response.trytes.map(trytes => Transaction.fromTrytes(Trytes.fromString(trytes)));
             this._logger.info("<=== TransactionClient::getTransactionsObjects", resp);
             return resp;
-        } else {
-            this._logger.info("<=== TransactionClient::getTransactionsObjects", []);
-            return [];
         }
+        this._logger.info("<=== TransactionClient::getTransactionsObjects", []);
+        return [];
     }
 
     /**
@@ -208,13 +206,11 @@ export class TransactionClient implements ITransactionClient {
             if (response && response.states) {
                 this._logger.info("<=== TransactionClient::transactionHashes", response.states);
                 return response.states;
-            } else {
-                this._logger.info("<=== TransactionClient::transactionHashes", []);
-                return [];
             }
-        } else {
-            throw new BusinessError("The node could not provide the latestSolidSubtangleMilestone");
+            this._logger.info("<=== TransactionClient::transactionHashes", []);
+            return [];
         }
+        throw new BusinessError("The node could not provide the latestSolidSubtangleMilestone");
     }
 
     /**
@@ -554,10 +550,11 @@ export class TransactionClient implements ITransactionClient {
 
         const transactionsToApprove = await this._apiClient.getTransactionsToApprove(transactionsToApproveRequest);
 
-        const allTrytes = await this._proofOfWork.pow(Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
-                                                      Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
-                                                      bundle.transactions.map(t => t.toTrytes()),
-                                                      minWeightMagnitude);
+        const allTrytes = await this._proofOfWork.pow(
+            Hash.fromTrytes(Trytes.fromString(transactionsToApprove.trunkTransaction)),
+            Hash.fromTrytes(Trytes.fromString(transactionsToApprove.branchTransaction)),
+            bundle.transactions.map(t => t.toTrytes()),
+            minWeightMagnitude);
 
         const powTransactions = allTrytes.map(returnTrytes => Transaction.fromTrytes(returnTrytes));
 
@@ -745,17 +742,14 @@ export class TransactionClient implements ITransactionClient {
                     return this._backgroundTaskService.create(
                         async () => this.promoteTransaction(transactionTail, depth, minWeightMagnitude, transfers, localPromoteOptions),
                         localPromoteOptions.delay);
-                } else {
-                    this._logger.info("<=== TransactionClient::promoteTransaction", sendTransferResponse);
-                    return sendTransferResponse;
                 }
-            } else {
-                throw new BusinessError("Transaction is not promotable");
+                this._logger.info("<=== TransactionClient::promoteTransaction", sendTransferResponse);
+                return sendTransferResponse;
             }
-        } else {
-            this._logger.info("<=== TransactionClient::promoteTransaction", undefined);
-            return undefined;
+            throw new BusinessError("Transaction is not promotable");
         }
+        this._logger.info("<=== TransactionClient::promoteTransaction", undefined);
+        return undefined;
     }
 
     /**
@@ -811,36 +805,35 @@ export class TransactionClient implements ITransactionClient {
 
             const getTrytesResponse = await this._apiClient.getTrytes(getTrytesRequest);
             const trytes = !ObjectHelper.isEmpty(getTrytesResponse) &&
-                            !ObjectHelper.isEmpty(getTrytesResponse.trytes) &&
-                            getTrytesResponse.trytes.length > 0 ? getTrytesResponse.trytes[0] : undefined;
+                !ObjectHelper.isEmpty(getTrytesResponse.trytes) &&
+                getTrytesResponse.trytes.length > 0 ? getTrytesResponse.trytes[0] : undefined;
 
             if (ObjectHelper.isEmpty(trytes)) {
                 throw new BusinessError("Bundle transactions not visible");
-            } else {
-                const transactionObject = Transaction.fromTrytes(Trytes.fromString(trytes));
+            }
+            const transactionObject = Transaction.fromTrytes(Trytes.fromString(trytes));
 
-                // If first transaction to search is not a tail, return error
-                const hasHash = !ObjectHelper.isEmpty(newBundleHash);
-                if (!hasHash && transactionObject.currentIndex.toNumber() !== 0) {
-                    throw new BusinessError("Invalid tail transaction supplied");
-                }
+            // If first transaction to search is not a tail, return error
+            const hasHash = !ObjectHelper.isEmpty(newBundleHash);
+            if (!hasHash && transactionObject.currentIndex.toNumber() !== 0) {
+                throw new BusinessError("Invalid tail transaction supplied");
+            }
 
-                // If no bundle hash, define it
-                const localBundleHash = hasHash ? newBundleHash : transactionObject.bundle;
+            // If no bundle hash, define it
+            const localBundleHash = hasHash ? newBundleHash : transactionObject.bundle;
 
-                newTrunkTransaction = undefined;
-                newBundleHash = undefined;
+            newTrunkTransaction = undefined;
+            newBundleHash = undefined;
 
-                // If same bundle hash continue
-                if (localBundleHash.toTrytes().toString() === transactionObject.bundle.toTrytes().toString()) {
-                    // Add transaction object to bundle
-                    allBundleTransactions.push(transactionObject);
+            // If same bundle hash continue
+            if (localBundleHash.toTrytes().toString() === transactionObject.bundle.toTrytes().toString()) {
+                // Add transaction object to bundle
+                allBundleTransactions.push(transactionObject);
 
-                    // If more than one element then continue
-                    if (transactionObject.lastIndex.toNumber() !== 0 || transactionObject.currentIndex.toNumber() !== 0) {
-                        newTrunkTransaction = transactionObject.trunkTransaction;
-                        newBundleHash = localBundleHash;
-                    }
+                // If more than one element then continue
+                if (transactionObject.lastIndex.toNumber() !== 0 || transactionObject.currentIndex.toNumber() !== 0) {
+                    newTrunkTransaction = transactionObject.trunkTransaction;
+                    newBundleHash = localBundleHash;
                 }
             }
         } while (newTrunkTransaction !== undefined);
@@ -905,10 +898,9 @@ export class TransactionClient implements ITransactionClient {
             const resp = await this.getTransactionsObjects(transactions);
             this._logger.info("<=== TransactionClient::findTransactionObjects", resp);
             return resp;
-        } else {
-            this._logger.info("<=== TransactionClient::findTransactionObjects", []);
-            return [];
         }
+        this._logger.info("<=== TransactionClient::findTransactionObjects", []);
+        return [];
     }
 
     /**
@@ -1061,8 +1053,12 @@ export class TransactionClient implements ITransactionClient {
     }
 
     /* @internal */
-    private async addRemainder(seed: Hash, bundle: Bundle, transferOptions: TransferOptions, inputs: Input[],
-                               signatureMessageFragments: SignatureMessageFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<void> {
+    private async addRemainder(
+        seed: Hash,
+        bundle: Bundle,
+        transferOptions: TransferOptions,
+        inputs: Input[],
+        signatureMessageFragments: SignatureMessageFragment[], totalValue: number, tag: Tag, addedHMAC: boolean): Promise<void> {
 
         let totalTransferValue = totalValue;
         for (let i = 0; i < inputs.length; i++) {
